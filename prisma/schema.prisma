@@ -1,0 +1,92 @@
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  extensions = [vector]
+}
+
+model owner {
+  id                String     @id @default(uuid())
+  email             String?     @unique
+  name              String?
+  stripeId          String?
+  subscription      billings?
+  stores            store[]
+
+  createdAt        DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model billings {
+  id              String @id @default(uuid())
+  amount          Int @default(10)
+  plan            plans   @default(STANDARD)
+  owner           owner?   @relation(fields: [ownerId], references: [id])
+  ownerId         String? @unique
+  expiryDate      String?
+  subscribed      Boolean @default(false)
+  daysWithService Int     @default(0)
+}
+
+enum plans {
+  STANDARD
+  PRO
+  ULTIMATE
+}
+
+model store {
+  id                  String    @id @default(uuid())
+  name                String
+  owner               owner     @relation( fields: [ownerId], references: [id])
+  ownerId             String
+  subdomain           String    @unique
+  products            product[]
+
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+model product {
+  id          String @id @default(uuid())
+  storeId     String
+  store       store @relation(fields: [storeId], references: [id])
+
+  name          String
+  priceInCents  Int
+  imagePath     String
+  isAvailableForPurchase     Boolean @default(true)
+  discountCodes discount[]
+  description String @default("")
+
+  embedding   Unsupported("vector(1536)")? //https://github.com/prisma/prisma/discussions/18220
+  tokens      Int?
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model discount {
+  id             String           @id @default(uuid())
+  code           String           @unique
+  discountAmount Int
+  discountType   discountCodeType
+  uses           Int              @default(0)
+  isActive       Boolean          @default(true)
+  allProducts    Boolean          @default(false)
+  createdAt      DateTime         @default(now())
+  limit          Int?
+  expiresAt      DateTime?
+  storeId        String?
+
+  products       product[]
+  //orders   Order[]
+}
+
+enum discountCodeType {
+  PERCENTAGE
+  FIXED
+}
