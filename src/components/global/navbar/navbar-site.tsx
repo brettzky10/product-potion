@@ -20,7 +20,7 @@ const Navigation = () => {
           alt=" logo"
           className='rounded-xl'
         />
-        <span className="text-xl font-bold group-hover:text-primary">Worker Forge</span>
+        <span className="text-xl font-bold group-hover:text-primary">Launch Potion</span>
       </aside>
       <div className='hidden md:flex'>
         

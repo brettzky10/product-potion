@@ -26,12 +26,12 @@ export async function GET(request: NextRequest) {
     if (!error) {
       switch (type) {
         case "signup":
-          redirectTo.pathname = "/dashboard";
+          redirectTo.pathname = "/check";
         case "invite":
           redirectTo.pathname = "/password-reset";
           break;
         case "magiclink":
-          redirectTo.pathname = "/dashboard";
+          redirectTo.pathname = "/check";
           break;
         case "recovery":
           redirectTo.pathname = "/password-reset";
@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
           redirectTo.pathname = "/login";
           break;
         case "email":
-          redirectTo.pathname = "/dashboard";
+          redirectTo.pathname = "/check";
           break;
         default:
           break;

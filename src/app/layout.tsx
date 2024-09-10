@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/lib/providers/theme-provider"
 import { Toaster } from 'sonner'
 import StripeModalProvider from "@/lib/providers/stripe-modal-provider";
+import { ModalProvider } from "@/lib/providers/modal-provider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -17,8 +18,8 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Product Potion",
-  description: "An Elixir for Success",
+  title: "Launch Potion",
+  description: "Elixir for Success",
 };
 
 export default function RootLayout({
@@ -33,7 +34,7 @@ export default function RootLayout({
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <Toaster/>
-            {/* <ModalProvider/> */}
+            <ModalProvider/>
             <StripeModalProvider>
               {children}
             </StripeModalProvider>

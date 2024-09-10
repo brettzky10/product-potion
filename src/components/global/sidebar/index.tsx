@@ -23,7 +23,6 @@ const SideBar = ({storeId}:{storeId: string | null}) => {
     >
       {expand ? (
         <MaxMenu
-          
         current={page!}
           onExpand={onExpand}
           storeId={storeId}

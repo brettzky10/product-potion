@@ -90,3 +90,14 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.glowBox {
+  position: absolute;
+  top: calc(50% - 250px);
+  left: calc(50% - 80px);
+  width: 250px;
+  height: 500px;
+  border-radius: 50%;
+  background-color: #FFF;
+  box-shadow: 0 0 60px 30px #F0F, 0 0 100px 60px #0FF;
+}

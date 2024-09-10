@@ -13,6 +13,7 @@ model owner {
   id                String     @id @default(uuid())
   email             String?     @unique
   name              String?
+  userId            String
   stripeId          String?
   subscription      billings?
   stores            store[]
@@ -27,6 +28,7 @@ model billings {
   plan            plans   @default(STANDARD)
   owner           owner?   @relation(fields: [ownerId], references: [id])
   ownerId         String? @unique
+  userId          String @unique
   expiryDate      String?
   subscribed      Boolean @default(false)
   daysWithService Int     @default(0)
@@ -42,7 +44,8 @@ model store {
   id                  String    @id @default(uuid())
   name                String
   owner               owner     @relation( fields: [ownerId], references: [id])
-  ownerId             String
+  ownerId             String    @unique
+  userId              String    @unique
   subdomain           String    @unique
   products            product[]
 
