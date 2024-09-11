@@ -1,10 +1,12 @@
 //import { SIDE_BAR_MENU } from '@/lib/sidebar-constants'
 
 import React from 'react'
-import { LogOut, Settings, ShirtIcon, Store, Tag, Wand2 } from 'lucide-react'
+import { LogOut, Settings, ShirtIcon, Store, StoreIcon, Tag, Wand2 } from 'lucide-react'
 import MenuItem from './menu-item'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { MenuLogoMin } from './menu-logo-min'
+import { Separator } from '@/components/ui/separator'
+import Link from 'next/link'
 
 
 type MinMenuProps = {
@@ -65,6 +67,21 @@ export const MinMenu = ({
       <span className="animate-fade-in  delay-300 fill-mode-forwards cursor-pointer">
         <MenuLogoMin onClick={onShrink}/>
       </span>
+      <Separator/>
+      <div>
+      {/* <TooltipProvider>
+                    <Tooltip>
+                        <TooltipTrigger className="mx-2">
+                        <a target="_blank" href={`https://${subDomain}.workerforge.com/`} rel="noopener noreferrer">
+                    Preview Your Site
+                </a>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                        {subDomain}.workerforge.com
+                        </TooltipContent>
+                    </Tooltip>
+                </TooltipProvider> */}
+      </div>
       <div className="animate-fade-in  fill-mode-forwards delay-300 flex flex-col justify-between h-full pt-10">
         <div className="flex flex-col">
           {SIDE_BAR_MENU.map((menu, key) => (
@@ -90,8 +107,8 @@ export const MinMenu = ({
         </div>
         <div className="flex flex-col mb-2">
           <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger className='my-2'>
+          <Tooltip delayDuration={0}>
+            <TooltipTrigger className='my-2 text-gray-500'>
               <MenuItem
                 size="min"
                 label="Settings"
@@ -105,8 +122,8 @@ export const MinMenu = ({
           </Tooltip>
           </TooltipProvider>
           <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
+            <Tooltip delayDuration={0}>
+              <TooltipTrigger className='text-gray-500'>
                 <MenuItem
                   size="min"
                   label="Sign out"

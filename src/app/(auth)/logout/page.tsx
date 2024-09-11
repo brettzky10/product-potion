@@ -1,12 +1,12 @@
 import AuthButton from '@/components/auth/auth-button'
 import React from 'react'
 
-const Dashboard = () => {
+const LogoutPage = () => {
   return (
     <div>
-      <AuthButton/>
+        <AuthButton/>
     </div>
   )
 }
 
-export default Dashboard
+export default LogoutPage

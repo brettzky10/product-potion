@@ -1,3 +1,4 @@
+import prismadb from "@/lib/db/prismadb";
 import { createClient } from "@/lib/supabase/supabase-server";
 import { type EmailOtpType } from "@supabase/supabase-js";
 import { NextRequest, NextResponse } from "next/server";
@@ -11,7 +12,14 @@ export async function GET(request: NextRequest) {
   redirectTo.pathname = next;
 
   if (token_hash && type) {
+
+
     const supabase = createClient();
+
+      const {
+          data: { user },
+      } = await supabase.auth.getUser();
+
 
     const { error, data } = await supabase.auth.verifyOtp({
       type,

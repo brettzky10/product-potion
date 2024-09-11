@@ -15,8 +15,10 @@ model owner {
   name              String?
   userId            String
   stripeId          String?
-  subscription      billings?
+  subscription      billings? @relation("OwnerToBilling")
   stores            store[]
+  orders            order[] 
+
 
   createdAt        DateTime @default(now())
   updatedAt         DateTime @updatedAt
@@ -26,8 +28,8 @@ model billings {
   id              String @id @default(uuid())
   amount          Int @default(10)
   plan            plans   @default(STANDARD)
-  owner           owner?   @relation(fields: [ownerId], references: [id])
-  ownerId         String? @unique
+  owner           owner?   @relation("OwnerToBilling", fields: [ownerId], references: [id])
+  ownerId         String @unique
   userId          String @unique
   expiryDate      String?
   subscribed      Boolean @default(false)
@@ -48,6 +50,7 @@ model store {
   userId              String    @unique
   subdomain           String    @unique
   products            product[]
+  orders              order[] 
 
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
@@ -55,15 +58,16 @@ model store {
 
 model product {
   id          String @id @default(uuid())
-  storeId     String
-  store       store @relation(fields: [storeId], references: [id])
-
   name          String
   priceInCents  Int
   imagePath     String
+  description String @default("")
   isAvailableForPurchase     Boolean @default(true)
   discountCodes discount[]
-  description String @default("")
+
+  orderItems  orderItem[]
+  storeId     String
+  store       store @relation(fields: [storeId], references: [id])
 
   embedding   Unsupported("vector(1536)")? //https://github.com/prisma/prisma/discussions/18220
   tokens      Int?
@@ -86,10 +90,40 @@ model discount {
   storeId        String?
 
   products       product[]
-  //orders   Order[]
+  orders          order[]
 }
 
 enum discountCodeType {
   PERCENTAGE
   FIXED
+}
+
+model order{
+  id String @id @default(uuid())
+  storeId String
+  store store @relation(fields: [storeId], references: [id])
+  owner  owner     @relation(fields: [ownerId], references: [id])
+  ownerId   String
+  orderItems orderItem[]
+  isPaid Boolean @default(false)
+  phone String @default("")
+  address String @default("")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  discountCodeId String?
+  discountCode   discount? @relation(fields: [discountCodeId], references: [id], onDelete: Restrict)
+
+  @@index([storeId])
+}
+
+
+model orderItem {
+  id String @id @default(uuid())
+  orderId String
+  order order @relation(fields: [orderId], references: [id])
+  productId String
+  product product @relation(fields: [productId], references: [id])
+
+  @@index([orderId])
+  @@index([productId])
 }

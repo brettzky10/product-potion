@@ -22,7 +22,7 @@ const MenuItem = ({ size, path, icon, label, current }: Props) => {
           className={cn(
             'flex items-center gap-2 px-1 py-2 rounded-lg my-1',
             !current
-              ? 'text-white'
+              ? 'text-gray-300'
               : current == path
               ? 'bg-gradient-to-br from-white/30 to-slate/60 font-bold text-black'
               : 'text-gray-300'
@@ -38,7 +38,7 @@ const MenuItem = ({ size, path, icon, label, current }: Props) => {
           
           className={cn(
             !current
-              ? 'text-white'
+              ? 'text-gray-300'
               : current == path
               ? 'bg-white font-bold text-black'
               : 'text-gray-300',

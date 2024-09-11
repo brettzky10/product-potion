@@ -7,20 +7,22 @@ import { Button } from '@/components/ui/button'
 import { BuildingIcon, HeartPulseIcon, LeafIcon, MenuIcon, PillIcon, ThermometerIcon } from 'lucide-react'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import {ThemeToggle} from '@/components/global/theme-toggle'
+import Potion from '@/components/global/icons/crafting-nav'
 
 
 const Navigation = () => { 
   return (
     <div className="fixed top-0 right-0 left-0 p-4 flex items-center justify-between z-30 dark:bg-primary-foreground/40 bg-white/30 backdrop-blur-lg">
       <aside className="flex items-center gap-2 group cursor-pointer">
-        <Image
+        {/* <Image
           src={'/images/logo-main.png'}
           width={40}
           height={40}
           alt=" logo"
           className='rounded-xl'
-        />
-        <span className="text-xl font-bold group-hover:text-primary">Launch Potion</span>
+        /> */}
+        <Potion selected={false}/>
+        <span className="text-xl font-bold hover:text-primary/50">Launch Potion</span>
       </aside>
       <div className='hidden md:flex'>
         
