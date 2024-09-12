@@ -7,12 +7,22 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { MenuLogoMin } from './menu-logo-min'
 import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
+import DomainMenu from './domain-menu'
 
 
 type MinMenuProps = {
   onShrink(): void
   current: string
   storeId: string | null
+  stores:
+    | {
+        id: string
+        name: string
+        subdomain: string
+        icon: string | null
+      }[]
+    | null
+    | undefined
 }
 
 type SIDE_BAR_MENU_PROPS = {
@@ -22,13 +32,10 @@ type SIDE_BAR_MENU_PROPS = {
 }
 
 
-
-
-
-
 export const MinMenu = ({
   onShrink,
-  current
+  current,
+  stores,
 }: MinMenuProps) => {
   //const params = useParams();
 
@@ -63,11 +70,11 @@ export const MinMenu = ({
 
 
   return (
-    <div className="p-3 flex flex-col items-center h-full bg-primary-foreground">
+    <div className="p-3 flex flex-col items-center h-full bg-sand">
       <span className="animate-fade-in  delay-300 fill-mode-forwards cursor-pointer">
         <MenuLogoMin onClick={onShrink}/>
       </span>
-      <Separator/>
+      
       <div>
       {/* <TooltipProvider>
                     <Tooltip>
@@ -82,8 +89,10 @@ export const MinMenu = ({
                     </Tooltip>
                 </TooltipProvider> */}
       </div>
+      
       <div className="animate-fade-in  fill-mode-forwards delay-300 flex flex-col justify-between h-full pt-10">
         <div className="flex flex-col">
+        <Separator className='bg-black/50'/>
           {SIDE_BAR_MENU.map((menu, key) => (
             <TooltipProvider key={key}>
               <Tooltip delayDuration={0}>
@@ -101,7 +110,11 @@ export const MinMenu = ({
             </Tooltip>
           </TooltipProvider>
           ))} 
-          
+          <Separator className='bg-black/50'/>
+          <DomainMenu
+            min
+            stores={stores}
+          />
           
           
         </div>

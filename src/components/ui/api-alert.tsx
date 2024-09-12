@@ -6,6 +6,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge, BadgeProps } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./tooltip";
 
 
 interface ApiAlertProps {
@@ -49,9 +50,19 @@ export const ApiAlert: React.FC<ApiAlertProps> = ({
                 <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
                     {description}
                 </code>
-                <Button variant="outline" size="icon" onClick={onCopy}>
+                <TooltipProvider>
+                <Tooltip>
+                    <TooltipTrigger>
+                    <Button variant="outline" size="icon" onClick={onCopy}>
                     <Copy className="h-4 w-4"/>
                 </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                        Copy
+                    </TooltipContent>
+                    </Tooltip>
+                    </TooltipProvider>
+                
             </AlertDescription>
         </Alert>
     )

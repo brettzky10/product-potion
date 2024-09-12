@@ -45,9 +45,10 @@ enum plans {
 model store {
   id                  String    @id @default(uuid())
   name                String
+  icon                String?
   owner               owner     @relation( fields: [ownerId], references: [id])
-  ownerId             String    @unique
-  userId              String    @unique
+  ownerId             String    
+  userId              String    
   subdomain           String    @unique
   products            product[]
   orders              order[] 

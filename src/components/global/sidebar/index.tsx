@@ -6,9 +6,20 @@ import { Button } from '@/components/ui/button'
 import MaxMenu from './maximized-menu'
 import { MinMenu } from './minimized-menu'
 
+type Props = {
+  storeId: string
+  stores:
+    | {
+        id: string
+        name: string
+        subdomain: string
+        icon: string | null
+      }[]
+    | null
+    | undefined
+}
 
-
-const SideBar = ({storeId}:{storeId: string | null}) => {
+const SideBar = ({ stores, storeId }: Props) => {
   const { expand, onExpand, page} = useSideBar()
 
   return (
@@ -26,13 +37,14 @@ const SideBar = ({storeId}:{storeId: string | null}) => {
         current={page!}
           onExpand={onExpand}
           storeId={storeId}
+          stores={stores}
         />
       ) : (
         <MinMenu
         current={page!}
           onShrink={onExpand}
           storeId={storeId}
-          
+          stores={stores}
         />
       )}
     </div>

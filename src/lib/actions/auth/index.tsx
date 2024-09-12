@@ -1,7 +1,9 @@
 "use server";
+import prismadb from "@/lib/db/prismadb";
 import { createClient } from "@/lib/supabase/supabase-server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { onGetAllAccountDomains } from "../store/settings";
 
 export const signIn = async (formData: FormData) => {
   const email = formData.get("email") as string;
@@ -56,3 +58,35 @@ export const signInWithGoogleOAuth = async () => {
   }
   return redirect(data.url);
 };
+
+export const onLoginUser = async () => {
+  const supabase = createClient();
+
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
+
+  if (!user) return redirect(`/login`)
+  else {
+    try {
+      const authenticated = await prismadb.owner.findUnique({
+        where: {
+          userId: user.id,
+          email: user.email
+        },
+        select: {
+          //fullname: true,
+          id: true,
+          //type: true,
+        },
+      })
+      if (authenticated) {
+        const stores = await onGetAllAccountDomains()
+        //console.log("Store info", stores?.stores)
+        return { status: 200, user: authenticated, store: stores?.stores }
+      }
+    } catch (error) {
+      return { status: 400 }
+    }
+  }
+}

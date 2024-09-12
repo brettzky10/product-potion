@@ -64,7 +64,7 @@ const SettingsPage: React.FC<SettingsPageProps> = async ({
         <TabsTrigger value="settings">Settings</TabsTrigger>
       </TabsList>
       <TabsContent value="account">
-        <Card className="bg-gray-100">
+        <Card className="">
           <CardHeader>
             <CardTitle>Billing</CardTitle>
             <CardDescription>

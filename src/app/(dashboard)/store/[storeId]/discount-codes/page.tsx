@@ -36,6 +36,7 @@ import {
   DeleteDropdownItem,
 } from "@/components/store/discount/discount-code-action"
 import { Heading } from "@/components/ui/heading"
+import Image from "next/image"
 
 interface DiscountPageProps {
   params: { 
@@ -81,6 +82,7 @@ function getUnexpiredDiscountCodes() {
   })
 }
 
+
 const DiscountPage: React.FC<DiscountPageProps> = async ({
   params
 }) => {
@@ -88,6 +90,8 @@ const DiscountPage: React.FC<DiscountPageProps> = async ({
     getExpiredDiscountCodes(),
     getUnexpiredDiscountCodes(),
   ])
+
+  const discountNumber = await prismadb.discount.count()
 
   return (
     <>
@@ -97,10 +101,19 @@ const DiscountPage: React.FC<DiscountPageProps> = async ({
           <Link href={`/store/${params.storeId}/discount-codes/new`}>Add Coupon</Link>
         </Button>
       </div>
+      { discountNumber<1 ?
+      <div className="w-full rounded-xl bg-white px-5">
+        
+        <img  src="/images/no-discounts.png" alt="discounts"/>
+      </div>
+      
+        :
       <DiscountCodesTable
         discountCodes={unexpiredDiscountCodes}
         canDeactivate
       />
+      }
+      
 
       <div className="mt-8">
         <h2 className="text-xl font-bold">Expired Coupons</h2>

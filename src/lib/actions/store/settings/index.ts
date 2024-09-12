@@ -152,7 +152,7 @@ export const onGetSubscriptionPlan = async () => {
   }
 
   
-export const onIntegrateStores = async (store: string, subdomain: string) => {
+export const onIntegrateStores = async (name: string, subdomain: string, icon: string) => {
   const supabase = createClient();
 
   const {
@@ -184,13 +184,20 @@ export const onIntegrateStores = async (store: string, subdomain: string) => {
           email: user.email,
           stores: {
             some: {
-              name: store,
+              name: name,
             },
           },
         },
       })
+
+      const ownerInfo = await prismadb.owner.findUnique({
+        where: {
+            userId: user.id,
+            email: user.email,
+        },
+      })
   
-      if (!storeExists) {
+      if (!storeExists && ownerInfo) {
         if (
           (subscription?.subscription?.plan == 'STANDARD' &&
             subscription._count.stores < 1) ||
@@ -199,7 +206,7 @@ export const onIntegrateStores = async (store: string, subdomain: string) => {
           (subscription?.subscription?.plan == 'ULTIMATE' &&
             subscription._count.stores < 10)
         ) {
-          const newStore = await prismadb.owner.update({
+          /* const newStore = await prismadb.owner.update({
             where: {
               userId: user.id,
               email: user.email
@@ -207,11 +214,22 @@ export const onIntegrateStores = async (store: string, subdomain: string) => {
             data: {
               stores: {
                 create: {
-                  name: store,
+                 name: name,
                  subdomain: subdomain,
                  userId: user.id,
+                 ownerId: ownerInfo?.id,
+                 icon,
                 },
               },
+            },
+          }) */
+          const newStore = await prismadb.store.create({
+            data: {
+                name,
+                subdomain,
+                ownerId: ownerInfo.id,
+                userId: user.id,
+                icon
             },
           })
   
@@ -231,5 +249,39 @@ export const onIntegrateStores = async (store: string, subdomain: string) => {
       }
     } catch (error) {
       console.log(error) //Change to Status{error}
+    }
+  }
+
+  export const onGetAllAccountDomains = async () => {
+    const supabase = createClient();
+
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) return
+
+    try {
+      const stores = await prismadb.owner.findUnique({
+        where: {
+          userId: user.id,
+          email: user.email
+        },
+        select: {
+          id: true,
+          stores: {
+            select: {
+              name: true,
+              subdomain: true,
+              icon: true,
+              id: true,
+            },
+          },
+        },
+      })
+      //console.log(stores)
+      return { ...stores }
+    } catch (error) {
+      console.log(error)
     }
   }

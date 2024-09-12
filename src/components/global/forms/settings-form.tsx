@@ -19,6 +19,10 @@ import { AlertModal } from "@/components/global/modals/alert-modal";
 import { ApiAlert } from "@/components/ui/api-alert";
 import { useOrigin } from "@/lib/hooks/use-origin";
 import { toast } from "sonner";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Dialog, DialogContent, DialogDescription, DialogHeader } from "@/components/ui/dialog";
+import { DialogTrigger } from "@radix-ui/react-dialog";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 
 interface SettingsFormProps {
@@ -79,9 +83,20 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({
             <AlertModal isOpen={open} onClose={()=> setOpen(false)} onConfirm={onDelete} loading={loading}/>
             <div className="flex items-center justify-between">
                 <Heading title="Settings" description="Manage store preferences"/>
-                <Button disabled={loading} variant="destructive" size="icon" onClick={()=> setOpen(true)}>
-                    <Trash className="h-4 w-4"/>
-                </Button>
+                <TooltipProvider>
+                <Tooltip>
+                    <TooltipTrigger>
+                        <Button disabled={loading} variant="destructive" size="icon" onClick={()=> setOpen(true)}>
+                            <Trash className="h-4 w-4"/>
+                    </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                        Delete Account
+                    </TooltipContent>
+                    </Tooltip>
+                </TooltipProvider>
+               
+                
             </div>
             <Separator/>
             <Form {...form}>
@@ -91,7 +106,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({
                             <FormItem>
                                 <FormLabel>Name</FormLabel>
                                 <FormControl>
-                                    <Input disabled={loading} placeholder="Store name" {...field}/>
+                                    <Input disabled={loading} placeholder="Store name" {...field} className="bg-white"/>
                                 </FormControl>
                                 <FormMessage/>
                             </FormItem>
@@ -102,9 +117,35 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({
                     </Button>
                 </form>
             </Form>
-            <Separator/>
+            <Separator className="my-5"/>
             <ApiAlert title="NEXT_PUBLIC_API_URL" description={`${origin}/api/${params.storeId}`} variant="public"/>
             </div>
+            <Separator className="my-5"/>
+            {/* <Card className="w-full">
+                <CardHeader className="text-xl font-bold">
+                    Delete Account
+                </CardHeader>
+                <CardContent>
+                    <Dialog>
+                        <DialogTrigger>
+                            <Button variant={"destructive"}>
+                                Delete Account
+                            </Button>
+                        </DialogTrigger>
+                        <DialogContent className="bg-white">
+                            <DialogHeader>
+                                Delete your Account?
+                            </DialogHeader>
+                            <DialogDescription>
+                                You data will be permanently deleted
+                            </DialogDescription>
+                            <Button variant={"destructive"}>
+                                Delete
+                            </Button>
+                        </DialogContent>
+                    </Dialog>
+                </CardContent>
+            </Card> */}
         </>
     );
 };
