@@ -5,6 +5,7 @@ type PlanUsageProps = {
   plan: 'STANDARD' | 'PRO' | 'ULTIMATE'
   credits: number
   stores: number
+  products: number
   //clients: number
 }
 
@@ -12,6 +13,7 @@ export const PlanUsage = ({
   plan,
   credits,
   stores,
+  products
   //clients,
 }: PlanUsageProps) => {
   //console.log(credits)
@@ -23,9 +25,14 @@ export const PlanUsage = ({
         credits={credits}
       />
       <ProgressBar
-        end={plan == 'STANDARD' ? 1 : plan == 'PRO' ? 1 : 1}
+        end={plan == 'STANDARD' ? 1 : plan == 'PRO' ? 5 : 10}
         label="Stores"
         credits={stores}
+      />
+      <ProgressBar
+        end={plan == 'STANDARD' ? 1 : plan == 'PRO' ? 20 : 500}
+        label="Products"
+        credits={products}
       />
       {/* <ProgressBar
         end={plan == 'STANDARD' ? 10 : plan == 'PRO' ? 50 : 500}

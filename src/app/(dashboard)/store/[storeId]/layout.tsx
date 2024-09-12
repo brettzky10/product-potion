@@ -7,6 +7,10 @@ import SideBar from "@/components/global/sidebar";
 //import { auth } from "@clerk/nextjs/server";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { onLoginUser } from "@/lib/actions/auth";
+import NavbarDashboard from "@/components/global/navbar/navbar-dashboard";
+import { getSubDomain, getSubDomainFromStoreId } from "@/lib/actions/store/get-subdomain";
+import { getCredits } from "@/lib/actions/store/get-credits";
+import { StoreIdProvider } from "@/lib/providers/store-provider";
 
 export default async function DashboardLayout({
     children,
@@ -16,7 +20,7 @@ export default async function DashboardLayout({
     params: {storeId: string};
 }) {
 
-        const supabase = createClient();
+       /*  const supabase = createClient();
 
         const {
             data: { user },
@@ -26,18 +30,23 @@ export default async function DashboardLayout({
             redirect('/login');
         }
     
-    //Load only 1st store with this ID
-    const store = await prismadb.store.findFirst({
-        where: {
-            id: params.storeId,
-            userId: user.id,
-        }
-    });
+        const store = await getCurrentStoreId(user.id) */
 
-    //Check Store Exists
+
+    /* //Check Store Exists
     if (!store){
         redirect('/check');
-    }
+    } */
+
+
+    //Load id of store
+
+    const credits = await getCredits(params.storeId)
+
+
+    const subdomain = await getSubDomainFromStoreId(params.storeId)
+
+    
      //Grab Store Details for authenticated user:
 
     const authenticated = await onLoginUser()
@@ -46,13 +55,16 @@ export default async function DashboardLayout({
 
     return (
         <>
-        <div className="relative">
-            
+        <div className="">
+            <StoreIdProvider>
             {/* <Navbar /> */}
-            <div className="absolute h-full hidden md:flex min-h-[91vh] max-h-screen z-50">
-            <SideBar storeId={store.id} stores={authenticated.store}/>
+            <div className="">
+            <NavbarDashboard subdomain={subdomain!}credits={credits!}/>
             </div>
+            <ScrollArea className="h-[100vh] md:ml-10 bg-ghost">
                 {children}
+            </ScrollArea>
+            </StoreIdProvider>
             </div>
         </>
     );

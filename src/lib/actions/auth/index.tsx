@@ -19,7 +19,7 @@ export const signIn = async (formData: FormData) => {
     return redirect(`/login?message=${error.message}`);
   }
 
-  return redirect("/dashboard");
+  return redirect("/check");
 };
 
 export const signUp = async (formData: FormData) => {

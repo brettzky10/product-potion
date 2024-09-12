@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/lib/providers/theme-provider"
 import { Toaster } from 'sonner'
 import StripeModalProvider from "@/lib/providers/stripe-modal-provider";
 import { ModalProvider } from "@/lib/providers/modal-provider";
+import { BillingProvider } from "@/lib/providers/billing-provider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -35,9 +36,11 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <Toaster/>
             <ModalProvider/>
+            <BillingProvider>
             <StripeModalProvider>
               {children}
             </StripeModalProvider>
+            </BillingProvider>
           </ThemeProvider>
       </body>
     </html>

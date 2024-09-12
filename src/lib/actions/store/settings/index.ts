@@ -70,11 +70,11 @@ export const onGetPaymentConnected = async () => {
             email: user.email
           },
           select: {
-            stripeId: true,
+            customerId: true,
           },
         })
         if (connected) {
-          return connected.stripeId
+          return connected.customerId
         }
       }
     } catch (error) {

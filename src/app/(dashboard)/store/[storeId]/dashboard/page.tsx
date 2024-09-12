@@ -8,6 +8,7 @@ import { getUserPlanInfo } from "@/lib/actions/store/dashboard/get-user-plan";
 import Link from 'next/link';
 import { AnimatedButton } from '@/components/ui/animated-button-right';
 import { PlanUsage } from '@/components/store/dashboard/plan-usage';
+import prismadb from '@/lib/db/prismadb';
 
 interface DashboardPageProps {
   params: { 
@@ -21,85 +22,31 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({
 }) => {
 
 
+  const productAvail = await prismadb.product.count()
+
   const plan = await getUserPlanInfo()
 
   return (
     <div className="flex-col mx-12 pt-5">
     <Heading title="Dashboard" description="Overview of your store"/>
     <Separator className="my-5"/>
-    <Card className="flex flex-row justify-between items-center px-4 ">
-        <CardHeader>
-            <CardTitle className="text-sm font-medium">
-              <p className="text-lg font-bold">Create your own store map</p>
-              <p className="dark:text-gray-300">Let&apos;s get everything in order so customers can search and find your products.</p>
-            </CardTitle>
-        </CardHeader>
-        <CardContent className="p-5">
-             {/*  <AddMapDrawer/> */}
-              {/* <Link href={`/store/${params.storeId}`}>
-              <AnimatedButton variant="gooeyLeft">
-                Getting Started
-              </AnimatedButton>
-              </Link> */}
-            </CardContent>
-      </Card>
-      <Card className="flex flex-row justify-between items-center px-4  mt-2">
-        <CardHeader>
-            <CardTitle className="text-sm font-medium">
-              <p className="text-lg font-bold">Add your first product</p>
-              <p className="dark:text-gray-300">Let&apos;s get everything in order so customers can search and find your products.</p>
-            </CardTitle>
-        </CardHeader>
-        <CardContent className="p-5">
-              <Link href={`/store/${params.storeId}/products`}>
-              <AnimatedButton variant="gooeyLeft">
-                Getting Started
-              </AnimatedButton>
-              </Link>
-            </CardContent>
-      </Card>
-      <Separator className="my-5"/>
-    <div className="w-full grid grid-cols-1 lg:grid-cols-2 py-10">
-        <div>
-          <div>
-            <h2 className="font-bold text-2xl">Plan Usage</h2>
-            <p className="text-sm font-light">
-              A detailed overview of your metrics, usage, customers and more
-            </p>
-          </div>
-          <PlanUsage
-            plan={plan?.plan!}
-            credits={plan?.credits || 0}
-            stores={plan?.stores || 1}
-            //clients={0} //clients || 0
-          />
-        </div>
-        <div className="flex flex-col">
-          <div className="w-full flex justify-between items-start mb-5">
-            <div className="flex gap-3 items-center">
-              <DollarSign />
-              <p className="font-bold">Recent Transactions</p>
-            </div>
-            <p className="text-sm">See more</p>
-          </div>
-          <Separator orientation="horizontal" />
-         {/*  {transactions &&
-            transactions.data.map((transaction) => (
-              <div
-                className="flex gap-3 w-full justify-between items-center border-b-2 py-5"
-                key={transaction.id}
-              >
-                <p className="font-bold">
-                  {transaction.calculated_statement_descriptor}
-                </p>
-                <p className="font-bold text-xl">
-                  ${transaction.amount / 100}
-                </p>
-              </div>
-            ))} */}
-        </div>
-      </div>
-    <div className="flex-1 space-y-4 p-8 pt-6">
+      { productAvail < 1
+      ? <Card className="flex flex-row justify-between items-center px-4  mt-2">
+      <CardHeader>
+          <CardTitle className="text-sm font-medium">
+            <p className="text-lg font-bold">Add your first product</p>
+            <p className="dark:text-gray-300">Let&apos;s get everything in order so customers can search and find your products.</p>
+          </CardTitle>
+      </CardHeader>
+      <CardContent className="p-5">
+            <Link href={`/store/${params.storeId}/products`}>
+            <AnimatedButton variant="gooeyLeft">
+              Getting Started
+            </AnimatedButton>
+            </Link>
+          </CardContent>
+    </Card>
+      : <div className="flex-1 space-y-4 p-8 pt-6">
       
       <Separator />
       
@@ -162,7 +109,49 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({
           icon={<DollarSign />}
         /> */}
     </div>
-    
+      }
+      <Separator className="my-5"/>
+    <div className="w-full grid grid-cols-1 lg:grid-cols-2 py-10">
+        <div>
+          <div>
+            <h2 className="font-bold text-2xl">Plan Usage</h2>
+            <p className="text-sm font-light">
+              A detailed overview of your metrics, usage, customers and more
+            </p>
+          </div>
+          <PlanUsage
+            plan={plan?.plan!}
+            credits={plan?.credits || 0}
+            stores={plan?.stores || 1}
+            products={productAvail}
+            //clients={0} //clients || 0
+          />
+        </div>
+        <div className="flex flex-col">
+          <div className="w-full flex justify-between items-start mb-5">
+            <div className="flex gap-3 items-center">
+              <DollarSign />
+              <p className="font-bold">Recent Transactions</p>
+            </div>
+            <p className="text-sm">See more</p>
+          </div>
+          <Separator orientation="horizontal" />
+         {/*  {transactions &&
+            transactions.data.map((transaction) => (
+              <div
+                className="flex gap-3 w-full justify-between items-center border-b-2 py-5"
+                key={transaction.id}
+              >
+                <p className="font-bold">
+                  {transaction.calculated_statement_descriptor}
+                </p>
+                <p className="font-bold text-xl">
+                  ${transaction.amount / 100}
+                </p>
+              </div>
+            ))} */}
+        </div>
+      </div>
   </div>
   
   )

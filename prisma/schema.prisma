@@ -14,7 +14,7 @@ model owner {
   email             String?     @unique
   name              String?
   userId            String
-  stripeId          String?
+  customerId       String? @unique
   subscription      billings? @relation("OwnerToBilling")
   stores            store[]
   orders            order[] 
@@ -31,7 +31,9 @@ model billings {
   owner           owner?   @relation("OwnerToBilling", fields: [ownerId], references: [id])
   ownerId         String @unique
   userId          String @unique
-  expiryDate      String?
+  startDate       DateTime  @default(now())
+  endDate         DateTime?
+  period          period?
   subscribed      Boolean @default(false)
   daysWithService Int     @default(0)
 }
@@ -40,6 +42,11 @@ enum plans {
   STANDARD
   PRO
   ULTIMATE
+}
+
+enum period {
+ monthly
+ yearly
 }
 
 model store {

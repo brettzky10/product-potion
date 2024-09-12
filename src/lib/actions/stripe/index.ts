@@ -1,8 +1,6 @@
 'use server'
 
 import  prismadb  from '@/lib/db/prismadb'
-//import { auth, currentUser } from '@clerk/nextjs/server'
-//import { currentUser } from '@clerk/nextjs'
 import Stripe from 'stripe'
 import { createClient } from "@/lib/supabase/supabase-server";
 
@@ -82,10 +80,10 @@ export const onUpdateSubscription = async (
 
 const setPlanAmount = (item: 'STANDARD' | 'PRO' | 'ULTIMATE') => {
   if (item == 'PRO') {
-    return 1500
+    return 3500
   }
   if (item == 'ULTIMATE') {
-    return 3500
+    return 5500
   }
   return 0
 }

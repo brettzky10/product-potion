@@ -9,6 +9,7 @@ import UploadButton from '@/components/global/upload-button'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import Image from 'next/image'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 
 type Props = {
   min?: boolean
@@ -80,34 +81,43 @@ const DomainMenu = ({ stores, min }: Props) => {
       <div className="flex flex-col gap-1 text-ironside font-medium">
         {stores &&
           stores.map((store) => (
-            <Link
-              href={`/settings/${store.name.split('.')[0]}`}
-              key={store.id}
-              className={cn(
-                'flex gap-3 hover:bg-white rounded-full transition duration-100 ease-in-out cursor-pointer items-center p-1',
-                !min ? 'p-2' : 'py-2',
-                store.name.split('.')[0] == isDomain && 'bg-white'
-              )}
-            >
-              {store.icon 
-              ? <Image
-              //src={`https://ucarecdn.com/${store.icon}/`}
-              src={`${store.icon}`}
-              alt="logo"
-              width={20}
-              height={20}
-            />
-              : <Image
-              //src={`https://ucarecdn.com/${store.icon}/`}
-              src={`/images/logo-main.png`}
-              alt="logo"
-              width={20}
-              height={20}
-            />
-              }
-              
-              {!min && <p className="text-sm">{store.name}</p>}
-            </Link>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Link
+                    href={`/store/${store.id}/dashboard`}
+                    key={store.id}
+                    className={cn(
+                      'flex gap-3 hover:bg-white rounded-full transition duration-100 ease-in-out cursor-pointer items-center p-1',
+                      !min ? 'p-2' : 'py-2',
+                      store.name.split('.')[0] == isDomain && 'bg-white'
+                    )}
+                  >
+                    {store.icon 
+                    ? <Image
+                    //src={`https://ucarecdn.com/${store.icon}/`}
+                    src={`${store.icon}`}
+                    alt="logo"
+                    width={20}
+                    height={20}
+                  />
+                    : <Image
+                    //src={`https://ucarecdn.com/${store.icon}/`}
+                    src={`/images/logo-main.png`}
+                    alt="logo"
+                    width={20}
+                    height={20}
+                  />
+                    }
+                    
+                    {!min && <p className="text-sm">{store.name}</p>}
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent>
+                  {store.name.split('.')[0]}
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           ))}
       </div>
     </div>
