@@ -50,9 +50,11 @@ export default async function DashboardLayout({
             
             {/* <Navbar /> */}
             <div className="absolute h-full hidden md:flex min-h-[91vh] max-h-screen z-50">
-            <SideBar storeId={store.id} stores={authenticated.store}/>
+                <SideBar storeId={store.id} stores={authenticated.store}/>
             </div>
+            <ScrollArea className="h-[100vh] bg-ghost">
                 {children}
+                </ScrollArea>
             </div>
         </>
     );

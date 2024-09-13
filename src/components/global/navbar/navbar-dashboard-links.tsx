@@ -60,7 +60,7 @@ export function MainNav({
     ];
 
     return(
-        <nav className={cn("flex-1", className)}>
+        <nav className={cn("", className)}>
             <Sheet>
             <SheetTrigger asChild>
               <Button className="" size="icon" variant="outline">

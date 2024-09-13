@@ -61,9 +61,9 @@ export default async function DashboardLayout({
             <div className="">
             <NavbarDashboard subdomain={subdomain!}credits={credits!}/>
             </div>
-            <ScrollArea className="h-[100vh] md:ml-10 bg-ghost">
+            <div className="md:ml-12">
                 {children}
-            </ScrollArea>
+            </div>
             </StoreIdProvider>
             </div>
         </>

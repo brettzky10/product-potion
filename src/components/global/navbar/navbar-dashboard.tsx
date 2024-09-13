@@ -58,8 +58,8 @@ const NavbarDashboard = async ({credits, subdomain}:{credits: number, subdomain:
                         <TooltipTrigger className="mx-2">
                         <Badge>
                         <a target="_blank" href={`http://${subdomain}.${process.env.SITE_URL}/`} rel="noopener noreferrer">
-                    Preview Your Site
-                </a>
+                        Preview <span className="text-purple-400">{subdomain}</span>
+                        </a>
                         </Badge>
                         </TooltipTrigger>
                         <TooltipContent>

@@ -31,6 +31,11 @@ const DomainMenu = ({ stores, min }: Props) => {
     <div className={cn('flex flex-col gap-3', min ? 'mt-6' : 'mt-3')}>
       <div className="flex justify-between w-full items-center">
         {!min && <p className="text-xs text-gray-500">STORES</p>}
+        <TooltipProvider>
+          <Tooltip delayDuration={0}>
+            <TooltipTrigger className='my-2 text-gray-500'>
+
+            
         <AppDrawer
           description="add in your domain address to integrate your chatbot"
           title="Add your business domain"
@@ -77,12 +82,18 @@ const DomainMenu = ({ stores, min }: Props) => {
             </form>
           </Loader>
         </AppDrawer>
+        </TooltipTrigger>
+            <TooltipContent>
+              Create Store
+            </TooltipContent>
+            </Tooltip>
+            </TooltipProvider>
       </div>
       <div className="flex flex-col gap-1 text-ironside font-medium">
         {stores &&
           stores.map((store) => (
             <TooltipProvider>
-              <Tooltip>
+              <Tooltip delayDuration={0}>
                 <TooltipTrigger>
                   <Link
                     href={`/store/${store.id}/dashboard`}
