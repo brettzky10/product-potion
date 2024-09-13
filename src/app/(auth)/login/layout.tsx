@@ -11,13 +11,13 @@ const Layout = ({children}: Props) => {
 
   return (
     <div className="max-h-screen h-screen flex w-full justify-center">
-      <div className="w-[600px] ld:w-full flex flex-col items-start p-6">
+      <div className="w-[600px] ld:w-full flex flex-col items-start p-6 bg-black">
         <Image
           src="/images/logo-main.png"
           alt="LOGO"
           sizes="100vw"
           style={{
-            width: '20%',
+            width: '10%',
             height: 'auto',
           }}
           width={0}
@@ -25,7 +25,7 @@ const Layout = ({children}: Props) => {
         />
         {children}
       </div>
-      <div className="hidden lg:flex flex-1 w-full max-h-screen max-w-4000px overflow-hidden relative bg-cream  flex-col pt-10 pl-24 gap-3">
+      <div className="hidden lg:flex flex-1 w-full max-h-screen max-w-4000px overflow-hidden relative bg-iron  flex-col pt-10 pl-24 gap-3">
         <h2 className="text-gravel md:text-4xl font-bold">
           Welcome, I&apos;m here to increase sales!
         </h2>

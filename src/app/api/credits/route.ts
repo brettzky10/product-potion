@@ -54,32 +54,31 @@ export async function GET(request: NextRequest) {
       where: {
         plan: "PRO",
       },
-      select: {amount: true, id: true, startDate: true}
+      select: {amount: true, id: true, startDate: true, endDate: true}
       }
     );
 
     getAmount.map(async (index)=>{
        //&& index.daysFromPurchase > month
         //Update Pro
-        if (index.amount <= 150 && currentDate===index.startDate){
+        if (index.amount <= 150 && currentDate < index.endDate!){
         const updateProBilling = await prismadb.billings.updateMany({
           where: {
             plan: "PRO",
             
           },
           data: {
-            amount: { increment: 15},
+            amount: { increment: 2},
           }
-    
         });
         }
-        if (index.amount <= 150 && currentDate===index.startDate){
+        if (index.amount <= 150 && currentDate < index.endDate!){
         //Update Ultimate
         const updateUltimateBilling = await prismadb.billings.updateMany({
           where: {
             plan: "ULTIMATE",
           },
-          data: { amount: { increment: 50 }
+          data: { amount: { increment: 5 }
           }
     
         });

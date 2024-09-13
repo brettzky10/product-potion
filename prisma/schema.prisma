@@ -53,12 +53,15 @@ model store {
   id                  String    @id @default(uuid())
   name                String
   icon                String?
+  category            String?   @default("Online")
   owner               owner     @relation( fields: [ownerId], references: [id])
-  ownerId             String    
-  userId              String    
+  ownerId             String
+  userId              String
   subdomain           String    @unique
+  //domain            String?
+  affiliate           affiliate?
   products            product[]
-  orders              order[] 
+  orders              order[]
 
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
@@ -68,6 +71,7 @@ model product {
   id          String @id @default(uuid())
   name          String
   priceInCents  Int
+  quantity      Int  @default(1)
   imagePath     String
   description String @default("")
   isAvailableForPurchase     Boolean @default(true)
@@ -134,4 +138,11 @@ model orderItem {
 
   @@index([orderId])
   @@index([productId])
+}
+
+model affiliate {
+  id        String   @id @default(uuid())
+  store     store?   @relation(fields: [storeId], references: [id])
+  storeId   String?  @unique
+  createdAt DateTime @default(now())
 }

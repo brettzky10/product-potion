@@ -56,9 +56,9 @@ const NavbarDashboard = async ({credits, subdomain}:{credits: number, subdomain:
                 <TooltipProvider>
                     <Tooltip>
                         <TooltipTrigger className="mx-2">
-                        <Badge>
+                        <Badge className="text-sm">
                         <a target="_blank" href={`http://${subdomain}.${process.env.SITE_URL}/`} rel="noopener noreferrer">
-                        Preview <span className="text-purple-400">{subdomain}</span>
+                        <span className="text-steel">{subdomain}</span>.launchpotion.com
                         </a>
                         </Badge>
                         </TooltipTrigger>

@@ -3,10 +3,11 @@ export interface Product {
     //category: Category;
     name: string;
     priceInCents: Number;
-    discountCodes: string[],
+    discountCodes: string[];
     description: string;
-    isFeatured: boolean;
+    isAvailableForPurchase: boolean;
+    quantity: Number;
     //size: Size;
     //color: Color;
-    imagePath: string
+    imagePath: string;
   };

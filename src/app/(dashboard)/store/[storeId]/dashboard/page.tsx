@@ -112,13 +112,14 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({
       }
       <Separator className="my-5"/>
     <div className="w-full grid grid-cols-1 lg:grid-cols-2 py-10">
-        <div>
-          <div>
+        <Card>
+          <CardHeader>
             <h2 className="font-bold text-2xl">Plan Usage</h2>
             <p className="text-sm font-light">
               A detailed overview of your metrics, usage, customers and more
             </p>
-          </div>
+          </CardHeader>
+          <CardContent>
           <PlanUsage
             plan={plan?.plan!}
             credits={plan?.credits || 0}
@@ -126,7 +127,9 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({
             products={productAvail}
             //clients={0} //clients || 0
           />
-        </div>
+          </CardContent>
+          
+        </Card>
         <div className="flex flex-col">
           <div className="w-full flex justify-between items-start mb-5">
             <div className="flex gap-3 items-center">

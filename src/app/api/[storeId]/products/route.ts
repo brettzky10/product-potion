@@ -25,6 +25,7 @@ export async function POST(
             name,
             priceInCents,
             description,
+            quantity,
             //categoryId,
             isAvailableForPurchase,
             imagePath
@@ -81,6 +82,7 @@ export async function POST(
                 name,
                 priceInCents,
                 //categoryId,
+                quantity,
                 description,
                 isAvailableForPurchase,
                 storeId: params.storeId,

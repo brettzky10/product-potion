@@ -52,6 +52,7 @@ export async function PATCH (
             priceInCents,
             description,
             imagePath,
+            quantity,
             isAvailableForPurchase,
          } = body;
 
@@ -102,6 +103,7 @@ export async function PATCH (
                 name,
                 priceInCents,
                 description,
+                quantity,
                 //categoryId,
                 imagePath,
                 isAvailableForPurchase,

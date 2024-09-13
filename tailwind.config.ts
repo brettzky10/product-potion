@@ -10,6 +10,7 @@ const config: Config = {
   theme: {
   	extend: {
   		colors: {
+			steel: '#B4B0AE',
 			cream: '#F5F5F5',
 			gravel: '#4E4E4E',
 			iridium: '#3F3F3F',
