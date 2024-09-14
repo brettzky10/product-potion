@@ -1,3 +1,5 @@
+"use client"
+
 import { useState } from "react";
 import { Product } from "@/lib/types";
 import { createClient } from "@/lib/supabase/supabase-component";
@@ -6,21 +8,26 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useParams } from "next/navigation";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabase = createClient();
+
+const params = useParams()
 
 const randomNameId = `name-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 
 export function AddProduct() {
   const [productInfo, setProductInfo] = useState<Product>({
+    id: '',
     imagePath: '',
     name: "",
     description: '',
     isAvailableForPurchase: true,
     priceInCents: 0,
     quantity: 1,
-    //timestamp: new Date().toISOString(),
+    //storeId: params.storeId as string,
+    createdAt: new Date(),
   });
 
   const handleFileChange = async (
@@ -56,13 +63,15 @@ export function AddProduct() {
     e.preventDefault();
     await handleAddProduct(productInfo);
     setProductInfo({
+      id: '',
       imagePath: '',
       name: "",
       description: '',
       isAvailableForPurchase: true,
       priceInCents: 0,
       quantity: 1,
-      //timestamp: "",
+      //storeId: params.storeId as string,
+      createdAt: new Date(),
     });
   };
 

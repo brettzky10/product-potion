@@ -22,6 +22,11 @@ const config: Config = {
 			grandis: '#FFC989',
 			porcelain: '#FEF5EF',
 			ironside: '#636363',
+			themeBlack: "#09090B",
+			themeGray: "#27272A",
+			themeDarkGray: "#27272A",
+			themeTextGray: "#B4B0AE",
+			themeTextWhite: "#F7ECE9",
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {

@@ -2,12 +2,14 @@ export interface Product {
     id: string;
     //category: Category;
     name: string;
-    priceInCents: Number;
-    discountCodes: string[];
+    priceInCents: number;
+    //discountCodes: string[];
     description: string;
     isAvailableForPurchase: boolean;
-    quantity: Number;
+    quantity: number;
     //size: Size;
     //color: Color;
     imagePath: string;
+    createdAt: Date;
+    //storeId: string
   };

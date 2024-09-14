@@ -5,9 +5,10 @@ import { ErrorMessage } from '@hookform/error-message'
 import React from 'react'
 import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form'
 import { Textarea } from '@/components/ui/textarea'
+import { Checkbox } from '@/components/ui/checkbox'
 
 type Props = {
-  type: 'text' | 'email' | 'password'
+  type: 'text' | 'email' | 'password' | 'number'
   inputType: 'select' | 'input' | 'textarea'
   options?: { value: string; label: string; id: string }[]
   label?: string
@@ -91,6 +92,26 @@ const FormGenerator = ({
           />
         </Label>
       )
+    /* case 'checkbox':
+      return(
+        <Label>
+          <Checkbox
+                                        
+                                        onCheckedChange={field.onChange}
+                                        id={`checkbox-${label}`}
+                                        {...register(name)}
+                                        />
+                                        <ErrorMessage
+            errors={errors}
+            name={name}
+            render={({ message }) => (
+              <p className="text-red-400 mt-2">
+                {message === 'Required' ? '' : message}
+              </p>
+            )}
+          />
+        </Label>
+      ) */
     case 'textarea':
       return (
         <Label

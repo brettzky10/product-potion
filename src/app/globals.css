@@ -101,3 +101,40 @@ body {
   background-color: #FFF;
   box-shadow: 0 0 60px 30px #F0F, 0 0 100px 60px #0FF;
 }
+
+.text-gradient {
+  background: linear-gradient(to right, #4a4e58, white, #716768);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-radial {
+  background-image: radial-gradient(
+    ellipse farthest-side,
+    rgba(113, 103, 104, 0.2) 30%,
+    black 70%
+  );
+  background-size: 100% 50%;
+  background-repeat: no-repeat;
+}
+
+.text-radial--circle {
+  background-image: radial-gradient(
+    circle farthest-side,
+    rgba(113, 103, 104, 0.35) 20%,
+    black 70%
+  );
+  background-size: 50% 70%;
+  background-repeat: no-repeat;
+  background-position: top center;
+}
+
+.backdrop--blur__safari {
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.radial--blur {
+  -webkit-backdrop-filter: blur(100px);
+  filter: blur(100px);
+  background: #877874;
+}

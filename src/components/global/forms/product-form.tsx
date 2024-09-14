@@ -27,13 +27,14 @@ import { productSchema } from "@/lib/schemas/product.schema";
 import Link from "next/link";
 import { Textarea } from "@/components/ui/textarea";
 import { createClient } from "@/lib/supabase/supabase-client";
+import { Product } from "@/lib/types";
 //import { JSONContent } from "@tiptap/react";
 
 
 type ProductFormValues = z.infer<typeof productSchema>;
 
 interface ProductFormProps {
-    initialData: product
+    initialData: product | null
 }
 
 export const ProductForm: React.FC<ProductFormProps> = ({
@@ -60,7 +61,8 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         description: '',
         priceInCents: 0,
         isAvailableForPurchase: true,
-        quantity: 1
+        quantity: 1,
+        createdAt: new Date(),
       }
 
     const form = useForm<ProductFormValues>({
@@ -72,12 +74,14 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         try{
             setLoading(true);
             setProductInfo({
+                id: '',
                 imagePath: '',
                 name: "",
                 description: '',
                 isAvailableForPurchase: true,
                 priceInCents: 0,
                 quantity: 1,
+                createdAt: new Date()
               });
             if (initialData){
                 await axios.patch(`/api/${params.storeId}/products/${params.productId}`, data);
@@ -110,26 +114,20 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         }
     }
 
-    const sizeLink = `${process.env.NEXT_PUBLIC_SITE_URL}/store/${params.storeId}/size`
-    const categoryLink = `${process.env.NEXT_PUBLIC_SITE_URL}/store/${params.storeId}/category`
-    const colorLink = `${process.env.NEXT_PUBLIC_SITE_URL}/store/${params.storeId}/color`
-
-    const storeId = params.storeId
-
-    const [json, setJson] = useState(null)
-
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const supabase = createClient();
 
     const randomNameId = `name-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 
     const [productInfo, setProductInfo] = useState<product>({
+        id: '',
         imagePath: '',
         name: "",
         isAvailableForPurchase: true,
         description: '',
         priceInCents: 0,
         quantity: 1,
+        createdAt: new Date()
       });
 
     const handleFileChange = async (
@@ -140,7 +138,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
           if (file) {
             const { data, error } = await supabase.storage
               .from("store-files")
-              .upload(`/public/${randomNameId}`, file, {
+              .upload(`/${randomNameId}`, file, {
                 cacheControl: "3600",
                 upsert: false,
               });

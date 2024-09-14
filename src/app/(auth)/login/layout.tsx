@@ -1,4 +1,5 @@
 
+import GradientText from '@/components/global/gradient-text'
 import Image from 'next/image'
 import { redirect } from 'next/navigation'
 import React from 'react'
@@ -10,7 +11,7 @@ type Props = {
 const Layout = ({children}: Props) => {
 
   return (
-    <div className="max-h-screen h-screen flex w-full justify-center">
+    <div className="max-h-screen h-screen flex w-full justify-center bg-black">
       <div className="w-[600px] ld:w-full flex flex-col items-start p-6 bg-black">
         <Image
           src="/images/logo-main.png"
@@ -25,16 +26,16 @@ const Layout = ({children}: Props) => {
         />
         {children}
       </div>
-      <div className="hidden lg:flex flex-1 w-full max-h-screen max-w-4000px overflow-hidden relative bg-iron  flex-col pt-10 pl-24 gap-3">
-        <h2 className="text-gravel md:text-4xl font-bold">
-          Welcome, I&apos;m here to increase sales!
-        </h2>
-        <p className="text-iridium md:text-sm mb-10">
-          We&apos;ll set you up with workers to help customers...{' '}
+      <div className="hidden lg:flex flex-1 w-full max-h-screen max-w-4000px overflow-hidden relative bg-iron  flex-col pt-10 pl-24 gap-3 bg-themeDarkGray">
+        <GradientText className=" md:text-4xl font-bold">
+          Get More Traffic.
+        </GradientText>
+        <p className="text-cream md:text-sm mb-10">
+          We&apos;ll set you up with store clerk that draws customers attention.{' '}
           <br />
-          search, check stock and locate the product within your store.{' '}
+          While allowing you, the owner, to add products, discounts and more...{' '}
           <br />
-          Get more done with Worker Forge.
+          all on your very own storefront page!
         </p>
         <Image
           src="/images/app-ui.png"

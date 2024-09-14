@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { AnimatedButton } from '@/components/ui/animated-button-right';
 import { PlanUsage } from '@/components/store/dashboard/plan-usage';
 import prismadb from '@/lib/db/prismadb';
+import GlassCard from '@/components/global/glass-card';
 
 interface DashboardPageProps {
   params: { 
@@ -112,14 +113,12 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({
       }
       <Separator className="my-5"/>
     <div className="w-full grid grid-cols-1 lg:grid-cols-2 py-10">
-        <Card>
-          <CardHeader>
+        <GlassCard className='px-10 py-5 mx-0 md:mr-10 my-5 md:my-2'>
             <h2 className="font-bold text-2xl">Plan Usage</h2>
             <p className="text-sm font-light">
               A detailed overview of your metrics, usage, customers and more
             </p>
-          </CardHeader>
-          <CardContent>
+
           <PlanUsage
             plan={plan?.plan!}
             credits={plan?.credits || 0}
@@ -127,9 +126,7 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({
             products={productAvail}
             //clients={0} //clients || 0
           />
-          </CardContent>
-          
-        </Card>
+        </GlassCard>
         <div className="flex flex-col">
           <div className="w-full flex justify-between items-start mb-5">
             <div className="flex gap-3 items-center">
