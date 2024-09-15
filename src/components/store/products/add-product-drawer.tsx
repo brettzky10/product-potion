@@ -25,13 +25,13 @@ const AddProductDrawer = () => {
           <Tooltip delayDuration={1}>
             <TooltipTrigger className=' text-white'>
               <AppDrawer 
-                description="add in product to your store"
-                title="Add your product"
+                description="create a product for your store"
+                title="Add Product"
                 onOpen={
-                  <Badge className="cursor-pointer text-white rounded-full border-2 flex flex-row items-center gap-2 text-sm font-light">
-                    <Plus className='border border-white rounded-full'/>
+                  <Button className="cursor-pointer text-white rounded-full border-2 flex flex-row items-center gap-2 text-sm font-light">
+                    <Plus className='border border-white rounded-full w-4 h-4'/>
                     Add Product
-                  </Badge>
+                  </Button>
                 }
               >
                 <ProductForm productId='' storeId={params.storeId as string}/>

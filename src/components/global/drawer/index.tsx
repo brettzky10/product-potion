@@ -18,8 +18,8 @@ const AppDrawer = ({ children, description, onOpen, title }: Props) => {
   return (
     <Drawer>
       <DrawerTrigger>{onOpen}</DrawerTrigger>
-      <DrawerContent className='bg-white'>
-        <div className="container flex flex-col items-center gap-2 pb-10">
+      <DrawerContent className='bg-white '>
+        <div className="container flex flex-col items-center gap-2 pb-10 pt-5">
           <DrawerTitle>{title}</DrawerTitle>
           <DrawerDescription>{description}</DrawerDescription>
           {children}

@@ -1,5 +1,7 @@
 //import { UserButton, auth } from "@clerk/nextjs";
 //import { auth } from "@clerk/nextjs/server";
+"use client"
+
 import prismadb from "@/lib/db/prismadb";
 
 import { MainNav } from "@/components/global/navbar/navbar-dashboard-links";
@@ -16,10 +18,11 @@ import { getSubDomain, getSubDomainFromStoreId } from "@/lib/actions/store/get-s
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { createClient } from "@/lib/supabase/supabase-server";
+import CreditsButton from "./credits-button";
 
 
 
-const NavbarDashboard = async ({credits, subdomain}:{credits: number, subdomain: string})=> {
+const NavbarDashboard =  ({credits, subdomain}:{credits: number, subdomain: string})=> {
 
     //const { userId } = auth();
 
@@ -32,19 +35,19 @@ const NavbarDashboard = async ({credits, subdomain}:{credits: number, subdomain:
             userId
         },
     }); */
-     const supabase = createClient();
+/*      const supabase = createClient();
 
     const {
         data: { user },
     } = await supabase.auth.getUser();
-      if (!user) redirect("/login")
+      if (!user) redirect("/login") */
 
 
 
 
     /* const subDomain = await getSubDomainFromStoreId(store.id)*/
 
-    const creditsAmount = await getCredits(user.id) 
+    //const creditsAmount = await getCredits(user.id) 
 
 
     return (
@@ -56,9 +59,9 @@ const NavbarDashboard = async ({credits, subdomain}:{credits: number, subdomain:
                 <TooltipProvider>
                     <Tooltip>
                         <TooltipTrigger className="mx-2">
-                        <Badge className="text-sm">
+                        <Badge className="text-sm text-steel">
                         <a target="_blank" href={`http://${subdomain}.${process.env.SITE_URL}/`} rel="noopener noreferrer">
-                        <span className="text-steel">{subdomain}</span>.launchpotion.com
+                        <span className="text-white">{subdomain}</span>.launchpotion.com
                         </a>
                         </Badge>
                         </TooltipTrigger>
@@ -71,15 +74,20 @@ const NavbarDashboard = async ({credits, subdomain}:{credits: number, subdomain:
                 </div>
                 <div className="ml-auto flex items-center space-x-2">
                     {/* <BuyModal> */}
-                        <Badge variant="gradient">
+                        {/* <Badge variant="gradient">
                             <span className="text-xs font-normal text-zinc-300 dark:text-zinc-400">
                             <span className="font-black text-lg dark:text-white ">{creditsAmount}</span>
                             {" "}
                             credits
                             </span>
-                        </Badge>
+                        </Badge> */}
+                        <Link
+                        href={"/buy"}
+                        >
+                        <CreditsButton/>
+                        </Link>
                     {/* </BuyModal> */}
-                    <ThemeToggle/>
+                    {/* <ThemeToggle/> */}
                     <UserDropdownMenu>
                         <Image
                         src="/icons/user.svg"

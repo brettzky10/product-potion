@@ -3,10 +3,9 @@
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { product, } from "@prisma/client";
-import { PlusCircleIcon, Trash, Wand2 } from "lucide-react";
+import { ArrowBigLeft, PlusCircleIcon, Trash, Wand2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-//import { toast } from "react-hot-toast";
 import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
 
@@ -17,18 +16,22 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from "@/components/ui/input";
 import { AlertModal } from "@/components/global/modals/alert-modal";
 import { useOrigin } from "@/lib/hooks/use-origin";
-//import ImageUpload from "@/components/ui/image-upload";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
-//import { TipTapEditor } from "./editor";
-//import { Textarea } from "@/components/ui/textarea";
 import { productSchema } from "@/lib/schemas/product.schema";
 import Link from "next/link";
 import { Textarea } from "@/components/ui/textarea";
 import { createClient } from "@/lib/supabase/supabase-client";
 import { Product } from "@/lib/types";
-//import { JSONContent } from "@tiptap/react";
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+  } from "@/components/ui/breadcrumb";
 
 
 type ProductFormValues = z.infer<typeof productSchema>;
@@ -81,11 +84,14 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                 isAvailableForPurchase: true,
                 priceInCents: 0,
                 quantity: 1,
-                createdAt: new Date()
+                createdAt: new Date(),
+
+                updatedAt: new Date(),
+                storeId: '',
+                tokens: null
               });
             if (initialData){
                 await axios.patch(`/api/${params.storeId}/products/${params.productId}`, data);
-           
             } else{
                 await axios.post(`/api/${params.storeId}/products`, data);
               }
@@ -127,8 +133,12 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         description: '',
         priceInCents: 0,
         quantity: 1,
-        createdAt: new Date()
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        storeId: '',
+        tokens: null
       });
+
 
     const handleFileChange = async (
         event: React.ChangeEvent<HTMLInputElement>
@@ -147,7 +157,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
             }
             setProductInfo((prev) => ({
               ...prev,
-              image: `${supabaseUrl}/storage/v1/object/public/store-files/${data?.path}`,
+              imagePath: `${supabaseUrl}/storage/v1/object/public/store-files/${data?.path}`,
             }));
           }
         } catch (error) {
@@ -157,6 +167,31 @@ export const ProductForm: React.FC<ProductFormProps> = ({
 
     return (
         <>
+            <Breadcrumb className="hidden md:flex">
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link href={`/store/${params.storeId}/dashboard`}>Dashboard</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link href={`/store/${params.storeId}/products`}>Products</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>Edit</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+          <Button asChild className="flex md:hidden w-20" size={'sm'}>
+            <Link href={`/store/${params.storeId}/products`}>
+                <ArrowBigLeft/>
+                Back
+            </Link>
+          </Button>
             <AlertModal isOpen={open} onClose={()=> setOpen(false)} onConfirm={onDelete} loading={loading}/>
             <div className="flex items-center justify-between">
                 <Heading title={title} description={headingDescription}/>
@@ -169,21 +204,21 @@ export const ProductForm: React.FC<ProductFormProps> = ({
             <Separator/>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full justify-between">
-                    <FormField control={form.control} name="imagePath" render={({field})=> (
+                    <FormField control={form.control} name="imagePath" render={({field: { value, onChange, ...fieldProps }})=> (
                                 <FormItem>
                                     <FormLabel>Images</FormLabel>
-                                    <FormControl>
                                     <img
-                                        className="rounded-md size-16"
-                                        src={productInfo.imagePath || "/placeholder.svg"}
+                                        className="rounded-md size-8"
+                                        src={productInfo?.imagePath || initialData?.imagePath || "/icons/placeholder.svg"}
                                         alt="Product image"
                                         />
+                                    <FormControl>
                                         <Input
-                                        className="hidden"
-                                        id="file-upload"
-                                        type="file"
-                                        {...field}
-                                        onChange={handleFileChange}
+                                            id="imagePath"
+                                            type="file"
+                                            {...fieldProps}
+                                            disabled={loading}
+                                            onChange={handleFileChange}
                                         />
                                     </FormControl>
                                     <FormMessage/>

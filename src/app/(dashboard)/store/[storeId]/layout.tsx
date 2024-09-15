@@ -11,6 +11,7 @@ import NavbarDashboard from "@/components/global/navbar/navbar-dashboard";
 import { getSubDomain, getSubDomainFromStoreId } from "@/lib/actions/store/get-subdomain";
 import { getCredits } from "@/lib/actions/store/get-credits";
 import { StoreIdProvider } from "@/lib/providers/store-provider";
+import BillingNavbar from "@/components/global/navbar/navbar-store";
 
 export default async function DashboardLayout({
     children,
@@ -60,6 +61,8 @@ export default async function DashboardLayout({
             {/* <Navbar /> */}
             <div className="">
             <NavbarDashboard subdomain={subdomain!}credits={credits!}/>
+            
+             {/* {<BillingNavbar/>} */}
             </div>
             <div className="md:ml-12">
                 {children}

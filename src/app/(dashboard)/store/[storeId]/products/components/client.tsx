@@ -43,32 +43,6 @@ export const ProductClient: React.FC<ProductClientProps> = ({
                 Add New
                 </Button> */}
                 <AddProductDrawer/>
-            <div>
-            <Dialog>
-                <DialogTrigger asChild>
-                    <Button variant="outline">
-                        <Settings className="w-6 h-6"/>
-                    </Button>
-                </DialogTrigger>
-                <DialogContent className="max-w-3xl md:max-w-7xl">
-                    <DialogHeader>
-                    <DialogTitle>API</DialogTitle>
-                    <DialogDescription>
-                        API routes for device.
-                    </DialogDescription>
-                    </DialogHeader>
-                    <div className="grid gap-4 py-4">
-
-                    <div className="flex flex-col items-center gap-4">
-                        <Button>
-                            ApiList
-                        </Button>
-                   {/*  <ApiList entityName="products" entityIdName="productId"/> */}
-                    </div>
-                    </div>
-                </DialogContent>
-                </Dialog>
-            </div>
         </div>
          </div>
          <Separator/>

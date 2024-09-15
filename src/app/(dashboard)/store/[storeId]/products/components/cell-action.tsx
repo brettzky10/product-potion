@@ -1,6 +1,6 @@
 "use client";
 
-import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
+import { Copy, Edit, MoreHorizontal, Trash, Wand2 } from "lucide-react";
 //import { toast } from "react-hot-toast";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
@@ -11,6 +11,7 @@ import { ProductColumn } from "./columns";
 import { Button } from "@/components/ui/button";
 import { AlertModal } from "@/components/global/modals/alert-modal";
 import { toast } from "sonner";
+import { Separator } from "@/components/ui/separator";
 
 
 
@@ -62,18 +63,25 @@ export const CellAction: React.FC<CellActionProps> = ({
                     <DropdownMenuLabel>
                         Actions
                     </DropdownMenuLabel>
-                    <DropdownMenuItem onClick={()=> onCopy(data.id)}>
-                        <Copy className="mr-2 h-4 w-4"/>
-                        Copy Id
+                    <DropdownMenuItem onClick={()=> router.push(`/store/${params.storeId}/edit`)}>
+                        <Wand2 className="mr-2 h-4 w-4"/>
+                        Image Editor
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={()=> router.push(`/store/${params.storeId}/products/${data.id}`)}>
                         <Edit className="mr-2 h-4 w-4"/>
                         Update
                     </DropdownMenuItem>
+                    <DropdownMenuItem onClick={()=> onCopy(data.id)}>
+                        <Copy className="mr-2 h-4 w-4"/>
+                        Copy Id
+                    </DropdownMenuItem>
+                    
+                    <Separator className="m-1"/>
                     <DropdownMenuItem onClick={()=>setOpen(true)}>
                         <Trash className="mr-2 h-4 w-4"/>
                         Delete
                     </DropdownMenuItem>
+                    
                 </DropdownMenuContent>
             </DropdownMenu>
         </>

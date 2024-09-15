@@ -1,4 +1,8 @@
 import * as React from "react"
+import { omit } from 'lodash';
+interface TableRowProps extends React.HTMLAttributes<HTMLTableRowElement> {
+  type?: string; 
+}
 
 import { cn } from "@/lib/utils"
 
@@ -51,20 +55,24 @@ const TableFooter = React.forwardRef<
 ))
 TableFooter.displayName = "TableFooter"
 
-const TableRow = React.forwardRef<
-  HTMLTableRowElement,
-  React.HTMLAttributes<HTMLTableRowElement>
->(({ className, ...props }, ref) => (
-  <tr
-    ref={ref}
-    className={cn(
-      "border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted",
-      className
-    )}
-    {...props}
-  />
-))
-TableRow.displayName = "TableRow"
+const TableRow = React.forwardRef<HTMLTableRowElement, TableRowProps>((props, ref) => {
+  const { className, type, ...rest } = props;
+
+  const filteredProps = omit(rest, ['type']);
+
+  return (
+    <tr
+      ref={ref}
+      className={cn(
+        "border-b transition-colors hover:bg-slate-100/50 data-[state=selected]:bg-slate-100 dark:hover:bg-slate-800/50 dark:data-[state=selected]:bg-slate-800",
+        className
+      )}
+      {...filteredProps}
+    />
+  );
+});
+
+TableRow.displayName = "TableRow";
 
 const TableHead = React.forwardRef<
   HTMLTableCellElement,

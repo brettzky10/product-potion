@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { getProduct, saveProduct } from '@/lib/actions/store/product'
@@ -9,9 +9,7 @@ import { Label } from '@/components/ui/label'
 import { createClient } from '@/lib/supabase/supabase-client'
 import { Product } from '@/lib/types'
 import { Textarea } from '@/components/ui/textarea'
-
-/* const supabase = createClient();
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL; */
+import Image from 'next/image'
 
 
 export default function ProductForm({ productId, storeId }: { productId: string, storeId: string }) {
@@ -27,6 +25,12 @@ export default function ProductForm({ productId, storeId }: { productId: string,
   })
   const [isLoading, setIsLoading] = useState(true)
   const [charCount, setCharCount] = useState(0)
+  const [rawValue, setRawValue] = useState('')
+  const [displayValue, setDisplayValue] = useState('')
+  const [capturedImage, setCapturedImage] = useState<string | null>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
+  
   const handleTextChange = (event: any) => {
     setCharCount(event.target.value.length)
   }
@@ -42,8 +46,38 @@ export default function ProductForm({ productId, storeId }: { productId: string,
     fetchProduct()
   }, [productId])
 
+  //Handle Price Input
+    const formatAsCurrency = (value: string) => {
+    // Remove non-digit characters
+    const digits = value.replace(/\D/g, '')
+    
+    // Convert to cents
+    const cents = parseInt(digits, 10)
+    
+    // Format as currency
+    return cents ? `$${(cents / 100).toFixed(2)}` : ''
+  }
+
+
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const input = e.target.value
+    
+    // Remove dollar sign and decimal for raw value
+    const raw = input.replace(/[\$,]/g, '')
+    setRawValue(raw)
+
+    // Format for display
+    setDisplayValue(formatAsCurrency(raw))
+  }
+
+  const handleBlur = () => {
+    // Ensure proper formatting when leaving the input
+    setDisplayValue(formatAsCurrency(rawValue))
+  }
+/*
   const randomNameId = `${storeId}-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
-/* 
+ 
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -78,28 +112,87 @@ export default function ProductForm({ productId, storeId }: { productId: string,
     setIsLoading(false)
   }
 
+  
+
+  const handleImageClick = () => {
+    fileInputRef.current?.click()
+  }
+
+  const handleImageCapture = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (file) {
+      const imageUrl = URL.createObjectURL(file)
+      setCapturedImage(imageUrl)
+    }
+  }
+
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       {/* <Input type="hidden" name="id" defaultValue={product?.id || ''} /> */}
-      <div>
+      {/* <div>
         <label htmlFor="imagePath" className="block text-sm font-medium text-gray-700">
           Product Image
         </label>
-        <Input type="file" id="imagePath" name="imagePath" required className="mt-1 block w-full" />
-        {/* <Label htmlFor="file-upload" className="w-fit cursor-pointer">
-            <img
-              className="rounded-md size-16"
-              src={product.imagePath || "/images/placeholder.svg"}
-              alt="Product image"
-            />
-            <Input
-              className="hidden"
-              id="file-upload"
-              type="file"
-              onChange={handleFileChange}
-            />
-          </Label> */}
-      </div>
+        <Button asChild className='rounded-full'>
+
+        
+        <Input type="file" id="imagePath" name="imagePath" required className="mt-1 block w-full bg-themeTextGray hover:bg-steel cursor-pointer" />
+        </Button>
+      </div> */}
+      
+      <div>
+          <Label htmlFor="image-capture">Capture Image</Label>
+          <div 
+            className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md cursor-pointer"
+            onClick={handleImageClick}
+          >
+            <div className="space-y-1 text-center">
+              {capturedImage ? (
+                <Image
+                  src={capturedImage}
+                  alt="Captured image"
+                  width={100}
+                  height={100}
+                  className="mx-auto object-cover rounded-md"
+                />
+              ) : (
+                <svg
+                  className="mx-auto h-12 w-12 text-gray-400"
+                  stroke="currentColor"
+                  fill="none"
+                  viewBox="0 0 48 48"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                    strokeWidth={2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              )}
+              <div className="flex text-sm text-gray-600">
+                <label
+                  htmlFor="image-capture"
+                  className="relative cursor-pointer bg-white rounded-md font-medium text-primary hover:text-primary-dark focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary"
+                >
+                  <span>{capturedImage ? 'Change photo' : 'Capture photo'}</span>
+                  <Input
+                    id="imagePath" name="imagePath" 
+                    required
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    capture="environment"
+                    className="sr-only"
+                    onChange={handleImageCapture}
+                  />
+                </label>
+              </div>
+              <p className="text-xs text-gray-500">PNG, JPG up to 3MB</p>
+            </div>
+          </div>
+        </div>
       <div>
         <label htmlFor="name" className="block text-sm font-medium text-gray-700">
           Product Name
@@ -117,27 +210,42 @@ export default function ProductForm({ productId, storeId }: { productId: string,
         <div className="absolute bottom-3 right-3 text-sm text-muted-foreground">{charCount}/300</div>
         {/* <Input type="text" id="description" name="description" defaultValue={product?.description || ''} required className="mt-1 block w-full" /> */}
       </div>
+        <div className='flex flex-row items-center justify-between gap-5'>
+        <div>
+        <label htmlFor="priceInCents" className="block text-sm font-medium text-gray-700">
+          Price
+        </label>
+        <Input
+          type="text"
+          id="priceInCents"
+          name="priceInCents"
+          required
+          value={displayValue}
+          onChange={handleInputChange}
+          onBlur={handleBlur}
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          placeholder="$0.00"
+        />
+       {/*  <Input type="number" id="priceInCents" name="priceInCents" defaultValue={product?.priceInCents || 0} required className="mt-1 block w-full" /> */}
+      </div>
       <div>
         <label htmlFor="quantity" className="block text-sm font-medium text-gray-700">
           Quantity
         </label>
         <Input type="number" id="quantity" name="quantity" defaultValue={product?.quantity || 1} required className="mt-1 block w-full" />
       </div>
-      <div>
+        </div>
+
+      <div className=''>
         <label htmlFor="isAvailableForPurchase" className="block text-sm font-medium text-gray-700">
           Available for Purchase
         </label>
-        <select id="isAvailableForPurchase" name="isAvailableForPurchase" defaultValue={product?.isAvailableForPurchase ? 'true' : 'false'} required className="mt-1 block w-full">
+        <select id="isAvailableForPurchase" name="isAvailableForPurchase" defaultValue={product?.isAvailableForPurchase ? 'true' : 'false'} required className="mt-1 block w-full border border-black rounded-xl h-8 px-2">
           <option value="true">Yes</option>
           <option value="false">No</option>
         </select>
       </div>
-      <div>
-        <label htmlFor="priceInCents" className="block text-sm font-medium text-gray-700">
-          Price (in cents)
-        </label>
-        <Input type="number" id="priceInCents" name="priceInCents" defaultValue={product?.priceInCents || 0} required className="mt-1 block w-full" />
-      </div>
+      
       <Button type="submit" className="w-full">
         {!isLoading ? 'Save Product' : 'Loading..'}
       </Button>

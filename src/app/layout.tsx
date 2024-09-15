@@ -7,6 +7,7 @@ import StripeModalProvider from "@/lib/providers/stripe-modal-provider";
 import { ModalProvider } from "@/lib/providers/modal-provider";
 import { BillingProvider } from "@/lib/providers/billing-provider";
 
+
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -19,8 +20,28 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Launch Potion",
-  description: "Elixir for Success",
+	metadataBase: new URL("https://next-supabase-vote.vercel.app/"),
+
+	title: {
+		template: "%s | Launch Potion",
+		default: "Launch Potion",
+	},
+	authors: {
+		name: "Brett",
+	},
+
+	description:
+		"Your elixir to business success! Let customers search products in any language and get traffic into your store faster.",
+	openGraph: {
+		title: "Launch Potion",
+		description:
+			"Your elixir to business success! Let customers search products in any language and get traffic into your store faster.",
+		url: "https://next-supabase-vote.vercel.app/",
+		siteName: "Launch Potion",
+		images: "/og.png",
+		type: "website",
+	},
+	keywords: ["search products language", "launch potion", "find products language"],
 };
 
 export default function RootLayout({

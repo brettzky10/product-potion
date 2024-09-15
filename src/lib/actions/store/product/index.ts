@@ -78,9 +78,15 @@ export async function saveProduct(formData: FormData, storeId: string) {
   const description = formData.get('description') as string
   const quantity = parseInt(formData.get('quantity') as string, 10)
   const isAvailableForPurchase = formData.get('isAvailableForPurchase') === 'true'
-  const priceInCents = parseInt(formData.get('priceInCents') as string, 10)
+  //const priceInCents = parseInt(formData.get('priceInCents') as string, 10)
   const imageFile = formData.get('imagePath') as File
   //const imagePath = formData.get('imagePath') as string
+
+  //Parse Currency
+  const numericAmount = parseFloat((formData.get('priceInCents') as string).replace(/[^\d.]/g, ''))
+  // Convert to cents for storage
+  const amountInCents = Math.round(numericAmount * 100)
+  const priceInCents = amountInCents
 
   // Upload image to Supabase
   //const supabase = createClient()
@@ -93,10 +99,12 @@ export async function saveProduct(formData: FormData, storeId: string) {
   const imagePath = data?.path
   */
 
+
   //Supabase Bucket
   const { storage } = createClient();
+  const randomNameId = `${storeId}-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
   const bucket = 'store-files'
-  const path = `${storeId}-${name}`   //`products/${storeId}-${name}`
+  const path = `${storeId}-${randomNameId}`   //`products/${storeId}-${name}`
 
   const { data, error } = await storage.from(bucket).upload(path, imageFile);
 
