@@ -31,7 +31,8 @@ export async function GET(request: Request) {
 						alignItems: "center",
 						justifyContent: "center",
 						backgroundColor: "#021528",
-						border: "4px solid #C792EF",
+						border: "4px solid #FFEDDF",
+						
 					}}
 				>
 					<div tw="flex flex-col  w-full py-12 px-4 p-8 ">
@@ -40,20 +41,21 @@ export async function GET(request: Request) {
 							style={{
 								marginBottom: "100",
 								fontSize: "80",
-								color: "#C792EF",
+								color: "#7D98A1",
 							}}
 						>
 							Launch Potion
 						</h1>
 						<div
-							tw="flex flex-row  item-center w-full gap-3"
+							tw="flex flex-row w-full"
 							style={{
 								alignItems: "center",
 								gap: 20,
+								fontSize: "50",
+								color: "#FFEDDF",
 							}}
 						>
-							Elixir for Business Success.
-							<p className="font-bold">Get more foot traffic</p>
+							Launch your business with an elixir for success!
 						</div>
 					</div>
 				</div>

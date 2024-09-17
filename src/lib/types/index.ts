@@ -1,6 +1,7 @@
+
 export interface Product {
     id: string;
-    //category: Category;
+    category: string | null; //Category
     name: string;
     priceInCents: number;
     //discountCodes: string[];
@@ -14,6 +15,16 @@ export interface Product {
     //storeId: string
   };
 
+  export enum Category {
+    SPORTS = 'Sports',
+    HOME = 'Home',
+    TOOLS = 'Tools',
+    'DIGITAL DOWNLOAD' = 'Digital Download',
+    MISC = 'Misc',
+    COURSE = 'COURSE',
+    'EQUIPMENT' = 'Equipment',
+  }
+
   export type ImageAreaProps = {
     title: string;
     icon: React.ForwardRefExoticComponent<
@@ -23,3 +34,4 @@ export interface Product {
       } & React.RefAttributes<SVGSVGElement>
     >;
   };
+

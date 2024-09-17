@@ -64,7 +64,7 @@ export default function ResizePhoneComponent() {
         
       ) : (
         <div>
-          {/* <Image src="/placeholder.svg" alt="image" 
+          {/* <Image src="/icons/placeholder.svg" alt="image" 
       width="300"
       height="300"
       
@@ -75,7 +75,7 @@ export default function ResizePhoneComponent() {
           className="size-36 cursor-pointer ring-offset-2 ring-2 ring-slate-200"
         >
           <input {...getInputProps()} />
-          <ImageCroppedImage src="/images/placeholder.svg" alt="placeholder" />
+          <ImageCroppedImage src="/icons/placeholder.svg" alt="placeholder" />
           <ImageCroppedFallback>CN</ImageCroppedFallback>
         </ImageCropped>
 

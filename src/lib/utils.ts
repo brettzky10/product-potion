@@ -70,3 +70,19 @@ const DATE_TIME_FORMATTER = new Intl.DateTimeFormat("en", {
 export function formatDateTime(date: Date) {
   return DATE_TIME_FORMATTER.format(date)
 }
+
+
+// convert to camelCase
+export const camelCase = (str: string) => {
+  let camelCase = str
+    .replace(/(?:^\w|[A-Z]|\b\w)/g, function (word, index) {
+      return index == 0 ? word.toLowerCase() : word.toUpperCase()
+    })
+    .replace(/\s+/g, '')
+
+  return camelCase
+}
+
+export const truncateString = (string: string) => {
+  return string.slice(0, 60) + "..."
+}

@@ -69,7 +69,7 @@ export default function ResizeComponent() {
           className="size-36 cursor-pointer ring-offset-2 ring-2 ring-slate-200 mx-10"
         >
           <input {...getInputProps()} />
-          <AvatarImage src="/images/placeholder.svg" alt="placeholder" />
+          <AvatarImage src="/icons/placeholder.svg" alt="placeholder" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
 

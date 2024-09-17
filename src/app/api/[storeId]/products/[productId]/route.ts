@@ -1,9 +1,11 @@
+
+
 import prismadb from "@/lib/db/prismadb";
 //import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 //import { createClient } from "@supabase/supabase-js";
 //import axios from "axios";
-import { createClient } from "@/lib/supabase/supabase-client";
+import { createClient } from "@/lib/supabase/supabase-server";
 
 /* import { OpenAI } from "openai"
 
@@ -52,6 +54,7 @@ export async function PATCH (
             priceInCents,
             description,
             imagePath,
+            category,
             quantity,
             isAvailableForPurchase,
          } = body;
@@ -104,7 +107,7 @@ export async function PATCH (
                 priceInCents,
                 description,
                 quantity,
-                //categoryId,
+                category,
                 imagePath,
                 isAvailableForPurchase,
             }
@@ -200,7 +203,7 @@ export async function DELETE (
             }
         });
 
-        //TODO: Delete Cloudinary Photo
+        //TODO: Delete Supabase Photos
 
         return NextResponse.json(product);
 

@@ -26,7 +26,7 @@ export async function POST(
             priceInCents,
             description,
             quantity,
-            //categoryId,
+            //category,
             isAvailableForPurchase,
             imagePath
          } = body;
@@ -81,7 +81,7 @@ export async function POST(
             data: {
                 name,
                 priceInCents,
-                //categoryId,
+                //category,
                 quantity,
                 description,
                 isAvailableForPurchase,

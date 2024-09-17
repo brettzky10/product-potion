@@ -12,12 +12,14 @@ import { Textarea } from '@/components/ui/textarea'
 import Image from 'next/image'
 
 
+
 export default function ProductForm({ productId, storeId }: { productId: string, storeId: string }) {
   const [product, setProduct] = useState<Product>({
     id: productId,
-    imagePath: '/images/placeholder.svg',
+    imagePath: '/icons/placeholder.svg',
     name: '',
     description: '',
+    category: '',
     isAvailableForPurchase: true,
     priceInCents: 0,
     quantity: 1,
@@ -75,33 +77,6 @@ export default function ProductForm({ productId, storeId }: { productId: string,
     // Ensure proper formatting when leaving the input
     setDisplayValue(formatAsCurrency(rawValue))
   }
-/*
-  const randomNameId = `${storeId}-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
- 
-  const handleFileChange = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    try {
-      const file = event.target.files?.[0];
-      if (file) {
-        const { data, error } = await supabase.storage
-          .from("store-files")
-          .upload(`/${randomNameId}`, file, {
-            cacheControl: "3600",
-            upsert: false,
-          });
-        if (error) {
-          throw error;
-        }
-        setProduct((prev) => ({
-          ...prev,
-          image: `${supabaseUrl}/storage/v1/object/public/store-files/${data?.path}`,
-        }));
-      }
-    } catch (error) {
-      console.error("An error occurred while uploading the file:", error);
-    }
-  }; */
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setIsLoading(true)
@@ -128,18 +103,6 @@ export default function ProductForm({ productId, storeId }: { productId: string,
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      {/* <Input type="hidden" name="id" defaultValue={product?.id || ''} /> */}
-      {/* <div>
-        <label htmlFor="imagePath" className="block text-sm font-medium text-gray-700">
-          Product Image
-        </label>
-        <Button asChild className='rounded-full'>
-
-        
-        <Input type="file" id="imagePath" name="imagePath" required className="mt-1 block w-full bg-themeTextGray hover:bg-steel cursor-pointer" />
-        </Button>
-      </div> */}
-      
       <div>
           <Label htmlFor="image-capture">Capture Image</Label>
           <div 
@@ -235,6 +198,8 @@ export default function ProductForm({ productId, storeId }: { productId: string,
         <Input type="number" id="quantity" name="quantity" defaultValue={product?.quantity || 1} required className="mt-1 block w-full" />
       </div>
         </div>
+
+
 
       <div className=''>
         <label htmlFor="isAvailableForPurchase" className="block text-sm font-medium text-gray-700">

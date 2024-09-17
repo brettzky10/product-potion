@@ -33,6 +33,8 @@ import {
     BreadcrumbSeparator,
   } from "@/components/ui/breadcrumb";
 
+  
+
 
 type ProductFormValues = z.infer<typeof productSchema>;
 
@@ -63,6 +65,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         imagePath: '',
         description: '',
         priceInCents: 0,
+        category: 'fitness',
         isAvailableForPurchase: true,
         quantity: 1,
         createdAt: new Date(),
@@ -85,7 +88,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                 priceInCents: 0,
                 quantity: 1,
                 createdAt: new Date(),
-
+                category: 'fitness',
                 updatedAt: new Date(),
                 storeId: '',
                 tokens: null
@@ -133,6 +136,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         description: '',
         priceInCents: 0,
         quantity: 1,
+        category: 'fitness',
         createdAt: new Date(),
         updatedAt: new Date(),
         storeId: '',
@@ -247,6 +251,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                                 <FormMessage/>
                             </FormItem>
                         )}/>
+                        
                         <FormField control={form.control} name="isAvailableForPurchase" render={({field})=> (
                             <FormItem className="flex flex-row items-start space-y-0 space-x-3 rounded-md border p-4">
                                 <FormControl>
@@ -255,16 +260,56 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                                         //@ts-ignore
                                         onCheckedChange={field.onChange}/>
                                 </FormControl>
+                               
                                 <div className="space-y-1 leading-none">
                                     <FormLabel>
-                                        Featured
+                                        Available to Purchase
                                     </FormLabel>
                                     <FormDescription>
-                                        This product will appear on homepage
+                                        This product will appear on the homepage
                                     </FormDescription>
                                 </div>
                             </FormItem>
                         )}/>
+                        {/*  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <FormControl>
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Select a verified email to display" />
+                                    </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                    <SelectItem value="m@example.com">m@example.com</SelectItem>
+                                    <SelectItem value="m@google.com">m@google.com</SelectItem>
+                                    <SelectItem value="m@support.com">m@support.com</SelectItem>
+                                    </SelectContent>
+                                </Select> */}
+                             <FormField
+                            control={form.control}
+                            name="category"
+                            render={({ field }) => (
+                                <FormItem>
+                                <FormLabel>Category</FormLabel>
+                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <FormControl>
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Select a verified category" />
+                                    </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                    <SelectItem value="fitness">Fitness</SelectItem>
+                                    <SelectItem value="music">Music</SelectItem>
+                                    <SelectItem value="lifestyle">Lifestyle</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                                <FormDescription>
+                                    You can manage email addresses in your{" "}
+                                    <Link href="/examples/forms">email settings</Link>.
+                                </FormDescription>
+                                <FormMessage />
+                                </FormItem>
+                            )}
+                            />
+
                         <FormField control={form.control} name="description" render={({field})=> (
                             <FormItem className="items-start space-y-0 space-x-3 rounded-md border p-4">
                                 <div className="space-y-1 leading-none">

@@ -87,7 +87,7 @@ export async function saveProduct(formData: FormData, storeId: string) {
   // Convert to cents for storage
   const amountInCents = Math.round(numericAmount * 100)
   const priceInCents = amountInCents
-
+  const category = formData.get('category') as string
   // Upload image to Supabase
   //const supabase = createClient()
   /* const { data, error } = await supabase.storage.from('store-files').upload(`products/${imageFile.name}`, imageFile)

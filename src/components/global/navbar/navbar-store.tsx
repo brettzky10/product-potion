@@ -88,8 +88,8 @@ export default function BillingNavbar() {
 
   return (
     <div>
-        <Badge variant="default" className="text-lg rounded-full">
-        <span className="text-md font-normal mx-1 text-zinc-300 dark:text-zinc-400">
+        <Badge variant="default" className="text-md rounded-full mx-1 pr-5">
+        <span className="text-md font-normal text-zinc-300 mr-1 dark:text-zinc-400">
                             {billingAmount ?? 0}
         
                             </span>
@@ -99,12 +99,12 @@ export default function BillingNavbar() {
         className='w-4'
         />
         </Badge>
-        <Button 
+        {/* <Button 
           onClick={decrementBilling} 
           disabled={isUpdating || billingAmount === null || billingAmount === 0}
         >
           {isUpdating ? 'Updating...' : 'Decrement Billing'}
-        </Button>
+        </Button> */}
       </div>
     
   )

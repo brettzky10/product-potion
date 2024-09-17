@@ -7,7 +7,7 @@ import SideBar from "@/components/global/sidebar";
 //import { auth } from "@clerk/nextjs/server";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { onLoginUser } from "@/lib/actions/auth";
-import QueryProvider from "@/lib/providers/query-provider";
+
 
 export default async function DashboardLayout({
     children,
@@ -48,15 +48,15 @@ export default async function DashboardLayout({
     return (
         <>
         <div className="relative">
-        <QueryProvider>
-            {/* <Navbar /> */}
-            <div className="absolute h-full hidden md:flex min-h-[91vh] max-h-screen z-50">
-                <SideBar storeId={store.id} stores={authenticated.store}/>
-            </div>
-            <ScrollArea className="h-[100vh] bg-ghost">
-                {children}
-            </ScrollArea>
-            </QueryProvider>
+        
+                {/* <Navbar /> */}
+                <div className="absolute h-full hidden md:flex min-h-[91vh] max-h-screen z-50">
+                    <SideBar storeId={store.id} stores={authenticated.store}/>
+                </div>
+                <ScrollArea className="h-[100vh] bg-ghost">
+                    {children}
+                </ScrollArea>
+                
             </div>
         </>
     );

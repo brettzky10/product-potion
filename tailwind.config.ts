@@ -10,6 +10,8 @@ const config: Config = {
   theme: {
   	extend: {
   		colors: {
+			coral: '#7D98A1',
+			sponge: '#FFEDDF',
 			steel: '#B4B0AE',
 			cream: '#F5F5F5',
 			gravel: '#4E4E4E',
@@ -89,11 +91,16 @@ const config: Config = {
   				to: {
   					height: '0'
   				}
-  			}
+  			},
+			"flip": {
+				from: { transform:'rotateX(0deg)', transformOrigin: '50% bottom ',},
+				to: {transform: 'rotateX(180deg)', transformOrigin: '50% bottom ',}
+			},
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
-  			'accordion-up': 'accordion-up 0.2s ease-out'
+  			'accordion-up': 'accordion-up 0.2s ease-out',
+			"flip":'flip 1s cubic-bezier(0, 0, 0.2, 1) infinite',
   		}
   	}
   },

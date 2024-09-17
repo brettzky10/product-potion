@@ -16,7 +16,7 @@ export default function TePressencest({ id }: { id: string }) {
 				let users: string[] = [];
 				for (const id in channel.presenceState()) {
 					// @ts-ignore
-					const user_id = channel.presenceState()[id][0]?.user_id;
+					const user_id = channel.presenceState()['realtime_credits'][0]?.user_id;
 					if (user_id) {
 						users.push(user_id);
 					}

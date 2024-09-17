@@ -13,7 +13,7 @@ export default function CreditsButton() {
 
   useEffect(() => {
     const channel = supabase.channel('billing_amount')
-    
+
     const fetchBillingAmount = async () => {
       const { data, error } = await supabase
         .from('billings')
@@ -30,7 +30,11 @@ export default function CreditsButton() {
     fetchBillingAmount()
 
     channel
-      .on('presence', { event: 'sync' }, () => {
+      .on('postgres_changes',
+                {
+                event: 'UPDATE', // Listen only to UPDATEs
+                schema: 'billings',
+                }, () => {
         fetchBillingAmount()
       })
       .subscribe()

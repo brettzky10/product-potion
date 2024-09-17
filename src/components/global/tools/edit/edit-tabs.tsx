@@ -45,7 +45,7 @@ export default function EditTabs() {
               <CardDescription>
                 Remove Background from Images.
               </CardDescription>
-              <CreditsBadge/>
+             {/*  <CreditsBadge/> */}
             </CardHeader>
             
             <CardContent className="space-y-2">

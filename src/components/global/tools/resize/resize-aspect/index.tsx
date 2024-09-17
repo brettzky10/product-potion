@@ -70,7 +70,7 @@ export default function ResizeAspectComponent() {
           className="size-36 cursor-pointer ring-offset-2 ring-2 ring-slate-200 mx-10"
         >
           <input {...getInputProps()} />
-          <ImageCroppedImage src="/images/placeholder.svg" alt="placeholder" />
+          <ImageCroppedImage src="/icons/placeholder.svg" alt="placeholder" />
           <ImageCroppedFallback>CN</ImageCroppedFallback>
         </ImageCropped>
         <div className=" ">

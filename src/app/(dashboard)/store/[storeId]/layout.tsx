@@ -12,6 +12,11 @@ import { getSubDomain, getSubDomainFromStoreId } from "@/lib/actions/store/get-s
 import { getCredits } from "@/lib/actions/store/get-credits";
 import { StoreIdProvider } from "@/lib/providers/store-provider";
 import BillingNavbar from "@/components/global/navbar/navbar-store";
+/* import dynamic from "next/dynamic";
+const NavbarDashboard = dynamic(()=>import("@/components/global/navbar/navbar-dashboard"),
+{
+loading:()=><p>…Loading</p>,ssr:false
+}) */
 
 export default async function DashboardLayout({
     children,

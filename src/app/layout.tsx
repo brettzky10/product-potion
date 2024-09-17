@@ -6,6 +6,8 @@ import { Toaster } from 'sonner'
 import StripeModalProvider from "@/lib/providers/stripe-modal-provider";
 import { ModalProvider } from "@/lib/providers/modal-provider";
 import { BillingProvider } from "@/lib/providers/billing-provider";
+import QueryProvider from "@/lib/providers/query-provider";
+import { ReduxProvider } from "@/lib/providers/redux/provider";
 
 
 const geistSans = localFont({
@@ -36,7 +38,7 @@ export const metadata: Metadata = {
 		title: "Launch Potion",
 		description:
 			"Your elixir to business success! Let customers search products in any language and get traffic into your store faster.",
-		url: "https://next-supabase-vote.vercel.app/",
+		url: "https://launchpotion.vercel.app/",
 		siteName: "Launch Potion",
 		images: "/og.png",
 		type: "website",
@@ -59,7 +61,11 @@ export default function RootLayout({
             <ModalProvider/>
             <BillingProvider>
             <StripeModalProvider>
+            <ReduxProvider>
+            <QueryProvider>
               {children}
+              </QueryProvider>
+            </ReduxProvider>
             </StripeModalProvider>
             </BillingProvider>
           </ThemeProvider>

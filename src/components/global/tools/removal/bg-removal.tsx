@@ -11,6 +11,10 @@ import Loader from '@/components/global/loader/progress-spinner';
 import LoadingOverlay from '@/components/global/loader/loading-screen';
 import { ReactCompareSlider, ReactCompareSliderImage } from 'react-compare-slider';
 import BillingNavbar from '../../navbar/navbar-store';
+import { useCreditAmount, useDecrementCreditAmount } from '@/lib/hooks/use-credits';
+
+
+
 
 type ErrorNotificationProps = {
   errorMessage: string;
@@ -90,9 +94,11 @@ function ActionPanel({ isLoading, submitImage }: ActionPanelProps) {
             } inline-flex items-center rounded-md px-3 py-2 text-sm font-semibold shadow-sm transition-all duration-300 hover:bg-teal-500/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600/60 lg:px-3.5 lg:py-2.5`}
           >
             Remove background
-            <SparklesIcon className='ml-2 h-4 w-4 text-gray-300' />
+            {/* <SparklesIcon className='ml-2 h-4 w-4 text-gray-300' /> */}
+            <BillingNavbar/>
+
           </button>
-          <BillingNavbar/>
+          
         </div>
       </div>
     </div>
@@ -222,6 +228,12 @@ export default function RemovalTool() {
   const [error, setError] = useState<string | null>('');
   const [file, setFile] = useState<File | null>(null);
 
+  const decrementCreditAmount = useDecrementCreditAmount()
+
+  const handleDecrementCredit = () => {
+    decrementCreditAmount.mutate()
+  }
+
   function onImageDrop(acceptedFiles: File[], rejectedFiles: FileRejection[]) {
     // Check if any of the uploaded files are not valid
     if (rejectedFiles.length > 0) {
@@ -263,7 +275,7 @@ export default function RemovalTool() {
       setError('Please upload an image.');
       return;
     }
-
+    /* handleDecrementCredit() */
     setLoading(true);
 
     const response = await fetch('/api/tools/removal', {
@@ -282,7 +294,7 @@ export default function RemovalTool() {
       setLoading(false);
       return;
     }
-
+    
     setOutputImage(result.output);
     setLoading(false);
   }

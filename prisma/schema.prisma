@@ -15,6 +15,7 @@ model owner {
   name              String?
   userId            String
   customerId       String? @unique
+  affiliate         affiliate?
   subscription      billings? @relation("OwnerToBilling")
   stores            store[]
   orders            order[] 
@@ -59,7 +60,7 @@ model store {
   userId              String
   subdomain           String    @unique
   //domain            String?
-  affiliate           affiliate?
+  
   products            product[]
   orders              order[]
 
@@ -76,11 +77,10 @@ model product {
   description String @default("")
   isAvailableForPurchase     Boolean @default(true)
   discountCodes discount[]
-
+  category    String  @default("fitness")
   orderItems  orderItem[]
   storeId     String
   store       store @relation(fields: [storeId], references: [id])
-
   embedding   Unsupported("vector(1536)")? //https://github.com/prisma/prisma/discussions/18220
   tokens      Int?
 
@@ -142,7 +142,7 @@ model orderItem {
 
 model affiliate {
   id        String   @id @default(uuid())
-  store     store?   @relation(fields: [storeId], references: [id])
-  storeId   String?  @unique
+  owner     owner?   @relation(fields: [ownerId], references: [id])
+  ownerId   String?  @unique
   createdAt DateTime @default(now())
 }
