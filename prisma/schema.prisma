@@ -54,16 +54,15 @@ model store {
   id                  String    @id @default(uuid())
   name                String
   icon                String?
-  category            String?   @default("Online")
+  category            String?   @default("fitness")
   owner               owner     @relation( fields: [ownerId], references: [id])
   ownerId             String
   userId              String
   subdomain           String    @unique
   //domain            String?
-  
   products            product[]
   orders              order[]
-
+  discounts           discount[]
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
 }
@@ -99,8 +98,8 @@ model discount {
   createdAt      DateTime         @default(now())
   limit          Int?
   expiresAt      DateTime?
-  storeId        String?
-
+  storeId        String
+  store          store            @relation(fields: [storeId], references: [id])
   products       product[]
   orders          order[]
 }

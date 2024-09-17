@@ -3,9 +3,7 @@
 //import Navbar from "@/components/global/domain/navbar";
 import { ProductListSlider } from "@/components/domain/global/group-list-slider";
 import NavBarDomain from "@/components/domain/global/navbar-domain";
-import Search from "@/components/domain/store/explore/search";
-import BackdropGradient from "@/components/global/backdrop-gradient";
-import GradientText from "@/components/global/gradient-text";
+
 import prismadb from "@/lib/db/prismadb";
 import DomainModalProvider from "@/lib/providers/domain-modal-provider";
 import { headers } from "next/headers";
@@ -85,40 +83,7 @@ export default async function DomainLayout({
         <div className="">
             <DomainModalProvider/>
             <NavBarDomain />
-            <div className="flex-1 flex flex-col bg-themeBlack">
-              <div className="flex flex-col items-center mt-36 px-10">
-                <GradientText
-                  className="text-[90px] font-semibold leading-none"
-                  element="H2"
-                >
-                  Explore Products
-                </GradientText>
-                <p className="text-themeTextGray leading-none pt-2">
-                  or{" "}
-                  <Link
-                    href={"/login"}
-                    className="underline"
-                  >
-                    create your own
-                  </Link>
-                </p>
-                <BackdropGradient
-                  className="w-4/12 md:w-5/12 xl:w-3/12 xl:h-2/6 h-3/6"
-                  container="items-center"
-                >
-                  <Search
-                    storeId={store.id}
-                    placeholder="Search for anything"
-                    searchType="PRODUCTS"
-                    glass
-                    inputStyle="lg:w-[500px] text-lg h-auto z-[9999]"
-                    className="rounded-3xl border-themeGray py-2 px-5 mt-10 mb-3 text-white"
-                  />
-                  <div className="w-full md:w-[800px]">
-                    <ProductListSlider overlay route />
-                  </div>
-                </BackdropGradient>
-              </div>
+            <div className="">
               {children}
             </div>
             </div>

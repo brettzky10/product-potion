@@ -22,6 +22,7 @@ import {
 } from "@tanstack/react-query"
 import { onGetExplore } from "@/lib/actions/domain/explore";
 import ExplorePageContent from "@/components/domain/store/explore/explore-content";
+import DiscountBanner from "@/components/domain/global/banner/discount-banner-nearest";
 
 export type PageProps = {
   params: { [key: string]: string | string[] | undefined}
@@ -129,10 +130,14 @@ const query = new QueryClient()
         <>
         <HydrationBoundary state={dehydrate(query)}>
             <ExplorePageContent layout="SLIDER" storeId={storeId!} />
-            <div className="space-y-10 pb-10">
-                <div className="w-full m-5 rounded-xl bg-primary">
+            <div className="my-5">
+            <DiscountBanner storeId={storeId!}/>
+            </div>
+            
+            <div className="space-y-10 pb-10 px-5">
+                {/* <div className="w-full m-5 rounded-xl bg-primary">
                   <Timer />
-                </div>
+                </div> */}
                 {/*<div className="flex flex-col gap-y-8 px-4 sm:px-6 lg:px-4">
                  <ProductGridSection
                   title="Most Popular"
@@ -146,6 +151,7 @@ const query = new QueryClient()
                     <ProductList title="Featured Products" items={products}/>
                 </div>
             </div>
+            
             </HydrationBoundary>
         </>
         
@@ -170,8 +176,8 @@ function ProductGridSection({
   return (
     <div className="space-y-4">
       <div className="flex gap-4">
-        <h2 className="text-3xl font-bold">{title}</h2>
-        <Button variant="outline" asChild>
+        <h2 className="text-3xl font-bold text-primary-foreground">{title}</h2>
+        <Button variant="secondary" asChild>
           <Link href="/" className="space-x-2">
             <span>View All</span>
             <ArrowRight className="size-4" />
