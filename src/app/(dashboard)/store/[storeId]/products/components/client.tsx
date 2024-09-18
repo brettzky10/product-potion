@@ -33,16 +33,12 @@ export const ProductClient: React.FC<ProductClientProps> = ({
          <div className="flex items-center justify-between">
             <Heading title={`Products (${data.length})`} description="Manage products for your store."/>
             <div className="flex flex-row gap-x-2">
-                {/* <AddMapModal/> */}
-                {/* <DrawMap/> */}
-                {/* <SetupModal/> */}
-                {/* <SearchModal/> */}
-                
-                {/* <Button onClick={()=>router.push(`/store/${params.storeId}/products/new`)}>
-                <Plus className="mr-2 h-4 w-4"/>
-                Add New
-                </Button> */}
                 <AddProductDrawer/>
+                <Button onClick={()=>router.push(`/store/${params.storeId}/products/new`)} className="rounded-full">
+                <Plus className="mr-2 h-4 w-4"/>
+                Add New Product
+                </Button>
+                
         </div>
          </div>
          <Separator/>

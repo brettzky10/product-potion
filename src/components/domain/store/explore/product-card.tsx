@@ -5,9 +5,10 @@ import Link from "next/link"
 type Props = {
   id: string
   name: string
-  category: string | null
-  createdAt: Date
-  storeId: string
+  //category: string | null
+  //createdAt: Date
+  //storeId: string
+  priceInCents: number
   imagePath: string | null
   description: string
   //privacy: "PUBLIC" | "PRIVATE"
@@ -16,11 +17,12 @@ type Props = {
 
 const ProductCard = ({
   id,
-  storeId,
+  //storeId,
   imagePath,
   name,
-  category,
+  //category,
   description,
+  priceInCents,
   //privacy,
   //preview,
 }: Props) => {
@@ -34,6 +36,7 @@ const ProductCard = ({
         />
         <div className="p-6">
           <h3 className="text-lg text-themeTextGray font-bold">{name}</h3>
+          <p>{priceInCents}</p>
           <p className="text-base text-themeTextGray">
             {description && truncateString(description)}
           </p>

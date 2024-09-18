@@ -1,15 +1,13 @@
 
 
 import prismadb from "@/lib/db/prismadb";
-//import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
-//import { createClient } from "@supabase/supabase-js";
-//import axios from "axios";
 import { createClient } from "@/lib/supabase/supabase-server";
+import { supabaseClient } from "@/lib/supabase/client";
 
-/* import { OpenAI } from "openai"
+import { OpenAI } from "openai"
 
-const openAi = new OpenAI({apiKey: process.env.OPENAI_API_KEY}) */
+const openAi = new OpenAI({apiKey: process.env.OPENAI_API_KEY})
 
 
 
@@ -116,13 +114,13 @@ export async function PATCH (
 
         //console.log("ID: ", product.id)
 
-        /* const embeddingResponse = await generateOpenAIEmbeddings(product);
+        const embeddingResponse = await generateOpenAIEmbeddings(product);
 
         const embeddings = embeddingResponse.data[0].embedding
         const tokens = embeddingResponse.usage.total_tokens
 
         //Embeddings:
-        const { data, error: errorWithEmbeddingsInsert } = await createClient
+        const { data, error: errorWithEmbeddingsInsert } = await supabaseClient
         .from('product')
         .update({
           embedding: embeddings
@@ -155,7 +153,7 @@ export async function PATCH (
           status: 500,
           result: errorWithTokensInsert,
           });
-      } */
+      }
 
 
         return NextResponse.json(product);
@@ -216,10 +214,10 @@ export async function DELETE (
 
 //Embeddings:
 // Function to generate OpenAI embeddings for a given text
-/* async function generateOpenAIEmbeddings(product: any) {
+async function generateOpenAIEmbeddings(product: any) {
     const response = await openAi.embeddings.create({
       model: 'text-embedding-ada-002',
       input: `${product.name} - ${product.description}`,
     });
     return response;
-  } */
+  }

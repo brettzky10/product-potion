@@ -65,9 +65,9 @@ export function Timer({ initialTime }: TimerProps) {
   //   setNewTime(Number(e.target.value));
   // };
 
-  console.log(days)
+/*   console.log(days)
   console.log(hours)
-  console.log(minutes)
+  console.log(minutes) */
 
   return (
     <div className="flex flex-col items-center space-y-4">

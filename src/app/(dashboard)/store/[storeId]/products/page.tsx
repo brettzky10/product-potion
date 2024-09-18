@@ -28,6 +28,7 @@ const ProductsPage = async ({
         priceInCents: item.priceInCents,
         description: item.description,
         quantity: item.quantity,
+        imagePath: item.imagePath,
         createdAt: format(item.createdAt, "MMMM do, yyyy"),
     }));
 

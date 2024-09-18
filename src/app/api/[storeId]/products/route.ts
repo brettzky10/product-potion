@@ -2,10 +2,11 @@ import { NextResponse } from "next/server";
 //import { auth } from "@clerk/nextjs/server";
 import prismadb from "@/lib/db/prismadb";
 
-//import { OpenAI } from "openai"
-import { createClient } from '@/lib/supabase/supabase-client';
+import { OpenAI } from "openai"
+import { createClient } from '@/lib/supabase/supabase-server';
+import { supabaseClient } from "@/lib/supabase/client";
 
-/* const openAi = new OpenAI({apiKey: process.env.OPENAI_API_KEY}) */
+const openAi = new OpenAI({apiKey: process.env.OPENAI_API_KEY})
 
 export async function POST(
     req: Request,
@@ -58,8 +59,8 @@ export async function POST(
             return new NextResponse("Price is required"), {status: 400};
         }
 
-       /*  if (!categoryId){
-            return new NextResponse("Category Id is required"), {status: 400};
+       /*  if (!category){
+            return new NextResponse("Category is required"), {status: 400};
         } */
 
         if (!params.storeId){
@@ -89,15 +90,17 @@ export async function POST(
                 imagePath
             }
         });
-        //console.log("ID: ",product.id)
-/* 
+        console.log("ID: ",product.id)
+
         const embeddingResponse = await generateOpenAIEmbeddings(product);
 
         const embeddings = embeddingResponse.data[0].embedding
         const tokens = embeddingResponse.usage.total_tokens
 
+
+        
         //Embeddings:
-        const { data, error: errorWithEmbeddingsInsert } = await createClient
+        const { data, error: errorWithEmbeddingsInsert } = await supabaseClient
         .from('product')
         .update({
           embedding: embeddings
@@ -130,7 +133,7 @@ export async function POST(
             status: 500,
             result: errorWithTokensInsert,
             });
-        } */
+        }
 
         return NextResponse.json(product);
 
@@ -179,10 +182,10 @@ export async function GET(
 
 //Embeddings:
 // Function to generate OpenAI embeddings for a given text
-/* async function generateOpenAIEmbeddings(product: any) {
+async function generateOpenAIEmbeddings(product: any) {
     const response = await openAi.embeddings.create({
       model: 'text-embedding-ada-002',
       input: `${product.name} - ${product.description}`,
     });
     return response;
-  } */
+  }

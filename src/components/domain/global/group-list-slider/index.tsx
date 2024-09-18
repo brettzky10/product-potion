@@ -39,7 +39,7 @@ export const ProductListSlider = ({
         <SwiperSlide key={item.id} className="content-width-slide ">
           {!register ? (
             route ? (
-              <Link href={`/explore/${item.path}`}>
+              <Link href={`/${item.path}`}>
                 <ProductListItem {...item} selected={selected} />
               </Link>
             ) : (

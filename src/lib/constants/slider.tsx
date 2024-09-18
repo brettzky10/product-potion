@@ -1,4 +1,4 @@
-import { Cpu, Hammer, HeartPulse, Home, Joystick, PawPrint, RefreshCcw, ShoppingBag, Sofa, TentTree } from "lucide-react"
+import { Cpu, Dumbbell, Hammer, HeartPulse, Home, Joystick, PawPrint, RefreshCcw, ShoppingBag, Sofa, TentTree } from "lucide-react"
 
 export type CategoryListProps = {
   id: string
@@ -55,5 +55,11 @@ export const CATEGORY_LIST: CategoryListProps[] = [
     label: "Health",
     icon: <HeartPulse />,
     path: "health",
+  },
+  {
+    id: "8",
+    label: "Fitness",
+    icon: <Dumbbell />,
+    path: "fitness",
   },
 ]

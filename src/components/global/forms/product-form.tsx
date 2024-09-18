@@ -79,6 +79,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
     const onSubmit = async (data: ProductFormValues) => {
         try{
             setLoading(true);
+            console.log(productInfo)
             setProductInfo({
                 id: '',
                 imagePath: '',
@@ -163,6 +164,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
               ...prev,
               imagePath: `${supabaseUrl}/storage/v1/object/public/store-files/${data?.path}`,
             }));
+            console.log(productInfo)
           }
         } catch (error) {
           console.error("An error occurred while uploading the file:", error);
@@ -208,7 +210,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
             <Separator/>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full justify-between">
-                    <FormField control={form.control} name="imagePath" render={({field: { value, onChange, ...fieldProps }})=> (
+                    <FormField control={form.control} name="imagePath" render={({field})=> (
                                 <FormItem>
                                     <FormLabel>Images</FormLabel>
                                     <img
@@ -220,9 +222,12 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                                         <Input
                                             id="imagePath"
                                             type="file"
-                                            {...fieldProps}
+                                            //{...field}
                                             disabled={loading}
-                                            onChange={handleFileChange}
+                                            onChange={(e) => {
+                                                field.onChange(productInfo.imagePath)
+                                                handleFileChange(e)
+                                              }}
                                         />
                                     </FormControl>
                                     <FormMessage/>

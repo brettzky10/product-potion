@@ -63,6 +63,8 @@ model store {
   products            product[]
   orders              order[]
   discounts           discount[]
+
+  wake                Boolean @default(false)
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
 }
