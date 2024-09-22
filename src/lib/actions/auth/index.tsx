@@ -90,3 +90,12 @@ export const onLoginUser = async () => {
     }
   }
 }
+
+
+//Sign Out
+
+export const Logout = async ()=> {
+  const supabase = createClient();
+    await supabase.auth.signOut();
+    return redirect("/login");
+}

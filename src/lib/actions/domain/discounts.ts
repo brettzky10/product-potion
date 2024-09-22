@@ -39,3 +39,44 @@ export async function getNearestDiscount(storeId: string) {
 
   return null
 }
+
+
+export async function getProductDiscounts(productId: string) {
+  const store = await prismadb.store.findUnique({
+    where: { id: productId },
+    include: {
+      discounts: {
+        where: {
+          expiresAt: { gte: new Date() },
+          isActive: true,
+        },
+        orderBy: { expiresAt: 'asc' },
+        take: 1,
+        include: {
+          products: {
+            take: 4,
+          },
+        },
+      },
+    },
+  })
+
+  
+
+  const nearestDiscount = store?.discounts[0]
+
+  if (nearestDiscount) {
+    return {
+      ...nearestDiscount,
+      expiresAt: nearestDiscount.expiresAt?.toISOString() || null,
+      products: nearestDiscount.products.map(product => ({
+        ...product,
+        createdAt: product.createdAt.toISOString(),
+        updatedAt: product.updatedAt.toISOString(),
+      })),
+    }
+  }
+
+  return null
+}
+

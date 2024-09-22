@@ -4,6 +4,7 @@ import prismadb from '@/lib/db/prismadb'
 import { toast } from 'sonner';
 import { createClient } from '@/lib/supabase/supabase-server';
 import { redirect } from 'next/navigation';
+import { stripe } from '@/lib/stripe';
 
 
 export async function POST(request: NextRequest): Promise<any> {
@@ -48,18 +49,38 @@ export async function POST(request: NextRequest): Promise<any> {
       },
     })
     if(!findOwner){
+
+      const account = await stripe.accounts.create({
+        email: user.email as string,
+        controller: {
+          losses: {
+            payments: "application",
+          },
+          fees:{
+            payer: "application"
+          },
+          stripe_dashboard: {
+            type: "express"
+          }
+        }
+      })
+      //Create owner
       const newOwner = await prismadb.owner.create({
         data: {
             userId: user.id,
             email: user.email,
+            connectedAccountId: account.id,
             subscription: {
               create: {
-                userId: user.id
+                userId: user.id,
               },
             },
         },
       })
+
+      
     }
+
     //Find Subscription and Store Count
     const ownerInfo = await prismadb.owner.findUnique({
       where: {

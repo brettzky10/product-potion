@@ -6,6 +6,7 @@ import NavBarDomain from "@/components/domain/global/navbar-domain";
 
 import prismadb from "@/lib/db/prismadb";
 import DomainModalProvider from "@/lib/providers/domain-modal-provider";
+import { ModalProvider } from "@/lib/providers/modal-provider";
 import { headers } from "next/headers";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -83,6 +84,7 @@ export default async function DomainLayout({
         <div className="">
             <DomainModalProvider/>
             <NavBarDomain />
+            {/* <ModalProvider/> */}
             <div className="">
               {children}
             </div>

@@ -15,6 +15,8 @@ model owner {
   name              String?
   userId            String
   customerId       String? @unique
+  connectedAccountId    String?  @unique
+  stripeConnectedLinked Boolean @default(false)
   affiliate         affiliate?
   subscription      billings? @relation("OwnerToBilling")
   stores            store[]
@@ -63,7 +65,11 @@ model store {
   products            product[]
   orders              order[]
   discounts           discount[]
+  categories          category[] @relation("StoreToCategory")
+  sizes               size[] @relation("StoreToSize")
+  colors              color[] @relation("StoreToColor")
 
+  pin                 Int @default(1234)
   wake                Boolean @default(false)
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
@@ -80,6 +86,13 @@ model product {
   discountCodes discount[]
   category    String  @default("fitness")
   orderItems  orderItem[]
+  customCategory    category? @relation("CategoryToproduct", fields: [categoryId], references: [id])
+  categoryId  String?
+  sizeId      String?
+  size        size? @relation(fields: [sizeId], references: [id])
+  colorId     String?
+  color       color? @relation(fields: [colorId], references: [id])
+
   storeId     String
   store       store @relation(fields: [storeId], references: [id])
   embedding   Unsupported("vector(1536)")? //https://github.com/prisma/prisma/discussions/18220
@@ -140,6 +153,50 @@ model orderItem {
   @@index([orderId])
   @@index([productId])
 }
+
+
+
+model category {
+  id String @id @default(uuid())
+  storeId String
+  store store @relation("StoreToCategory", fields: [storeId], references: [id])
+  // billboardId String
+  // billboard billboard @relation(fields: [billboardId], references: [id])
+  products product[] @relation("CategoryToproduct")
+  name String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([storeId])
+  //@@index([billboardId])
+}
+
+model size{
+  id String @id @default(uuid())
+  storeId String
+  store store @relation("StoreToSize", fields: [storeId], references: [id])
+  name String
+  value String
+  products product[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([storeId])
+}
+
+model color{
+  id String @id @default(uuid())
+  storeId String
+  store store @relation("StoreToColor", fields: [storeId], references: [id])
+  name String
+  value String
+  products product[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([storeId])
+}
+
 
 model affiliate {
   id        String   @id @default(uuid())

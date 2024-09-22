@@ -11,6 +11,8 @@ const config: Config = {
   	extend: {
   		colors: {
 			coral: '#7D98A1',
+			potion: "#934683",
+			linen: '#F7ECE1',
 			sponge: '#FFEDDF',
 			steel: '#B4B0AE',
 			cream: '#F5F5F5',

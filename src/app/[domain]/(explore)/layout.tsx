@@ -75,22 +75,22 @@ export default async function DashboardLayout({
                 >
                   Explore Products
                 </GradientText>
-                <p className="text-themeTextGray leading-none pt-2">
-                  or{" "}
+                {/* <p className="text-themeTextGray leading-none pt-2">
+                  in{" "}
                   <Link
                     href={"/login"}
                     className="underline"
                   >
-                    create your own
+                    any language
                   </Link>
-                </p>
+                </p> */}
                 <BackdropGradient
                   className="w-4/12 md:w-5/12 xl:w-3/12 xl:h-2/6 h-3/6"
                   container="items-center"
                 >
                   <Search
                     storeId={store.id}
-                    placeholder="Search for anything"
+                    placeholder="Search for Products"
                     searchType="PRODUCTS"
                     glass
                     inputStyle="lg:w-[500px] text-lg h-auto z-[9999]"

@@ -1,7 +1,8 @@
-/* 'use server'
+'use server'
 
-import prismadb from '@/lib/prismadb'
-import { currentUser } from '@clerk/nextjs/server'
+import prismadb from '@/lib/db/prismadb'
+import { createClient } from '@/lib/supabase/supabase-server'
+//import { currentUser } from '@clerk/nextjs/server'
 
 import Stripe from 'stripe'
 
@@ -13,20 +14,28 @@ const stripe = new Stripe(process.env.STRIPE_SECRET!, {
 
 export const getUserTransactions = async () => {
     try {
-      const user = await currentUser()
+
+      const supabase = createClient();
+
+        const {
+            data: { user },
+        } = await supabase.auth.getUser();
+
       if (user) {
         const connectedStripe = await prismadb.owner.findUnique({
           where: {
             userId: user.id,
+            email: user.email
           },
           select: {
-            stripeId: true,
+            stripeConnectedLinked: true,
+            connectedAccountId: true
           },
         })
   
-        if (connectedStripe) {
+        if (connectedStripe?.stripeConnectedLinked == true) {
           const transactions = await stripe.charges.list({
-            stripeAccount: connectedStripe.stripeId!,
+            stripeAccount: connectedStripe.connectedAccountId!,
           })
           if (transactions) {
             return transactions
@@ -36,4 +45,4 @@ export const getUserTransactions = async () => {
     } catch (error) {
       console.log(error)
     }
-  } */
+  }

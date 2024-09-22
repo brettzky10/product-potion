@@ -62,7 +62,8 @@ export async function addDiscountCode(prevState: unknown, formData: FormData) {
     }
   })
 
-//Create the discount code
+  if(storeId){
+    //Create the discount code
   await prismadb.discount.create({
     data: {
       storeId: storeId?.storeId,
@@ -78,6 +79,9 @@ export async function addDiscountCode(prevState: unknown, formData: FormData) {
       limit: data.limit,
     },
   })
+  }
+
+
 
   redirect("/check")
 }

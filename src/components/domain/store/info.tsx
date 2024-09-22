@@ -7,7 +7,9 @@ import { ShoppingCart } from "lucide-react";
 import useCart from "@/lib/hooks/domain/use-cart"; */
 import { Button } from "@/components/ui/button";
 import { formatCurrency } from "@/lib/utils";
-
+import { useTransition } from "react";
+import { createCheckoutSession } from "@/lib/actions/stripe";
+import { loadStripe } from "@stripe/stripe-js";
 
 interface InfoProps {
   data: Product
@@ -21,6 +23,41 @@ const Info: React.FC<InfoProps> = ({
     const onAddToCart = ()=>{
         cart.addItem(data);
     }; */
+
+    const [loading, startTransition] = useTransition();
+
+  //const product = products[0];
+
+  function handleBuy() {
+    startTransition(async () => {
+      const result = await createCheckoutSession({ productId: data.id, quantity: 1 });
+
+      if (!result || result.error || !result.sessionId) {
+        alert("Error creating checkout session");
+        return;
+      }
+
+      const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISH_KEY;
+      if (!publishableKey) {
+        alert("Stripe public key is missing");
+        return;
+      }
+      const stripe = await loadStripe(publishableKey);
+
+      if (!stripe) {
+        alert("Error loading stripe");
+        return;
+      }
+
+      const { error } = await stripe.redirectToCheckout({
+        sessionId: result.sessionId,
+      });
+
+      if (error) {
+        alert("Error redirecting to checkout");
+      }
+    });
+  }
 
     return (
         <div>
@@ -52,8 +89,13 @@ const Info: React.FC<InfoProps> = ({
                     Add To Cart
                     <ShoppingCart />
                 </StoreButton> */}
-                <Button>
-                    Add
+                <Button
+            disabled={loading}
+            onClick={handleBuy}
+            className="w-full rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300"
+          >
+            {loading ? "Loading..." : "Buy Now"}
+         
                 </Button>
             </div>
         </div>

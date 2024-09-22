@@ -5,6 +5,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { toast } from "sonner";
 import Stripe from "stripe";
 
+const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET!;
+
 export async function POST(req: NextRequest) {
   const body = await req.text();
   const signature = headers().get("Stripe-Signature") ?? "";
@@ -146,7 +148,7 @@ try {
               where: { userId: user.id },
               data: {
                 plan: "STANDARD",
-                subscribed: false
+                subscribed: false,
                },
             });
           } else {

@@ -10,8 +10,7 @@ import { onLoginUser } from "@/lib/actions/auth";
 import NavbarDashboard from "@/components/global/navbar/navbar-dashboard";
 import { getSubDomain, getSubDomainFromStoreId } from "@/lib/actions/store/get-subdomain";
 import { getCredits } from "@/lib/actions/store/get-credits";
-import { StoreIdProvider } from "@/lib/providers/store-provider";
-import BillingNavbar from "@/components/global/navbar/navbar-store";
+import { getUserPlanInfo } from "@/lib/actions/store/dashboard/get-user-plan";
 /* import dynamic from "next/dynamic";
 const NavbarDashboard = dynamic(()=>import("@/components/global/navbar/navbar-dashboard"),
 {
@@ -26,7 +25,7 @@ export default async function DashboardLayout({
     params: {storeId: string};
 }) {
 
-       /*  const supabase = createClient();
+        const supabase = createClient();
 
         const {
             data: { user },
@@ -35,25 +34,19 @@ export default async function DashboardLayout({
         if (!user) {
             redirect('/login');
         }
-    
-        const store = await getCurrentStoreId(user.id) */
+
+        let userEmail = user.email
+        {user.email ? userEmail = user.email : userEmail="User"}
 
 
-    /* //Check Store Exists
-    if (!store){
-        redirect('/check');
-    } */
+    const credits = await getCredits(user.id)
 
-
-    //Load id of store
-
-    const credits = await getCredits(params.storeId)
-
+    const plan = await getUserPlanInfo()
+    let userPlan = plan?.plan
+        {plan?.plan ? userPlan = plan?.plan : userPlan="STANDARD"}
 
     const subdomain = await getSubDomainFromStoreId(params.storeId)
 
-    
-     //Grab Store Details for authenticated user:
 
     const authenticated = await onLoginUser()
     if (!authenticated) return null
@@ -62,17 +55,16 @@ export default async function DashboardLayout({
     return (
         <>
         <div className="">
-            <StoreIdProvider>
+            
             {/* <Navbar /> */}
             <div className="">
-            <NavbarDashboard subdomain={subdomain!}credits={credits!}/>
+            <NavbarDashboard subdomain={subdomain!} credits={credits!} userId={user.id} email={userEmail} plan={userPlan}/>
             
              {/* {<BillingNavbar/>} */}
             </div>
             <div className="md:ml-12">
                 {children}
             </div>
-            </StoreIdProvider>
             </div>
         </>
     );

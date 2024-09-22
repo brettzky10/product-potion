@@ -47,3 +47,64 @@ export const getUserPlanInfo = async () => {
   }
 
   
+export const getLinked = async () => {
+  try {
+    //const user = await currentUser()
+    const supabase = createClient();
+
+  const {
+      data: { user },
+  } = await supabase.auth.getUser();
+
+    if (user) {
+      const linked = await prismadb.owner.findUnique({
+        where: {
+          userId: user.id,
+          email: user.email
+        },
+        select: {
+          stripeConnectedLinked: true
+        }
+      })
+
+        return {
+          linked: linked?.stripeConnectedLinked
+        }
+      
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+  /* 
+export const getProductCount = async (userId: string | null) => {
+  try {
+    //const user = await currentUser()
+    
+
+    if (userId) {
+      const plan = await prismadb.product.findMany({
+        where: {
+          store:{
+            userId: userId
+          },
+        },
+        select: {
+          _count:{
+            select:{
+              
+            }
+          }
+        }
+      })
+      if (plan) {
+        return {
+          products: plan,
+        }
+      }
+    }
+  } catch (error) {
+    console.log(error)
+  }
+} */

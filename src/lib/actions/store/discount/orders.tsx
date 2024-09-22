@@ -1,5 +1,5 @@
 "use server"
-
+/* 
 import prismadb from "@/lib/prismadb"
 import OrderHistoryEmail from "@/lib/email/order-history"
 import {
@@ -9,7 +9,7 @@ import {
 import { Resend } from "resend"
 import Stripe from "stripe"
 import { z } from "zod"
-/* 
+
 const emailSchema = z.string().email()
 const resend = new Resend(process.env.RESEND_API_KEY as string)
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string)

@@ -24,6 +24,9 @@ import {
 } from "@/components/ui/tabs"
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { createClient } from "@/lib/supabase/supabase-server";
+import StripeBillingCard from "@/components/global/integrate/stripe-card";
+import { CreateStripeAccoutnLink, GetStripeDashboardLink } from "@/lib/actions/stripe";
+import { Submitbutton } from "@/components/ui/submit-buttons";
 
 interface SettingsPageProps {
     params: {
@@ -31,9 +34,24 @@ interface SettingsPageProps {
     }
 };
 
+
+async function getData(userId: string) {
+  const owner = await prismadb.owner.findFirst({
+    where: {
+      userId,
+    },
+    select: {
+      stripeConnectedLinked: true,
+    },
+  });
+
+  return owner;
+}
+
 const SettingsPage: React.FC<SettingsPageProps> = async ({
     params
 })=>{
+
   const supabase = createClient();
 
   const {
@@ -54,6 +72,9 @@ const SettingsPage: React.FC<SettingsPageProps> = async ({
     if (!store){
         redirect("/");
     }
+
+
+    const owner = await getData(user.id);
 
     return (
         <div className="flex-1 space-y-4 p-8 pt-6">
@@ -87,8 +108,29 @@ const SettingsPage: React.FC<SettingsPageProps> = async ({
           <CardContent className="space-y-2 ">
             <ScrollArea>
                 <div className="flex flex-col">
+                <Card>
+                    <CardHeader>
+                      <CardTitle>Billing</CardTitle>
+                      <CardDescription>
+                        Find all your details regarding your payments
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      {owner?.stripeConnectedLinked === false && (
+                        <form action={CreateStripeAccoutnLink}>
+                          <Submitbutton title="Link your Accout to Stripe" success={false} />
+                        </form>
+                      )}
+
+                      {owner?.stripeConnectedLinked === true && (
+                        <form action={GetStripeDashboardLink}>
+                          <Submitbutton title="View Stripe Dashboard" success={true} />
+                        </form>
+                      )}
+                    </CardContent>
+                  </Card>
                 {/* <IntegrationsSection/> */}
-                
+                {/* <StripeBillingCard/> */}
                 </div>
                 
             </ScrollArea>

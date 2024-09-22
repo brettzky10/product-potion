@@ -47,7 +47,7 @@ interface DiscountPageProps {
 
 const WHERE_EXPIRED: Prisma.discountWhereInput = {
   OR: [
-    { limit: { not: null, lte: prismadb.discount.fields.uses } },
+    { limit: { not: null, lte: prismadb.discount.fields.uses }},
     { expiresAt: { not: null, lte: new Date() } },
   ],
 }
@@ -56,6 +56,7 @@ const SELECT_FIELDS: Prisma.discountSelect = {
   id: true,
   allProducts: true,
   code: true,
+  storeId: true,
   discountAmount: true,
   discountType: true,
   expiresAt: true,
@@ -69,15 +70,15 @@ const SELECT_FIELDS: Prisma.discountSelect = {
 function getExpiredDiscountCodes() {
   return prismadb.discount.findMany({
     select: SELECT_FIELDS,
-    where: WHERE_EXPIRED,
+    where: WHERE_EXPIRED, //storeId
     orderBy: { createdAt: "asc" },
   })
 }
 
-function getUnexpiredDiscountCodes() {
+function getUnexpiredDiscountCodes(storeId: string) {
   return prismadb.discount.findMany({
     select: SELECT_FIELDS,
-    where: { NOT: WHERE_EXPIRED },
+    where: { NOT: WHERE_EXPIRED, storeId: storeId },
     orderBy: { createdAt: "asc" },
   })
 }
@@ -88,10 +89,12 @@ const DiscountPage: React.FC<DiscountPageProps> = async ({
 }) => {
   const [expiredDiscountCodes, unexpiredDiscountCodes] = await Promise.all([
     getExpiredDiscountCodes(),
-    getUnexpiredDiscountCodes(),
+    getUnexpiredDiscountCodes(params.storeId),
   ])
 
-  const discountNumber = await prismadb.discount.count()
+  const discountNumber = await prismadb.discount.count({
+    where:{storeId: params.storeId}
+  }) //storeId
 
   return (
     <>

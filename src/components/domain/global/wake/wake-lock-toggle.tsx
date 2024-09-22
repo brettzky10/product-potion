@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label"
 import { getWakeLockState, toggleWakeLock } from '@/lib/actions/store/settings/wakelock'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { toast } from 'sonner'
+import { Lock, Unlock } from 'lucide-react'
 
 interface WakeLockToggleProps {
   id: string
@@ -69,7 +70,7 @@ export default function WakeLockToggle({ id }: WakeLockToggleProps) {
         : <div className='rounded-full bg-red-500 p-1'/>
         }
       </div>
-      {/* <p>Wake Lock {isLocked ? "Active" : "Inactive"}</p> */}
+      <p className='text-xs'>{isLocked ? "Active" : "Inactive"}</p>
     </div>
   )
 }

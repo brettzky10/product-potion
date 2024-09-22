@@ -79,6 +79,7 @@ const ProductCard: React.FC<ProductCard> = ({
             <div className="flex items-center justify-between">
                 {/* <Currency value={data?.price}/> */}
                 {formatCurrency(data?.priceInCents / 100)}
+
             </div>
         </div>
     );

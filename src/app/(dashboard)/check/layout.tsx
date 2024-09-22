@@ -23,7 +23,7 @@ export default async function DashboardLayout({
         redirect('/login');
     }
 
-    const owner = await prismadb.owner.findUnique({
+    /* const owner = await prismadb.owner.findUnique({
         where: {
             id: user.id,
         },
@@ -32,13 +32,22 @@ export default async function DashboardLayout({
             email: true,
         }
         
-    });
+    }); */
 
     //Load 1st store with this ID
+    const owner = await prismadb.owner.findUnique({
+        where: {
+            //id: params.storeId,
+            email: user?.email,
+            userId: user?.id,
+            
+        }
+    });
     const store = await prismadb.store.findFirst({
         where: {
-            id: params.storeId,
+            //id: params.storeId,
             ownerId: owner?.id,
+            userId: user?.id
         }
     });
 

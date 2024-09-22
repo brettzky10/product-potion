@@ -5,6 +5,9 @@ import React, { useState, useEffect } from 'react';
 import { supabaseClient } from '@/lib/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import Link from 'next/link';
+import { Card } from '@/components/ui/card';
+import { formatCurrency, truncateString } from '@/lib/utils';
 
 export default function ProductSearchSection({storeId}:{storeId: string}) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -24,17 +27,23 @@ export default function ProductSearchSection({storeId}:{storeId: string}) {
   }]);
 
 
-  const ProductCard = ({ product }: { product: {name: string,  description: string, priceInCents: number, imagePath: string} }) => (
-    <div className="max-w-sm rounded overflow-hidden shadow-md m-4 h-1/2 w-1/2 bg-primary">
-      {/* <img
-        src={product.imagePath || '/icons/placeholder.svg'}
-        alt={product.name}
-        className="w-full h-24 object-cover"
-      /> */}
-      <div className="px-6 py-4 text-primary-foreground">
-        <div className="font-bold text-md mb-2">{`${product.name} - ${product.priceInCents} - ${product.description}`}</div>
-      </div>
-    </div>
+  const ProductCard = ({ product }: { product: {id: string, name: string,  description: string, priceInCents: number, imagePath: string} }) => (
+    <Link href={`/products/${product.id}`}>
+      <Card className="bg-themeBlack border-themeGray rounded-xl overflow-hidden h-full">
+        <img
+          src={`${product.imagePath}` || '/icons/placeholder.svg' }
+          alt="thumbnail"
+          className="opacity-70 w-full aspect-video"
+        />
+        <div className="p-6">
+          <h3 className="text-lg text-themeTextGray font-bold">{product.name}</h3>
+          <p className='text-themeTextWhite'>{formatCurrency(product.priceInCents / 100)}</p>
+          <p className="text-base text-themeTextGray">
+            {product.description && truncateString(product.description)}
+          </p>
+        </div>
+      </Card>
+    </Link>
   );
 
   useEffect(() => {
@@ -50,7 +59,7 @@ export default function ProductSearchSection({storeId}:{storeId: string}) {
       .select('*')
       .match({ storeId: `${storeId}` })
       .order('name', { ascending: true })
-      .limit(4);
+      .limit(6);
 
     if (error) {
       console.log(error);
@@ -120,7 +129,7 @@ export default function ProductSearchSection({storeId}:{storeId: string}) {
           Search
         </Button>
       </form>
-      <div className="flex flex-wrap justify-center overflow-y-auto">
+      <div className="justify-center overflow-y-auto grid grid-cols-1 md:grid-cols-3 gap-4">
         {searchResults.map((product, index) => (
           <ProductCard key={index} product={product} />
         ))}

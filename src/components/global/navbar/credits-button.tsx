@@ -7,17 +7,23 @@ import { Button } from "@/components/ui/button"
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/supabase-client'
 
-export default function CreditsButton() {
+export default function CreditsButton(userId: string) {
   const [billingAmount, setBillingAmount] = useState<number | null>(null)
   const supabase = createClient()
 
   useEffect(() => {
-    const channel = supabase.channel('billing_amount')
+    //const channel = supabase.channel('billing_amount')
+
+
 
     const fetchBillingAmount = async () => {
+
+      
+
       const { data, error } = await supabase
         .from('billings')
         .select('amount')
+        .eq('ownerId', userId)
         .single()
       
       if (error) {
@@ -29,7 +35,7 @@ export default function CreditsButton() {
 
     fetchBillingAmount()
 
-    channel
+    /* channel
       .on('postgres_changes',
                 {
                 event: 'UPDATE', // Listen only to UPDATEs
@@ -41,7 +47,7 @@ export default function CreditsButton() {
 
     return () => {
       supabase.removeChannel(channel)
-    }
+    } */
   }, [supabase])
 
   return (

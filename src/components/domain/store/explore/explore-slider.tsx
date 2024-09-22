@@ -29,7 +29,7 @@ const ExploreSlider = ({ label, query, text, storeId }: Props) => {
     products.length > 0 &&
     onLoadSlider && (
       <div className="flex flex-col mt-16">
-        <div className="flex flex-col px-[40px] lg:px-[150px]">
+        <div className="flex flex-col px-40 md:px-[80px] lg:px-[150px]">
           <h2 className="text-2xl font-bold text-white">{label}</h2>
           <p className="text-sm text-themeTextGray">{text}</p>
         </div>
@@ -41,7 +41,12 @@ const ExploreSlider = ({ label, query, text, storeId }: Props) => {
           onReachEnd={() => refetch()}
           breakpoints={{
             200: {
-              slidesPerView: 1.2,
+              slidesPerView: 1.8,
+              slidesOffsetBefore: 40,
+              slidesOffsetAfter: 40,
+            },
+            400: {
+              slidesPerView: 2.1,
               slidesOffsetBefore: 40,
               slidesOffsetAfter: 40,
             },

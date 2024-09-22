@@ -1,4 +1,4 @@
-"use client"
+//"use client"
 
 
 import { MainNav } from "@/components/global/navbar/navbar-dashboard-links";
@@ -10,23 +10,25 @@ import Image from "next/image";
 import UserDropdownMenu from "@/components/global/navbar/user-menu";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
-import { createClient } from "@/lib/supabase/supabase-server";
-import dynamic from 'next/dynamic'
+import CreditsButton from "./credits-button";
+//import { createClient } from "@/lib/supabase/supabase-server";
+//import dynamic from 'next/dynamic'
+//import BuyModal from "../modals/buy-modal";
 
-const CreditsButton = dynamic(()=>import("@/components/global/navbar/credits-button"),
+/* const CreditsButton = dynamic(()=>import("@/components/global/navbar/credits-button"),
 {
 loading:()=><p>…Loading</p>,ssr:false
-})
+}) */
 //import CreditsButton from "./credits-button";
-import { useCreditAmount } from "@/lib/hooks/use-credits";
+/* import { useCreditAmount } from "@/lib/hooks/use-credits"; */
 
 
 
-const NavbarDashboard =  ({credits, subdomain}:{credits: number, subdomain: string})=> {
+const NavbarDashboard =  async ({credits, subdomain, userId, email, plan}:{credits: number, subdomain: string, userId: string, email: string, plan: string})=> {
 
 
     //Credits
-    const { data: creditAmount, isLoading, error: creditError } = useCreditAmount()
+    /* const { data: creditAmount, isLoading, error: creditError } = useCreditAmount() */
 
     return (
         <div className="border-b md:ml-12">
@@ -50,14 +52,35 @@ const NavbarDashboard =  ({credits, subdomain}:{credits: number, subdomain: stri
                 
                 </div>
                 <div className="ml-auto flex items-center space-x-2">
+                        
+                           
+                        {/* <CreditsButton userId={userId}/> */}
                         <Link
                         href={"/buy"}
                         >
-                        <CreditsButton/>
+                        <Badge variant="gradient" >
+                            <span className=" text-sm font-normal mx-1 text-zinc-300 dark:text-zinc-400">
+                            {credits ?? 0}
+        
+                            </span>
+                            <img
+                              src='/icons/dollar-coin.png'
+                              alt='credits'
+                              className='w-4'
+                              />
+                        </Badge>
                         </Link>
-                    {/* </BuyModal> */}
-                    <ThemeToggle/>
-                    <UserDropdownMenu>
+                        {/* <BuyModal>
+                        <Badge variant="default">
+                            <span className="text-sm font-normal text-zinc-600 dark:text-zinc-400">
+                            <span className="font-black text-lg dark:text-white ">{credits}</span>{" "}
+                            
+                            </span>
+                        </Badge>
+                        </BuyModal> */}
+
+                    {/* <ThemeToggle/> */}
+                    <UserDropdownMenu email={email} plan={plan}>
                         <Image
                         src="/icons/user.svg"
                         width={32}
