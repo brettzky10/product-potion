@@ -1,20 +1,21 @@
 "use server"
-/* 
-import prismadb from "@/lib/prismadb"
-import OrderHistoryEmail from "@/lib/email/order-history"
+
+import prismadb from "@/lib/db/prismadb"
+//import OrderHistoryEmail from "@/lib/email/order-history"
 import {
   getDiscountedAmount,
   usableDiscountCodeWhere,
-} from "@/lib/actions/discount/discount-code-helpers"
+} from "@/lib/actions/store/discount/discount-code-helpers"
 import { Resend } from "resend"
 import Stripe from "stripe"
 import { z } from "zod"
+import { notFound } from "next/navigation"
 
 const emailSchema = z.string().email()
 const resend = new Resend(process.env.RESEND_API_KEY as string)
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string)
 
-export async function emailOrderHistory(
+/* export async function emailOrderHistory(
   prevState: unknown,
   formData: FormData
 ): Promise<{ message?: string; error?: string }> {
@@ -30,7 +31,7 @@ export async function emailOrderHistory(
       email: true,
       orders: {
         select: {
-          price: true,
+          priceInCents: true,
           id: true,
           createdAt: true,
           product: {
@@ -82,20 +83,20 @@ export async function emailOrderHistory(
     message:
       "Check your email to view your order history and download your products.",
   }
-} */
-/* 
+} 
+
 export async function createPaymentIntent(
   email: string,
   productId: string,
   discountCodeId?: string
 ) {
-  const product = await db.product.findUnique({ where: { id: productId } })
+  const product = await prismadb.product.findUnique({ where: { id: productId } })
   if (product == null) return { error: "Unexpected Error" }
 
   const discountCode =
     discountCodeId == null
       ? null
-      : await db.discountCode.findUnique({
+      : await prismadb.discount.findUnique({
           where: { id: discountCodeId, ...usableDiscountCodeWhere(product.id) },
         })
 
@@ -103,7 +104,7 @@ export async function createPaymentIntent(
     return { error: "Coupon has expired" }
   }
 
-  const existingOrder = await db.order.findFirst({
+  const existingOrder = await prismadb.order.findFirst({
     where: { user: { email }, productId },
     select: { id: true },
   })
@@ -122,7 +123,7 @@ export async function createPaymentIntent(
 
   const paymentIntent = await stripe.paymentIntents.create({
     amount,
-    currency: "USD",
+    currency: "CAD",
     metadata: {
       productId: product.id,
       discountCodeId: discountCode?.id || null,
@@ -135,3 +136,13 @@ export async function createPaymentIntent(
 
   return { clientSecret: paymentIntent.client_secret }
 } */
+
+export async function deleteOrder(id: string) {
+  const order = await prismadb.order.delete({
+    where: { id },
+  })
+
+  if (order == null) return notFound()
+
+  return order
+}

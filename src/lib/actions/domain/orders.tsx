@@ -122,7 +122,7 @@ export async function createPaymentIntent(
 
   const paymentIntent = await stripe.paymentIntents.create({
     amount,
-    currency: "USD",
+    currency: "CAD",
     metadata: {
       productId: product.id,
       discountCodeId: discountCode?.id || null,

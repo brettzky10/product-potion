@@ -165,7 +165,7 @@ try {
   console.error("Error handling event", error);
   return new Response("Webhook Error", { status: 400 });
 }
-  console.log("Checkout has been trigered");
+  console.log("Checkout has been triggered");
 
   return NextResponse.json(null, { status: 200 });
 }

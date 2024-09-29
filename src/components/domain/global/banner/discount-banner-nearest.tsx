@@ -99,8 +99,8 @@ export default function DiscountBanner({ storeId }: DiscountBannerProps) {
       <div className="container mx-auto">
       <div className="flex flex-col md:flex-col justify-between items-center mb-4">
           <div className='text-center'>
-            <h2 className="text-7xl font-black mb-2">{discount.discountType === 'PERCENTAGE' ? `${discount.discountAmount}% off` : `$${discount.discountAmount / 100} off`}</h2>
-            <p className="text-lg">
+            <h2 className="md:text-9xl text-9xl font-black mb-2">{discount.discountType === 'PERCENTAGE' ? `${discount.discountAmount}% off` : `$${discount.discountAmount / 100} off`}</h2>
+            <p className="text-4xl font-extralight">
               Use code <span className="font-bold text-purple-400 underline">{discount.code}</span>
               
             </p>

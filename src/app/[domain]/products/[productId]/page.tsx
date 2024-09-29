@@ -14,6 +14,7 @@ import { unstable_noStore as noStore } from "next/cache";
 } from "@/components/ui/carousel"; */
 //import { JSONContent } from "@tiptap/react";
 import Image from "next/image";
+import Link from "next/link";
 
 async function getData(id: string) {
   const data = await prismadb.product.findUnique({
@@ -88,10 +89,14 @@ export default async function ProductPage({
         </h1>
         <p className="mt-2 text-muted-foreground">{data?.description}</p>
         {data?.store.owner.stripeConnectedLinked == true
-        ? <form action={BuyProduct}>
+        ? 
+        <div>
+          <form action={BuyProduct}>
             <input type="hidden" name="id" value={data?.id} />
             <BuyButton priceInCents={data?.priceInCents as number} />
           </form>
+         
+          </div>
         : <Button disabled size="lg" className="w-full mt-10">See Cashier</Button>
         }
         
@@ -114,7 +119,9 @@ export default async function ProductPage({
             <h3 className="text-sm font-medium col-span-1">{data?.category}</h3>
           </div>
         </div>
-
+        <Button asChild size="lg" className="w-100 my-5">
+          <Link href={`/products/${params.productId}/purchase`}>Use Discount</Link>
+        </Button>
         <div className="border-t border-gray-200 mt-10"></div>
       </div>
 

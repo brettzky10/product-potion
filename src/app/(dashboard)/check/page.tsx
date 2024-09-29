@@ -16,7 +16,8 @@ const SetupPage = ()=> {
     }
   }, [isOpen, onOpen]);
 
-  return null;
+  return <>
+</>;
 }
 
 export default SetupPage;

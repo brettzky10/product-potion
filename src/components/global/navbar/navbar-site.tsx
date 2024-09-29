@@ -6,7 +6,7 @@ import NavLinks from './navbar-site-links'
 import { Button } from '@/components/ui/button'
 import { BuildingIcon, HeartPulseIcon, LeafIcon, MenuIcon, PillIcon, ThermometerIcon } from 'lucide-react'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
-import {ThemeToggle} from '@/components/global/theme-toggle'
+import {ThemeToggle} from '@/components/global/navbar/theme-toggle'
 import Potion from '@/components/global/icons/crafting-nav'
 
 
@@ -45,17 +45,17 @@ const Navigation = () => {
             <SheetTrigger asChild>
               <Button className="md:hidden" size="icon" variant="outline">
                 <MenuIcon className="h-6 w-6" />
-                <span className="sr-only">Toggle navigation menu</span>
+                <span className="sr-only">Launch Potion</span>
               </Button>
             </SheetTrigger>
             <SheetContent side="right">
               <div className="grid gap-6 p-6">
                 <Link
                   className="flex items-center gap-3 text-sm font-medium hover:text-primary transition-colors"
-                  href="#"
+                  href="/"
                 >
                   <HeartPulseIcon className="h-5 w-5" />
-                  Preventive Health
+                  Home
                 </Link>
                 <Link
                   className="flex items-center gap-3 text-sm font-medium hover:text-primary transition-colors"
@@ -64,9 +64,9 @@ const Navigation = () => {
                   <ThermometerIcon className="h-5 w-5" />
                   Symptom Checker
                 </Link>
-                <Link
+                {/* <Link
                   className="flex items-center gap-3 text-sm font-medium hover:text-primary transition-colors"
-                  href="#"
+                  href=""
                 >
                   <PillIcon className="h-5 w-5" />
                   Treatment Options
@@ -84,7 +84,7 @@ const Navigation = () => {
                 >
                   <BuildingIcon className="h-5 w-5" />
                   Provider Directory
-                </Link>
+                </Link> */}
               </div>
             </SheetContent>
           </Sheet>

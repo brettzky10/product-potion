@@ -6,34 +6,34 @@ export function usableDiscountCodeWhere(productId: string) {
     isActive: true,
     AND: [
       {
-        OR: [{ allProducts: true }, { products: { some: { id: productId } } }],
+        OR: [{ allProducts: true }, { products: { some: { id: productId } } }],  //Is product discounted
       },
-      { OR: [{ limit: null }, { limit: { gt: prismadb.discount.fields.uses } }] },
-      { OR: [{ expiresAt: null }, { expiresAt: { gt: new Date() } }] },
+      { OR: [{ limit: null }, { limit: { gt: prismadb.discount.fields.uses } }] }, //Is discount limit exceeded
+      { OR: [{ expiresAt: null }, { expiresAt: { gt: new Date() } }] }, //Is expired
     ],
   } satisfies Prisma.discountWhereInput
 }
 
 export function getDiscountedAmount(
-  discountCode: { discountAmount: number; discountType: discountCodeType },
+  discount: { discountAmount: number; discountType: discountCodeType },
   priceInCents: number
 ) {
-  switch (discountCode.discountType) {
+  switch (discount.discountType) {
     case "PERCENTAGE":
       return Math.max(
         1,
         Math.ceil(
-          priceInCents - (priceInCents * discountCode.discountAmount) / 100
+          priceInCents - (priceInCents * discount.discountAmount) / 100
         )
       )
     case "FIXED":
       return Math.max(
         1,
-        Math.ceil(priceInCents - discountCode.discountAmount * 100)
+        Math.ceil(priceInCents - discount.discountAmount * 100)
       )
     default:
       throw new Error(
-        `Invalid discount type ${discountCode.discountType satisfies never}`
+        `Invalid discount type ${discount.discountType satisfies never}`
       )
   }
 }

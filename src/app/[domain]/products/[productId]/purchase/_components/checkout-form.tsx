@@ -13,6 +13,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { getDiscountedAmount } from "@/lib/actions/store/discount/discount-code-helpers"
+import { createPaymentIntent } from "@/lib/actions/stripe"
 import { formatCurrency, formatDiscountCode } from "@/lib/utils"
 import { discountCodeType } from "@prisma/client"
 import {
@@ -35,7 +36,7 @@ type CheckoutFormProps = {
     priceInCents: number
     description: string
   }
-  discountCode?: {
+  discount?: {
     id: string
     discountAmount: number
     discountType: discountCodeType
@@ -43,14 +44,14 @@ type CheckoutFormProps = {
 }
 
 const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY as string
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISH_KEY as string
 )
 
-export function CheckoutForm({ product, discountCode }: CheckoutFormProps) {
+export function CheckoutForm({ product, discount }: CheckoutFormProps) {
   const amount =
-    discountCode == null
+    discount == null
       ? product.priceInCents
-      : getDiscountedAmount(discountCode, product.priceInCents)
+      : getDiscountedAmount(discount, product.priceInCents)
   const isDiscounted = amount !== product.priceInCents
 
   return (
@@ -90,7 +91,7 @@ export function CheckoutForm({ product, discountCode }: CheckoutFormProps) {
         <Form
           priceInCents={amount}
           productId={product.id}
-          discountCode={discountCode}
+          discount={discount}
         />
       </Elements>
     </div>
@@ -100,11 +101,11 @@ export function CheckoutForm({ product, discountCode }: CheckoutFormProps) {
 function Form({
   priceInCents,
   productId,
-  discountCode,
+  discount,
 }: {
   priceInCents: number
   productId: string
-  discountCode?: {
+  discount?: {
     id: string
     discountAmount: number
     discountType: discountCodeType
@@ -115,7 +116,7 @@ function Form({
   const [isLoading, setIsLoading] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string>()
   const [email, setEmail] = useState<string>()
-  const discountCodeRef = useRef<HTMLInputElement>(null)
+  const discountRef = useRef<HTMLInputElement>(null)
   const searchParams = useSearchParams()
   const router = useRouter()
   const pathname = usePathname()
@@ -123,7 +124,7 @@ function Form({
 
   async function handleSubmit(e: FormEvent) {
     console.log("payment")
-    /* e.preventDefault()
+    e.preventDefault()
 
      if (stripe == null || elements == null || email == null) return
 
@@ -139,7 +140,7 @@ function Form({
     const paymentIntent = await createPaymentIntent(
       email,
       productId,
-      discountCode?.id
+      discount?.id
     )
     if (paymentIntent.error != null) {
       setErrorMessage(paymentIntent.error)
@@ -162,7 +163,7 @@ function Form({
           setErrorMessage("An unknown error occurred")
         }
       })
-      .finally(() => setIsLoading(false)) */
+      .finally(() => setIsLoading(false))
   }
 
   return (
@@ -172,7 +173,7 @@ function Form({
           <CardTitle>Checkout</CardTitle>
           <CardDescription className="text-destructive">
             {errorMessage && <div>{errorMessage}</div>}
-            {coupon != null && discountCode == null && (
+            {coupon != null && discount == null && (
               <div>Invalid discount code</div>
             )}
           </CardDescription>
@@ -185,29 +186,29 @@ function Form({
             />
           </div>
           <div className="space-y-2 mt-4">
-            <Label htmlFor="discountCode">Coupon</Label>
+            <Label htmlFor="discount">Coupon</Label>
             <div className="flex gap-4 items-center">
               <Input
-                id="discountCode"
+                id="discount"
                 type="text"
-                name="discountCode"
+                name="discount"
                 className="max-w-xs w-full"
                 defaultValue={coupon || ""}
-                ref={discountCodeRef}
+                ref={discountRef}
               />
               <Button
                 type="button"
                 onClick={() => {
                   const params = new URLSearchParams(searchParams)
-                  params.set("coupon", discountCodeRef.current?.value || "")
+                  params.set("coupon", discountRef.current?.value || "")
                   router.push(`${pathname}?${params.toString()}`)
                 }}
               >
                 Apply
               </Button>
-              {discountCode != null && (
+              {discount != null && (
                 <div className="text-muted-foreground">
-                  {formatDiscountCode(discountCode)} discount
+                  {formatDiscountCode(discount)} discount
                 </div>
               )}
             </div>

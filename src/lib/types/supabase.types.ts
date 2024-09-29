@@ -39,41 +39,109 @@ export type Database = {
           },
         ]
       }
+      affiliate: {
+        Row: {
+          createdAt: string
+          id: string
+          ownerId: string | null
+        }
+        Insert: {
+          createdAt?: string
+          id: string
+          ownerId?: string | null
+        }
+        Update: {
+          createdAt?: string
+          id?: string
+          ownerId?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "affiliate_ownerId_fkey"
+            columns: ["ownerId"]
+            isOneToOne: false
+            referencedRelation: "owner"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       billings: {
         Row: {
           amount: number
+          cancel_at: string | null
+          cancel_at_period_end: string | null
+          canceled_at: string | null
+          card_brand: string | null
+          card_last4: string | null
+          created: string | null
+          current_period_end: string | null
+          current_period_start: string | null
           daysWithService: number
           endDate: string | null
+          ended_at: string | null
           id: string
+          metadata: Json | null
           ownerId: string
-          period: Database["public"]["Enums"]["period"] | null       
+          payment_method_id: string | null
+          period: Database["public"]["Enums"]["period"] | null
           plan: Database["public"]["Enums"]["plans"]
           startDate: string
+          status: Database["public"]["Enums"]["status"] | null
           subscribed: boolean
+          trial_end: string | null
+          trial_start: string | null
           userId: string
         }
         Insert: {
           amount?: number
+          cancel_at?: string | null
+          cancel_at_period_end?: string | null
+          canceled_at?: string | null
+          card_brand?: string | null
+          card_last4?: string | null
+          created?: string | null
+          current_period_end?: string | null
+          current_period_start?: string | null
           daysWithService?: number
           endDate?: string | null
+          ended_at?: string | null
           id: string
+          metadata?: Json | null
           ownerId: string
-          period?: Database["public"]["Enums"]["period"] | null      
+          payment_method_id?: string | null
+          period?: Database["public"]["Enums"]["period"] | null
           plan?: Database["public"]["Enums"]["plans"]
           startDate?: string
+          status?: Database["public"]["Enums"]["status"] | null
           subscribed?: boolean
+          trial_end?: string | null
+          trial_start?: string | null
           userId: string
         }
         Update: {
           amount?: number
+          cancel_at?: string | null
+          cancel_at_period_end?: string | null
+          canceled_at?: string | null
+          card_brand?: string | null
+          card_last4?: string | null
+          created?: string | null
+          current_period_end?: string | null
+          current_period_start?: string | null
           daysWithService?: number
           endDate?: string | null
+          ended_at?: string | null
           id?: string
+          metadata?: Json | null
           ownerId?: string
-          period?: Database["public"]["Enums"]["period"] | null      
+          payment_method_id?: string | null
+          period?: Database["public"]["Enums"]["period"] | null
           plan?: Database["public"]["Enums"]["plans"]
           startDate?: string
+          status?: Database["public"]["Enums"]["status"] | null
           subscribed?: boolean
+          trial_end?: string | null
+          trial_start?: string | null
           userId?: string
         }
         Relationships: [
@@ -82,6 +150,73 @@ export type Database = {
             columns: ["ownerId"]
             isOneToOne: false
             referencedRelation: "owner"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      category: {
+        Row: {
+          createdAt: string
+          id: string
+          name: string
+          storeId: string
+          updatedAt: string
+        }
+        Insert: {
+          createdAt?: string
+          id: string
+          name: string
+          storeId: string
+          updatedAt: string
+        }
+        Update: {
+          createdAt?: string
+          id?: string
+          name?: string
+          storeId?: string
+          updatedAt?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "category_storeId_fkey"
+            columns: ["storeId"]
+            isOneToOne: false
+            referencedRelation: "store"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      color: {
+        Row: {
+          createdAt: string
+          id: string
+          name: string
+          storeId: string
+          updatedAt: string
+          value: string
+        }
+        Insert: {
+          createdAt?: string
+          id: string
+          name: string
+          storeId: string
+          updatedAt: string
+          value: string
+        }
+        Update: {
+          createdAt?: string
+          id?: string
+          name?: string
+          storeId?: string
+          updatedAt?: string
+          value?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "color_storeId_fkey"
+            columns: ["storeId"]
+            isOneToOne: false
+            referencedRelation: "store"
             referencedColumns: ["id"]
           },
         ]
@@ -97,7 +232,7 @@ export type Database = {
           id: string
           isActive: boolean
           limit: number | null
-          storeId: string | null
+          storeId: string
           uses: number
         }
         Insert: {
@@ -110,7 +245,7 @@ export type Database = {
           id: string
           isActive?: boolean
           limit?: number | null
-          storeId?: string | null
+          storeId: string
           uses?: number
         }
         Update: {
@@ -123,10 +258,18 @@ export type Database = {
           id?: string
           isActive?: boolean
           limit?: number | null
-          storeId?: string | null
+          storeId?: string
           uses?: number
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "discount_storeId_fkey"
+            columns: ["storeId"]
+            isOneToOne: false
+            referencedRelation: "store"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       order: {
         Row: {
@@ -221,29 +364,41 @@ export type Database = {
       }
       owner: {
         Row: {
+          connectedAccountId: string | null
           createdAt: string
           customerId: string | null
           email: string | null
           id: string
+          isPrintfulLinked: boolean
+          linkCode: string | null
           name: string | null
+          stripeConnectedLinked: boolean
           updatedAt: string
           userId: string
         }
         Insert: {
+          connectedAccountId?: string | null
           createdAt?: string
           customerId?: string | null
           email?: string | null
           id: string
+          isPrintfulLinked?: boolean
+          linkCode?: string | null
           name?: string | null
+          stripeConnectedLinked?: boolean
           updatedAt: string
           userId: string
         }
         Update: {
+          connectedAccountId?: string | null
           createdAt?: string
           customerId?: string | null
           email?: string | null
           id?: string
+          isPrintfulLinked?: boolean
+          linkCode?: string | null
           name?: string | null
+          stripeConnectedLinked?: boolean
           updatedAt?: string
           userId?: string
         }
@@ -251,6 +406,9 @@ export type Database = {
       }
       product: {
         Row: {
+          category: string
+          categoryId: string | null
+          colorId: string | null
           createdAt: string
           description: string
           embedding: string | null
@@ -259,11 +417,16 @@ export type Database = {
           isAvailableForPurchase: boolean
           name: string
           priceInCents: number
+          quantity: number
+          sizeId: string | null
           storeId: string
           tokens: number | null
           updatedAt: string
         }
         Insert: {
+          category?: string
+          categoryId?: string | null
+          colorId?: string | null
           createdAt?: string
           description?: string
           embedding?: string | null
@@ -272,11 +435,16 @@ export type Database = {
           isAvailableForPurchase?: boolean
           name: string
           priceInCents: number
+          quantity?: number
+          sizeId?: string | null
           storeId: string
           tokens?: number | null
           updatedAt: string
         }
         Update: {
+          category?: string
+          categoryId?: string | null
+          colorId?: string | null
           createdAt?: string
           description?: string
           embedding?: string | null
@@ -285,11 +453,34 @@ export type Database = {
           isAvailableForPurchase?: boolean
           name?: string
           priceInCents?: number
+          quantity?: number
+          sizeId?: string | null
           storeId?: string
           tokens?: number | null
           updatedAt?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "product_categoryId_fkey"
+            columns: ["categoryId"]
+            isOneToOne: false
+            referencedRelation: "category"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "product_colorId_fkey"
+            columns: ["colorId"]
+            isOneToOne: false
+            referencedRelation: "color"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "product_sizeId_fkey"
+            columns: ["sizeId"]
+            isOneToOne: false
+            referencedRelation: "size"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "product_storeId_fkey"
             columns: ["storeId"]
@@ -299,36 +490,80 @@ export type Database = {
           },
         ]
       }
+      size: {
+        Row: {
+          createdAt: string
+          id: string
+          name: string
+          storeId: string
+          updatedAt: string
+          value: string
+        }
+        Insert: {
+          createdAt?: string
+          id: string
+          name: string
+          storeId: string
+          updatedAt: string
+          value: string
+        }
+        Update: {
+          createdAt?: string
+          id?: string
+          name?: string
+          storeId?: string
+          updatedAt?: string
+          value?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "size_storeId_fkey"
+            columns: ["storeId"]
+            isOneToOne: false
+            referencedRelation: "store"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       store: {
         Row: {
+          category: string | null
           createdAt: string
           icon: string | null
           id: string
           name: string
           ownerId: string
+          pin: number
           subdomain: string
           updatedAt: string
           userId: string
+          wake: boolean
         }
         Insert: {
+          category?: string | null
           createdAt?: string
           icon?: string | null
           id: string
           name: string
           ownerId: string
+          pin?: number
           subdomain: string
           updatedAt: string
           userId: string
+          wake?: boolean
         }
         Update: {
+          category?: string | null
           createdAt?: string
           icon?: string | null
           id?: string
           name?: string
           ownerId?: string
+          pin?: number
           subdomain?: string
           updatedAt?: string
           userId?: string
+          wake?: boolean
         }
         Relationships: [
           {
@@ -456,6 +691,22 @@ export type Database = {
             }
             Returns: unknown
           }
+      product_search: {
+        Args: {
+          query_embedding: string
+          similarity_threshold: number
+          match_count: number
+          store_id: string
+        }
+        Returns: {
+          id: string
+          name: string
+          description: string
+          priceincents: number
+          imagepath: string
+          similarity: number
+        }[]
+      }
       sparsevec_out: {
         Args: {
           "": unknown
@@ -522,6 +773,16 @@ export type Database = {
       discountCodeType: "PERCENTAGE" | "FIXED"
       period: "monthly" | "yearly"
       plans: "STANDARD" | "PRO" | "ULTIMATE"
+      pricingInterval: "day" | "week" | "month"
+      pricingType: "one_time" | "recurring"
+      status:
+        | "trialing"
+        | "active"
+        | "canceled"
+        | "incomplete"
+        | "incomplete_expired"
+        | "past_due"
+        | "unpaid"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -529,27 +790,27 @@ export type Database = {
   }
 }
 
-type PublicSchema = Database[Extract<keyof Database, "public">]      
+type PublicSchema = Database[Extract<keyof Database, "public">]
 
 export type Tables<
   PublicTableNameOrOptions extends
     | keyof (PublicSchema["Tables"] & PublicSchema["Views"])
     | { schema: keyof Database },
-  TableName extends PublicTableNameOrOptions extends { schema: keyof 
-Database }
-    ? keyof (Database[PublicTableNameOrOptions["schema"]]["Tables"] &        Database[PublicTableNameOrOptions["schema"]]["Views"])       
+  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
+    ? keyof (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
+        Database[PublicTableNameOrOptions["schema"]]["Views"])
     : never = never,
-> = PublicTableNameOrOptions extends { schema: keyof Database }      
-  ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &        
+> = PublicTableNameOrOptions extends { schema: keyof Database }
+  ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
       Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
       Row: infer R
     }
     ? R
     : never
-  : PublicTableNameOrOptions extends keyof (PublicSchema["Tables"] & 
+  : PublicTableNameOrOptions extends keyof (PublicSchema["Tables"] &
         PublicSchema["Views"])
     ? (PublicSchema["Tables"] &
-        PublicSchema["Views"])[PublicTableNameOrOptions] extends {   
+        PublicSchema["Views"])[PublicTableNameOrOptions] extends {
         Row: infer R
       }
       ? R
@@ -560,18 +821,17 @@ export type TablesInsert<
   PublicTableNameOrOptions extends
     | keyof PublicSchema["Tables"]
     | { schema: keyof Database },
-  TableName extends PublicTableNameOrOptions extends { schema: keyof 
-Database }
-    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]   
+  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
+    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
     : never = never,
-> = PublicTableNameOrOptions extends { schema: keyof Database }      
+> = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
       Insert: infer I
     }
     ? I
     : never
-  : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]    
-    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {     
+  : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
+    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
         Insert: infer I
       }
       ? I
@@ -582,18 +842,17 @@ export type TablesUpdate<
   PublicTableNameOrOptions extends
     | keyof PublicSchema["Tables"]
     | { schema: keyof Database },
-  TableName extends PublicTableNameOrOptions extends { schema: keyof 
-Database }
-    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]   
+  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
+    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
     : never = never,
-> = PublicTableNameOrOptions extends { schema: keyof Database }      
+> = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
       Update: infer U
     }
     ? U
     : never
-  : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]    
-    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {     
+  : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
+    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
         Update: infer U
       }
       ? U
@@ -605,10 +864,11 @@ export type Enums<
     | keyof PublicSchema["Enums"]
     | { schema: keyof Database },
   EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicEnumNameOrOptions["schema"]]["Enums"]     
+    ? keyof Database[PublicEnumNameOrOptions["schema"]]["Enums"]
     : never = never,
-> = PublicEnumNameOrOptions extends { schema: keyof Database }       
-  ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]   
-  : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]      
+> = PublicEnumNameOrOptions extends { schema: keyof Database }
+  ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
+  : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
     ? PublicSchema["Enums"][PublicEnumNameOrOptions]
     : never
+

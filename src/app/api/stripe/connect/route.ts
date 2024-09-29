@@ -38,6 +38,24 @@ export async function POST(req: Request) {
       });
       break;
     }
+    /* case "payment_intent.succeeded": {
+      const account = event.data.object;
+
+      const data = await prismadb.owner.update({
+        where: {
+          connectedAccountId: account.id,
+        },
+        data: {
+          stripeConnectedLinked:
+            account.capabilities?.transfers === "pending" ||
+            account.capabilities?.transfers === "inactive"
+              ? false
+              : true,
+        },
+      });
+      break;
+    } */
+
     default: {
       console.log("unhandled event");
     }

@@ -15,7 +15,6 @@ export type ProductStateProps = {
   //color: Color;
   imagePath: string;
   createdAt: Date;
-  //storeId: string
 }
 
 type InitialStateProps = {

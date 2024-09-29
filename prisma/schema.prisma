@@ -17,10 +17,12 @@ model owner {
   customerId       String? @unique
   connectedAccountId    String?  @unique
   stripeConnectedLinked Boolean @default(false)
+  isPrintfulLinked Boolean @default(false)
+  linkCode         String?
   affiliate         affiliate?
   subscription      billings? @relation("OwnerToBilling")
   stores            store[]
-  orders            order[] 
+  orders            order[]
 
 
   createdAt        DateTime @default(now())
@@ -39,6 +41,34 @@ model billings {
   period          period?
   subscribed      Boolean @default(false)
   daysWithService Int     @default(0)
+
+  created         String?
+  current_period_end String?
+  current_period_start String?
+  ended_at        String?
+  metadata        Json?
+  cancel_at       String?
+  cancel_at_period_end String?
+  canceled_at     String?
+
+  status          status?
+  trial_end       String?
+  trial_start     String?
+
+  payment_method_id String?
+  card_brand      String?
+  card_last4      String?
+}
+
+
+enum status {
+  trialing
+  active
+  canceled
+  incomplete
+  incomplete_expired
+  past_due
+  unpaid
 }
 
 enum plans {
@@ -47,10 +77,22 @@ enum plans {
   ULTIMATE
 }
 
+enum pricingInterval {
+  day
+  week
+  month
+}
+
+enum pricingType {
+  one_time
+  recurring
+}
+
 enum period {
  monthly
  yearly
 }
+
 
 model store {
   id                  String    @id @default(uuid())

@@ -8,9 +8,12 @@ import { Input } from '@/components/ui/input';
 import Link from 'next/link';
 import { Card } from '@/components/ui/card';
 import { formatCurrency, truncateString } from '@/lib/utils';
+import { Submitbutton } from '@/components/ui/submit-buttons';
+import { Loader2 } from 'lucide-react';
 
 export default function ProductSearchSection({storeId}:{storeId: string}) {
   const [searchTerm, setSearchTerm] = useState('');
+  const [loading, setLoading] = useState(false)
   const [searchResults, setSearchResults] = useState([{
     id: '',
     imagePath: '',
@@ -54,6 +57,7 @@ export default function ProductSearchSection({storeId}:{storeId: string}) {
 
   // fetch products from supabase
   const fetchProducts = async () => {
+    
     const { data, error } = await supabaseClient
       .from('product')
       .select('*')
@@ -75,7 +79,7 @@ export default function ProductSearchSection({storeId}:{storeId: string}) {
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-
+    setLoading(true)
     // REGULAR SERACH
     // search the products array for the search term
     // const searchResults = products.filter((product) => {
@@ -105,6 +109,7 @@ export default function ProductSearchSection({storeId}:{storeId: string}) {
       console.log("semantic response", semanticSearchResponse.data);
       setSearchResults(semanticSearchResponse.data as never[]);
       //console.log("Data:", searchResults)
+      setLoading(false)
     }
   };
 
@@ -121,13 +126,24 @@ export default function ProductSearchSection({storeId}:{storeId: string}) {
           value={searchTerm}
           onChange={handleChange}
         />
-        <Button
+        {/* <Button
           type="submit"
           variant={"secondary"}
           className="mx-1 rounded-l-none"
+          disabled
         >
           Search
+        </Button> */}
+        {loading ? (
+        <Button disabled >
+          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          Please Wait
         </Button>
+      ) : (
+        <Button type="submit" className={`${"bg-primary"}`}>Search</Button>
+      )}
+
+        
       </form>
       <div className="justify-center overflow-y-auto grid grid-cols-1 md:grid-cols-3 gap-4">
         {searchResults.map((product, index) => (

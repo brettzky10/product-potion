@@ -72,8 +72,6 @@ export const useCompleteCustomerPayment = (onNext: () => void) => {
     if (!stripe || !elements) {
       return null
     }
-    
-    const storeId = onGetStoreId()
 
     console.log('no reload')
 
@@ -83,8 +81,8 @@ export const useCompleteCustomerPayment = (onNext: () => void) => {
       const { error, paymentIntent } = await stripe.confirmPayment({
         elements,
         confirmParams: {
-          //return_url: `${process.env.NEXT_PUBLIC_SITE_URL}/store/9009addf-6210-4a02-95f7-d532dbcf5ea5/settings`,
-          return_url: `https://${process.env.NEXT_PUBLIC_SITE_URL}/store/${storeId}/settings`
+          /* return_url: `${process.env.NEXT_PUBLIC_SITE_URL}/store/${storeId}/settings` */
+          return_url: `${process.env.NEXT_PUBLIC_SITE_URL}/billing`
         },
         redirect: 'if_required',
       })
@@ -185,7 +183,7 @@ export const useCompletePayment = (
       const { error, paymentIntent } = await stripe.confirmPayment({
         elements,
         confirmParams: {
-          return_url: `https://${process.env.NEXT_PUBLIC_SITE_URL}/settings`,
+          return_url: `${process.env.NEXT_PUBLIC_SITE_URL}/billing`,
         },
         redirect: 'if_required',
       })
@@ -193,7 +191,7 @@ export const useCompletePayment = (
       if (error) {
         console.log(error)
       }
-
+      //Success
       if (paymentIntent?.status === 'succeeded') {
         const plan = await onUpdateSubscription(payment)
         if (plan) {

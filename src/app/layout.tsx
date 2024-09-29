@@ -8,6 +8,7 @@ import { ModalProvider } from "@/lib/providers/modal-provider";
 import { BillingProvider } from "@/lib/providers/billing-provider";
 import QueryProvider from "@/lib/providers/query-provider";
 import { ReduxProvider } from "@/lib/providers/redux/provider";
+import Transition from "./transition";
 
 
 const geistSans = localFont({
@@ -63,8 +64,10 @@ export default function RootLayout({
             <StripeModalProvider>
             <ReduxProvider>
             <QueryProvider>
+            <Transition>
               {children}
-              </QueryProvider>
+            </Transition>
+            </QueryProvider>
             </ReduxProvider>
             </StripeModalProvider>
             </BillingProvider>

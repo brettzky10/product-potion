@@ -4,12 +4,16 @@ import  prismadb  from '@/lib/db/prismadb'
 import Stripe from 'stripe'
 import { createClient } from "@/lib/supabase/supabase-server";
 import { redirect } from "next/navigation";
+import { getDiscountedAmount, usableDiscountCodeWhere } from '../store/discount/discount-code-helpers';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET!, {
   typescript: true,
   apiVersion: '2024-06-20',
 })
 
+
+
+//Potion to Owner - Subscriptions
 export const onCreateCustomerPaymentIntentSecret = async (
   amount: number,
   stripeId: string
@@ -44,6 +48,23 @@ export const onUpdateSubscription = async (
         data: { user },
     } = await supabase.auth.getUser();
     if (!user) return
+
+    const owner = await prismadb.owner.findUnique({
+      where:{
+        userId: user.id,
+        email: user.email
+      },
+      select:{
+        subscription: {
+          select:{
+            amount: true
+          }
+        }
+      }
+    })
+
+    let oldAmount = owner?.subscription?.amount || 0
+
     const update = await prismadb.owner.update({
       where: {
         userId: user.id,
@@ -54,7 +75,7 @@ export const onUpdateSubscription = async (
           update: {
             data: {
               plan,
-              amount: plan == 'PRO' ? 50 : plan == 'ULTIMATE' ? 500 : 10,
+              amount: plan == 'PRO' ? (oldAmount + 50) : plan == 'ULTIMATE' ? (oldAmount + 500) : (oldAmount + 10),
             },
           },
         },
@@ -84,7 +105,7 @@ const setPlanAmount = (item: 'STANDARD' | 'PRO' | 'ULTIMATE') => {
     return 3500
   }
   if (item == 'ULTIMATE') {
-    return 5500
+    return 8500
   }
   return 0
 }
@@ -100,6 +121,7 @@ export const onGetStripeClientSecret = async (
       automatic_payment_methods: {
         enabled: true,
       },
+      //receipt_email: user.email
     })
 
     if (paymentIntent) {
@@ -111,6 +133,7 @@ export const onGetStripeClientSecret = async (
 }
 
 
+//--------Owner to Customer------------
 export async function createCheckoutSession({
   productId,
   quantity,
@@ -358,3 +381,105 @@ export async function BuyProduct(formData: FormData) {
 
   return redirect(session.url as string);
 }
+
+
+
+export async function createPaymentIntent(
+  email: string,
+  productId: string,
+  discountId?: string
+) {
+  const product = await prismadb.product.findUnique({ where: { id: productId } })
+  if (product == null) return { error: "Unexpected Error" }
+
+  const discount =
+    discountId == null
+      ? null
+      : await prismadb.discount.findUnique({
+          where: { id: discountId, ...usableDiscountCodeWhere(product.id) },
+        })
+
+  if (discount == null && discountId != null) {
+    return { error: "Coupon has expired" }
+  }
+
+ /*  const existingOrder = await prismadb.orderItem.findFirst({
+    where: {  productId }, //owner: { email },
+    select: { id: true },
+  }) */
+
+  /* if (existingOrder != null) {
+    return {
+      error:
+        "You have already purchased this product. Try downloading it from the My Orders page",
+    }
+  } */
+
+  const amount =
+    discount == null
+      ? product.priceInCents
+      : getDiscountedAmount(discount, product.priceInCents)
+
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount,
+    currency: "CAD",
+    metadata: {
+      productId: product.id,
+      discountId: discount?.id || null,
+    },
+  })
+
+  if (paymentIntent.client_secret == null) {
+    return { error: "Unknown error" }
+  }
+
+  return { clientSecret: paymentIntent.client_secret }
+}
+
+
+
+//Create Portal Link
+export const createOrRetrieveCustomer = async ({
+  email,
+  uuid,
+}: {
+  email: string;
+  uuid: string;
+}) => {
+
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from("owner")
+    .select("customerId")
+    .eq("userId", uuid)
+    .single();
+  if (error || !data?.customerId) {
+    // No customer record found, let's create one.
+    const customerData: { metadata: { supabaseUUID: string }; email?: string } =
+      {
+        metadata: {
+          supabaseUUID: uuid,
+        },
+      };
+    if (email) customerData.email = email;
+    const customer = await stripe.customers.create(customerData);
+    // Now insert the customer ID into our Supabase mapping table.
+    await prismadb.owner.update({
+      where:{
+        userId: uuid,
+        email: email
+      },
+      data:{
+        customerId: customer.id
+      }
+    })
+    /* const { error: supabaseError } = await supabase
+      .from("owner")
+      .insert([{ userId: uuid, customerId: customer.id }]); */
+    //if (supabaseError) throw supabaseError;
+    console.log(`New customer created and inserted for ${uuid}.`);
+    return customer.id;
+  }
+  return data.customerId;
+};

@@ -27,6 +27,18 @@ import { createClient } from "@/lib/supabase/supabase-server";
 import StripeBillingCard from "@/components/global/integrate/stripe-card";
 import { CreateStripeAccoutnLink, GetStripeDashboardLink } from "@/lib/actions/stripe";
 import { Submitbutton } from "@/components/ui/submit-buttons";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import Link from "next/link";
+import { Heading } from "@/components/ui/heading";
+import PrintfulLinkCard from "@/components/store/settings/integrations/link-printful";
+import { checkCustomerLinkStatus } from "@/lib/actions/store/settings/link-accounts";
 
 interface SettingsPageProps {
     params: {
@@ -76,8 +88,27 @@ const SettingsPage: React.FC<SettingsPageProps> = async ({
 
     const owner = await getData(user.id);
 
+    const isPrintfulLinked = await checkCustomerLinkStatus(user.id)
+
     return (
         <div className="flex-1 space-y-4 p-8 pt-6">
+          <Breadcrumb className="hidden md:flex">
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link href={`/store/${params.storeId}/dashboard`}>Dashboard</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link href={`/store/${params.storeId}/settings`}>Settings</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              
+            </BreadcrumbList>
+          </Breadcrumb>
+          <Heading title={`Settings`} description="Store settings here."/>
             <Tabs defaultValue="account" className="w-full">
       <TabsList className="grid w-full grid-cols-3">
         <TabsTrigger value="account">Account</TabsTrigger>
@@ -107,12 +138,12 @@ const SettingsPage: React.FC<SettingsPageProps> = async ({
           </CardHeader>
           <CardContent className="space-y-2 ">
             <ScrollArea>
-                <div className="flex flex-col">
-                <Card>
+                <div className="flex flex-col space-y-5">
+                <Card className="w-[350px]">
                     <CardHeader>
-                      <CardTitle>Billing</CardTitle>
+                      <CardTitle>Payment Link Status</CardTitle>
                       <CardDescription>
-                        Find all your details regarding your payments
+                        Link your Stripe account to start receiving payments.
                       </CardDescription>
                     </CardHeader>
                     <CardContent>
@@ -129,6 +160,11 @@ const SettingsPage: React.FC<SettingsPageProps> = async ({
                       )}
                     </CardContent>
                   </Card>
+                  {user.email && owner?.stripeConnectedLinked === true
+                    ? <PrintfulLinkCard isPrintfulLinked={isPrintfulLinked} userId={user.id} email={user.email} />
+                    : null
+                  }
+                  
                 {/* <IntegrationsSection/> */}
                 {/* <StripeBillingCard/> */}
                 </div>

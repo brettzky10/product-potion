@@ -2,7 +2,7 @@
 
 //import Navbar from "@/components/global/domain/navbar";
 import { ProductListSlider } from "@/components/domain/global/group-list-slider";
-import NavBarDomain from "@/components/domain/global/navbar-domain";
+import NavBarDomain from "@/components/domain/global/navbar/navbar-domain";
 
 import prismadb from "@/lib/db/prismadb";
 import DomainModalProvider from "@/lib/providers/domain-modal-provider";

@@ -23,24 +23,12 @@ export default async function DashboardLayout({
         redirect('/login');
     }
 
-    /* const owner = await prismadb.owner.findUnique({
-        where: {
-            id: user.id,
-        },
-        select: {
-            id: true,
-            email: true,
-        }
-        
-    }); */
-
     //Load 1st store with this ID
     const owner = await prismadb.owner.findUnique({
         where: {
             //id: params.storeId,
             email: user?.email,
             userId: user?.id,
-            
         }
     });
     const store = await prismadb.store.findFirst({
@@ -51,29 +39,17 @@ export default async function DashboardLayout({
         }
     });
 
-   /*  //Check Store Exists
-    if (!store){
-        redirect('/store');
-    } */
     //Check Store Exists
     if (store){
         redirect(`/store/${store.id}/dashboard`);
+    }else{
+        redirect(`/login`)
     }
 
     return (
         <>
         <div className="bg-white">
-{/*             <Navbar /> */}
             {children}
-            <div className="h-screen w-full">
-                <div className="flex items-center space-x-4">
-                    <Skeleton className="h-12 w-12 rounded-full" />
-                    <div className="space-y-2">
-                        <Skeleton className="h-4 w-[250px]" />
-                        <Skeleton className="h-4 w-[200px]" />
-                    </div>
-                    </div>
-            </div>
         </div>
         </>
     );

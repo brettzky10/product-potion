@@ -74,7 +74,7 @@ const SubDomainPage = async (props: PageProps) => {
   console.log(`This is theSubdomain storeId: ${storeId}`)
 
   //Get only discounted products for Subdomain:
-  const products = await getDomainProducts(storeId!)
+  //const products = await getDomainProducts(storeId!)
   //console.log(`This is product name: ${products.name}`)
   //const products = await getProducts({ isFeatured: true});
 
@@ -96,7 +96,7 @@ const SubDomainPage = async (props: PageProps) => {
 ) */
 
   //Sort by newest
-const getNewestProducts = cache(() => {
+/* const getNewestProducts = cache(() => {
   return prismadb.product.findMany({
     where: { 
       isAvailableForPurchase: true,
@@ -105,11 +105,54 @@ const getNewestProducts = cache(() => {
     orderBy: { createdAt: "desc" },
     take: 6,
   })
-}, [`/${subdomain}/`, "getNewestProducts"])
+}, [`/${subdomain}/`, "getNewestProducts"]) */
 
 
+//TODO: Get categories created by user, then prefetch here, as well pass to ExplorePageContent()
+//---Import Selected categories---
+/* const getMostPopularProducts = cache(
+  () => {
+    return prismadb.product.findMany({
+      where: { isAvailableForPurchase: true },
+      orderBy: { orderItems: { _count: "desc" } },
+      take: 6,
+    })
+  },
+  ["/", "getMostPopularProducts"],
+  { revalidate: 60 * 60 * 24 }
+)
+ */
+const getProducts = await prismadb.product.findMany({
+  where:{
+    storeId: storeId,
+    
+  },
+  select:{
+    customCategory: true
+  }
+
+})
+
+
+const getCategories = await prismadb.category.findMany({
+  where:{
+    storeId: storeId,
+    
+  },
+  select:{
+    name: true
+  },
+  take: 3
+
+})
+
+console.log(getCategories)
+
+//TODO: Get categories created by user, then prefetch here, as well pass to ExplorePageContent()
+
+//-----Query----
 const query = new QueryClient()
-
+ 
   await query.prefetchQuery({
     queryKey: ["fitness"],
     queryFn: () => onGetExplore("fitness", 0, storeId!),
@@ -124,33 +167,38 @@ const query = new QueryClient()
     queryKey: ["lifestyle"],
     queryFn: () => onGetExplore("lifestyle", 0, storeId!),
   })
+    /* await Promise.all(
+      getCategories.map((category, id )=> {
+        return query.prefetchQuery({
+          queryKey: [category.name],
+          queryFn: () => onGetExplore(category.name, 0, storeId!),
+        });
+      })
+    ); */
 
 
     return (
         <>
         <HydrationBoundary state={dehydrate(query)}>
-            <ExplorePageContent layout="SLIDER" storeId={storeId!} />
+            <ExplorePageContent layout="SLIDER" storeId={storeId!}  />{/*  categories={getCategories} */}
             <div className="my-5">
             <DiscountBanner storeId={storeId!}/>
             </div>
             
-            <div className="space-y-10 pb-10 px-5">
-                {/* <div className="w-full m-5 rounded-xl bg-primary">
-                  <Timer />
-                </div> */}
-                {/*<div className="flex flex-col gap-y-8 px-4 sm:px-6 lg:px-4">
+            {/* <div className="space-y-10 pb-10 px-5">
+                <div className="flex flex-col gap-y-8 px-4 sm:px-6 lg:px-4">
                  <ProductGridSection
                   title="Most Popular"
                   productsFetcher={getMostPopularProducts}
                 /> 
-                </div>*/}
+                </div>
                 <ProductGridSection title="Newest" productsFetcher={getNewestProducts} />
 
 
-                <div className="flex flex-col gap-y-8 px-4 sm:px-6 lg:px-4">
+                 <div className="flex flex-col gap-y-8 px-4 sm:px-6 lg:px-4">
                     <ProductList title="Featured Products" items={products}/>
-                </div>
-            </div>
+                </div> *
+            </div> */}
             
             </HydrationBoundary>
         </>

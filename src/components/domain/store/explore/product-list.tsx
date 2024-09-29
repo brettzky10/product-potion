@@ -15,7 +15,7 @@ const ProductList = ({ category, storeId }: Props) => {
   return (
     <div className="container grid md:grid-cols-2 grid-cols-1 lg:grid-cols-3 gap-6 mt-16">
       {status === 200 ? (
-        products.map((product) => <ProductCard key={product.id} {...product} />)
+        products.map((product) => <ProductCard key={product.id} {...product}/>)
       ) : (
         <NoResult />
       )}

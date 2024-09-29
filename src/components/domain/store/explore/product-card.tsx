@@ -15,7 +15,8 @@ type Props = {
   //storeId: string
   priceInCents: number
   imagePath: string | null
-  description: string
+  description: string,
+  //discount: number,
   //privacy: "PUBLIC" | "PRIVATE"
   //preview?: string
 }
@@ -28,6 +29,7 @@ const ProductCard = ({
   //category,
   description,
   priceInCents,
+  //discount,
   //privacy,
   //preview,
 }: Props) => {

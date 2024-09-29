@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import { Timer } from './timer'
 import { getNearestDiscount } from '@/lib/actions/domain/discounts'
+import { Badge } from '@/components/ui/badge'
 
 interface Discount {
   id: string
@@ -71,15 +72,25 @@ export default function SimplifiedDiscountBanner({ storeId }: SimplifiedDiscount
 
   return (
     <div className="bg-primary text-primary-foreground h-20 rounded-lg shadow-lg overflow-hidden">
-      <div className="container mx-auto h-full flex items-center justify-between px-4">
-        <div className="flex-shrink-0">
-          <h2 className="text-lg font-bold">Special Offer!</h2>
-          <p className="text-sm">
-            Use code <span className="font-bold">{discount.code}</span> for{' '}
+      <div className="container mx-auto h-full flex items-center justify-between px-4 lg:flex-row">
+        <div className='flex flex-row '>
+          <div className="flex-shrink-0 m-1 text-white">
+            <h2 className="text-3xl font-bold">Special Offer!</h2>
+            <p className="text-lg text-coral">
+              Use code <span className="font-bold text-white">{discount.code}</span> to get:{' '}
+              
+              
+            </p>
+            
+              
+              
+          </div>
+          <div className='bg-potion rounded-2xl border border-black p-4 ml-5 m-1 text-white font-black text-3xl'>
             {discount.discountType === 'PERCENTAGE' ? `${discount.discountAmount}% off` : `$${discount.discountAmount / 100} off`}
-          </p>
+          </div>
         </div>
-        <div className="flex-shrink-0">
+        
+        <div className="flex-shrink-0 md:flex hidden">
           <Timer initialTime={timeLeft} />
         </div>
       </div>

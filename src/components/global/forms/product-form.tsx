@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { product, } from "@prisma/client";
 import { ArrowBigLeft, PlusCircleIcon, Trash, Wand2 } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
 
@@ -32,6 +32,7 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
   } from "@/components/ui/breadcrumb";
+import Image from "next/image";
 
   
 
@@ -50,6 +51,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
 
     const [open, setOpen] = useState(false); //For alert Modal
     const [loading, setLoading] = useState(false);
+    const fileInputRef = useRef<HTMLInputElement>(null)
 
     const title = initialData ? "Edit product" : "Create product";
     const headingDescription = initialData ? "Edit a product" : "Add a new product";
@@ -92,7 +94,10 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                 category: 'fitness',
                 updatedAt: new Date(),
                 storeId: '',
-                tokens: null
+                tokens: null,
+                colorId: "",
+                sizeId: "",
+                categoryId: ""
               });
             if (initialData){
                 await axios.patch(`/api/${params.storeId}/products/${params.productId}`, data);
@@ -141,7 +146,10 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         createdAt: new Date(),
         updatedAt: new Date(),
         storeId: '',
-        tokens: null
+        tokens: null,
+        colorId: "",
+        sizeId: "",
+        categoryId: ""
       });
 
 
@@ -153,9 +161,28 @@ export const ProductForm: React.FC<ProductFormProps> = ({
           if (file) {
             const { data, error } = await supabase.storage
               .from("store-files")
-              .upload(`/${randomNameId}`, file, {
+              .upload(`/${randomNameId}`, file, { //randomNameId
                 cacheControl: "3600",
-                upsert: false,
+                upsert: false, //false
+              });
+            if (error) {
+                toast.error("Error occurred while uploading file")
+              throw error;
+            }
+            setProductInfo((prev) => ({
+              ...prev,
+              imagePath: `${supabaseUrl}/storage/v1/object/public/store-files/${data?.path}`,
+            }));
+            console.log(productInfo)
+          }
+          //If Second upload
+         /*  const fileTwo = event.target.files?.[1];
+          if (fileTwo) {
+            const { data, error } = await supabase.storage
+              .from("store-files")
+              .upload(`/${randomNameId}`, fileTwo, { //randomNameId
+                cacheControl: "3600",
+                upsert: false, //false
               });
             if (error) {
               throw error;
@@ -165,11 +192,19 @@ export const ProductForm: React.FC<ProductFormProps> = ({
               imagePath: `${supabaseUrl}/storage/v1/object/public/store-files/${data?.path}`,
             }));
             console.log(productInfo)
-          }
+          } */
         } catch (error) {
+            toast.error("Error occurred while uploading file")
           console.error("An error occurred while uploading the file:", error);
         }
+        
+
+        
       };
+
+      const handleImageClick = () => {
+        fileInputRef.current?.click()
+      }
 
     return (
         <>
@@ -212,14 +247,69 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full justify-between">
                     <FormField control={form.control} name="imagePath" render={({field})=> (
                                 <FormItem>
-                                    <FormLabel>Images</FormLabel>
-                                    <img
+                                    
+                                    <FormLabel>Capture Image</FormLabel>
+                                    {/* <img
                                         className="rounded-md size-8"
                                         src={productInfo?.imagePath || initialData?.imagePath || "/icons/placeholder.svg"}
                                         alt="Product image"
-                                        />
-                                    <FormControl>
-                                        <Input
+                                        /> */}
+                                    <div>
+                                    
+                                    <div 
+                                        className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md cursor-pointer"
+                                        onClick={handleImageClick}
+                                    >
+                                        <div className="space-y-1 text-center">
+                                        {productInfo?.imagePath ? (
+                                            <Image
+                                            src={productInfo?.imagePath}
+                                            alt="Captured image"
+                                            width={100}
+                                            height={100}
+                                            className="mx-auto object-cover rounded-md"
+                                            />
+                                        ) : (
+                                            <svg
+                                            className="mx-auto h-12 w-12 text-gray-400"
+                                            stroke="currentColor"
+                                            fill="none"
+                                            viewBox="0 0 48 48"
+                                            aria-hidden="true"
+                                            >
+                                            <path
+                                                d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                                                strokeWidth={2}
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                            />
+                                            </svg>
+                                        )}
+                                        <div className="flex text-sm text-gray-600">
+                                            <label
+                                            htmlFor="image-capture"
+                                            className="relative cursor-pointer bg-white rounded-md font-medium text-primary hover:text-primary-dark focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary"
+                                            >
+                                            <span>{productInfo?.imagePath || initialData?.imagePath ? 'Change photo' : 'Capture photo'}</span>
+                                            <FormControl>
+                                            <Input
+                                                id="imagePath" name="imagePath" 
+                                                required
+                                                ref={fileInputRef}
+                                                type="file"
+                                                accept="image/*"
+                                                disabled={loading}
+                                                capture="environment"
+                                                className="sr-only"
+                                                onChange={(e) => {
+                                                    field.onChange(productInfo.imagePath)
+                                                    handleFileChange(e)
+                                                  }}
+                                            />
+                                            </FormControl>
+                                            
+                                            
+                                            {/* <Input
                                             id="imagePath"
                                             type="file"
                                             //{...field}
@@ -228,11 +318,36 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                                                 field.onChange(productInfo.imagePath)
                                                 handleFileChange(e)
                                               }}
-                                        />
-                                    </FormControl>
+                                                /> */}
+                                            </label>
+                                        </div>
+                                        <p className="text-xs text-gray-500">PNG, JPG up to 3MB</p>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    
+                                        {/* <Input
+                                            id="imagePath"
+                                            type="file"
+                                            //{...field}
+                                            disabled={loading}
+                                            onChange={(e) => {
+                                                field.onChange(productInfo.imagePath)
+                                                handleFileChange(e)
+                                              }}
+                                        /> */}
+                                    
                                     <FormMessage/>
                                 </FormItem>
                         )}/>
+                        <div className="flex flex-row gap-2 items-center">
+                                            Current:
+                                            <img
+                                                className="rounded-md size-12"
+                                                src={productInfo?.imagePath || initialData?.imagePath || "/icons/placeholder.svg"}
+                                                alt="Product image"
+                                                />
+                                            </div>
                         {/* <Button onClick={()=>router.push(`/edit`)} variant={"gradient"}>
                             <Wand2 className="mr-2 h-4 w-4"/>
                             Edit Images with AI

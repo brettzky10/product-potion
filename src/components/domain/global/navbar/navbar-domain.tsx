@@ -2,9 +2,12 @@ import React from 'react'
 import prismadb from "@/lib/db/prismadb";
 import { headers } from "next/headers";
 import Link from 'next/link';
-import SearchModal from './modals/search-modal';
-import { ThemeToggle } from '@/components/global/theme-toggle';
-import WakeLockToggle from './wake/wake-lock-toggle';
+import SearchModal from '../modals/search-modal';
+import { ThemeToggle } from '@/components/global/navbar/theme-toggle';
+import WakeLockToggle from '../wake/wake-lock-toggle';
+import NavbarActions from './navbar-actions';
+import { Sheet, SheetContent, SheetHeader, SheetTrigger } from '@/components/ui/sheet';
+import { Menu } from 'lucide-react';
 
 const NavBarDomain = async () => {
 
@@ -51,9 +54,22 @@ const NavBarDomain = async () => {
                     <div className='flex flex-row gap-2'>
 
                       <SearchModal storeId={store!.id}/>
-                      <WakeLockToggle id={store!.id} />
-                      <ThemeToggle/>
+                      <NavbarActions/>
                       
+                      
+                      <Sheet>
+                        <SheetTrigger>
+                          <Menu className='w-6 h-6 ml-2'/>
+                        </SheetTrigger>
+                        
+                        <SheetContent className='w-56 bg-gray-100 text-coral space-y-10'>
+                          <SheetHeader className='font-light text-5xl'>
+                            Launch <span className='text-potion font-black'>Potion</span>
+                          </SheetHeader>
+                          <ThemeToggle/>
+                          <WakeLockToggle id={store!.id} />
+                        </SheetContent>
+                      </Sheet>
                     </div>
                     
                     
