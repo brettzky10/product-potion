@@ -10,7 +10,7 @@ import { Download, SparklesIcon, Trash, X } from 'lucide-react';
 import Loader from '@/components/global/loader/progress-spinner';
 import LoadingOverlay from '@/components/global/loader/loading-screen';
 import { ReactCompareSlider, ReactCompareSliderImage } from 'react-compare-slider';
-import BillingNavbar from '../../navbar/navbar-store';
+//import BillingNavbar from '../../navbar/navbar-store';
 import { useCreditAmount, useDecrementCreditAmount } from '@/lib/hooks/use-credits';
 
 
@@ -94,8 +94,8 @@ function ActionPanel({ isLoading, submitImage }: ActionPanelProps) {
             } inline-flex items-center rounded-md px-3 py-2 text-sm font-semibold shadow-sm transition-all duration-300 hover:bg-teal-500/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600/60 lg:px-3.5 lg:py-2.5`}
           >
             Remove background
-            {/* <SparklesIcon className='ml-2 h-4 w-4 text-gray-300' /> */}
-            <BillingNavbar/>
+            <SparklesIcon className='ml-2 h-4 w-4 text-gray-300' />
+            {/* <BillingNavbar/> */}
 
           </button>
           

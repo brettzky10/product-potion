@@ -76,6 +76,7 @@ export const onUpdateSubscription = async (
             data: {
               plan,
               amount: plan == 'PRO' ? (oldAmount + 50) : plan == 'ULTIMATE' ? (oldAmount + 500) : (oldAmount + 10),
+              subscribed: plan == "STANDARD" ? false : true
             },
           },
         },
@@ -88,6 +89,10 @@ export const onUpdateSubscription = async (
         },
       },
     })
+
+
+
+
     if (update) {
       return {
         status: 200,

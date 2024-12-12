@@ -24,16 +24,17 @@ import ResizePhoneComponent from "@/components/global/tools/resize/resize-phone"
 //import StageTool from "@/components/tools/stage"
 import LightingTool from "@/components/global/tools/lighting"
 import CreditsBadge from "../../navbar/credits-button"
+import ChangeTool from "../change"
  
 export default function EditTabs() {
   return (
     <> 
       
-    <div className="max-h-[60vh]">
+    <div className="max-h-[60vh] mt-5">
       <Tabs defaultValue="remove" className="mx-auto max-w-4xl sm:w-[550px] md:w-[700px] lg:w-[900px] ">
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="remove">Remove</TabsTrigger>
-          {/* <TabsTrigger value="replace">Replace</TabsTrigger> */}
+          {/* <TabsTrigger value="change">Change</TabsTrigger> */}
           <TabsTrigger value="relight">Relight</TabsTrigger>
 {/*           <TabsTrigger value="reblur">Blur</TabsTrigger> */}
           <TabsTrigger value="resize">Resize</TabsTrigger>
@@ -54,19 +55,6 @@ export default function EditTabs() {
             </CardContent>
           </Card>
         </TabsContent>
-        {/* <TabsContent value="replace">
-          <Card className="bg-gradient-to-t from-primary dark:from-primary-foreground via-primary dark:via-primary-foreground to-emerald-700/20 dark:to-emerald-600/30">
-          <CardHeader className="ml-5 md:ml-14">
-              <CardTitle>Replace</CardTitle>
-              <CardDescription>
-                Generate a background for a Product
-              </CardDescription>
-            </CardHeader>
-            <CardContent >
-              <StageTool/>
-            </CardContent>
-          </Card>
-        </TabsContent> */}
         <TabsContent value="relight" className="">
         <Card className="bg-gradient-to-t from-themeDarkGray via-themeDarkGray to-sand">
             <CardHeader className="ml-5 md:ml-14">
@@ -113,6 +101,7 @@ export default function EditTabs() {
             </CardContent>
           </Card>
         </TabsContent>
+        
       </Tabs>
     </div>
     </>

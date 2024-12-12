@@ -34,10 +34,10 @@ export const ProductClient: React.FC<ProductClientProps> = ({
             <Heading title={`Products (${data.length})`} description="Manage products for your store."/>
             <div className="flex flex-row gap-x-2">
                 <AddProductDrawer/>
-                <Button onClick={()=>router.push(`/store/${params.storeId}/products/new`)} className="rounded-full">
+                {/* <Button onClick={()=>router.push(`/store/${params.storeId}/products/new`)} className="rounded-full">
                 <Plus className="mr-2 h-4 w-4"/>
                 Add New Product
-                </Button>
+                </Button> */}
                 
         </div>
          </div>

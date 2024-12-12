@@ -34,7 +34,11 @@ export const getUserTransactions = async () => {
         })
   
         if (connectedStripe?.stripeConnectedLinked == true) {
-          const transactions = await stripe.charges.list({
+          const transactions = await stripe.charges.list(
+            {
+              limit: 10,
+            },
+            {
             stripeAccount: connectedStripe.connectedAccountId!,
           })
           if (transactions) {

@@ -14,7 +14,7 @@ const Layout = ({children}: Props) => {
     <div className="max-h-screen h-screen flex w-full justify-center bg-black">
       <div className="w-[600px] ld:w-full flex flex-col items-start p-6 bg-black">
         <Image
-          src="/images/logo-main.png"
+          src="/images/potion-white.png"
           alt="LOGO"
           sizes="100vw"
           style={{
@@ -38,7 +38,7 @@ const Layout = ({children}: Props) => {
           all on your very own storefront page!
         </p>
         <Image
-          src="/images/app-ui.png"
+          src="/images/site/launch-potion-ui-laptop-2.png"
           alt="app image"
           loading="lazy"
           sizes="30"

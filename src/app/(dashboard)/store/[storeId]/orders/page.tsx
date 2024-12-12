@@ -65,8 +65,9 @@ const OrdersPage = async ({
                 </BreadcrumbLink>
               </BreadcrumbItem>
             </BreadcrumbList>
-          </Breadcrumb>
+        </Breadcrumb>
             <OrderClient data={formattedOrders} />
+            
         </div>
 
     </div>

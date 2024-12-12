@@ -13,7 +13,7 @@ const ProductList = ({ category, storeId }: Props) => {
   const { products, status } = useProductList("products")
 
   return (
-    <div className="container grid md:grid-cols-2 grid-cols-1 lg:grid-cols-3 gap-6 mt-16">
+    <div className="container grid md:grid-cols-2 grid-cols-1 lg:grid-cols-3 gap-6 mt-16 py-10">
       {status === 200 ? (
         products.map((product) => <ProductCard key={product.id} {...product}/>)
       ) : (

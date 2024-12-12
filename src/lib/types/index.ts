@@ -35,3 +35,20 @@ export interface Product {
     >;
   };
 
+  export type Portfolio = {
+    quote: string;
+    name: string,
+    role: string,
+    imgSrc: string,
+    portfolioImage: string;
+  };
+
+  interface ImageLoaderParams {
+    src: string;
+    width: number;
+    quality?: number;
+  }
+
+  export const imageLoader = ({ src, width, quality = 75 }: ImageLoaderParams): string => 
+    `${src}?w=${width}&q=${quality}`;
+

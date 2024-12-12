@@ -141,10 +141,10 @@ export function ShareFeedback({ email, open, setOpen }: ShareFeedbackProps) {
                   <WavyBackground waveWidth={100} className="mx-auto" />
                   <CardHeader className="pt-1">
                     <CardTitle className="text-xl">
-                      Request a Character
+                      Request a Feature
                     </CardTitle>
                     <CardDescription>
-                      Looking to add someone to the Entropy collection? Share
+                      Looking to add someone to Launch Potion? Share
                       your ideas and we will consider them for future updates.
                     </CardDescription>
                   </CardHeader>
@@ -153,7 +153,7 @@ export function ShareFeedback({ email, open, setOpen }: ShareFeedbackProps) {
                       <FormControl>
                         <Textarea
                           id="request"
-                          placeholder="Could you add Ryan Gosling?"
+                          placeholder="Could you add a way for me to switch the charts on my dashboard?"
                           className="min-h-[120px]"
                           {...field}
                         />
@@ -218,10 +218,10 @@ export function ShareFeedback({ email, open, setOpen }: ShareFeedbackProps) {
                   />
                   <CardHeader className="pt-1">
                     <CardTitle className="text-xl">
-                      Loving Entropy or otherwise?
+                      Tell us what you think of Launch Potion!
                     </CardTitle>
                     <CardDescription>
-                      Share your love, feature requests, ideas, or bug reports!
+                      Share your love and what you like, areas that could be improved, and bug reports!
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -295,7 +295,7 @@ export function publishToLogSnag({ event, description, icon, ...props }) {
       Authorization: "Bearer " + LOGSNAG_TOKEN,
     }),
     body: JSON.stringify({
-      project: "entropy",
+      project: "potion",
       channel: "feedback",
       event: event,
       description: description,

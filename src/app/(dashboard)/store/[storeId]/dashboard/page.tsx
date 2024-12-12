@@ -13,6 +13,7 @@ import GlassCard from '@/components/global/glass-card';
 import { createClient } from '@/lib/supabase/supabase-server';
 import { redirect } from 'next/navigation';
 import { getUserTransactions } from '@/lib/actions/store/dashboard/get-user-transactions';
+import { SalesOverviewChart } from '@/components/store/dashboard/sales-chart';
 
 
 interface DashboardPageProps {
@@ -78,8 +79,19 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({
 
   const transactions = await getUserTransactions()
 
+  //Timestamp:
+  const myUnixTimestamp = 1691622800; // start with a Unix timestamp
+
+const myDate = new Date(myUnixTimestamp * 1000); // convert timestamp to milliseconds and construct Date object
+
+//console.log(myDate); // will print "Thu Aug 10 2023 01:13:20" followed by the local timezone on browser console
+
+
+
+
+
   return (
-    <div className="flex-col mx-12 pt-5">
+    <div className="flex-col md:mx-12 pt-5">
     <Heading title="Dashboard" description="Overview of your store"/>
     <Separator className="my-5"/>
    
@@ -101,7 +113,7 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({
         </Card>
       : <div className="flex-1 space-y-4 p-8 pt-6">
           <Separator />
-          <div className="grid gap-4 grid-cols-3">
+          {/* <div className="grid gap-4 grid-cols-3">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">
@@ -110,7 +122,7 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({
                 <DollarSign className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-              {/*  <div className="text-2xl font-bold">{formatter.format(totalRevenue)}</div> */}
+               <div className="text-2xl font-bold">{formatter.format(totalRevenue)}</div>
               </CardContent>
             </Card>
             <Card>
@@ -119,7 +131,8 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({
                 <CreditCard className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                {/* <div className="text-2xl font-bold">+{salesCount}</div> */}
+                <div className="text-2xl font-bold">+{salesCount}</div>
+               
               </CardContent>
             </Card>
             <Card>
@@ -128,18 +141,12 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({
                 <Package className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                {/* <div className="text-2xl font-bold">{stockCount}</div> */}
+                <div className="text-2xl font-bold">{stockCount}</div>
               </CardContent>
             </Card>
-          </div>
-          <Card className="col-span-4">
-            <CardHeader>
-              <CardTitle>Overview</CardTitle>
-            </CardHeader>
-            <CardContent className="pl-2">
-              {/* <Overview data={graphRevenue} /> */}
-            </CardContent>
-          </Card>
+          </div> */}
+          <SalesOverviewChart/>
+          
           {/* New Cards */}
           {/* <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -190,7 +197,9 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({
                 key={transaction.id}
               >
                 <p className="font-bold">
-                  {transaction.calculated_statement_descriptor}
+                  <Link href={transaction.receipt_url || "/"}>
+                    {transaction.created}
+                  </Link>
                 </p>
                 <p className="font-bold text-xl">
                   ${transaction.amount / 100}

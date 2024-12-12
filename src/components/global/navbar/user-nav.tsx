@@ -32,6 +32,7 @@ import { useTheme } from "next-themes";
 import { createClient } from "@/lib/supabase/supabase-client";
 import { Badge } from "@/components/ui/badge";
 import { Sparkles } from "lucide-react";
+import { ThemeToggle } from "./theme-toggle";
 
 interface Props {
   user: User | null | undefined;
@@ -127,7 +128,7 @@ export function UserNav({ plan, user, credits}: Props) { //, userDetails
             asChild
             className="text-muted-foreground cursor-pointer rounded-md py-2"
           >
-            <Link href="/">
+            <Link href="/check">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="icon icon-tabler icon-tabler-layout-dashboard w-5 h-5 mr-4"
@@ -146,14 +147,14 @@ export function UserNav({ plan, user, credits}: Props) { //, userDetails
                 <path d="M14 12h6v8h-6z" />
                 <path d="M14 4h6v4h-6z" />
               </svg>
-              Explore
+              Dashboard
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem
             asChild
             className="text-muted-foreground cursor-pointer rounded-md py-2"
           >
-            <Link href="/profile">
+            <Link href="/">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="icon icon-tabler icon-tabler-user w-5 h-5 mr-4"
@@ -170,7 +171,7 @@ export function UserNav({ plan, user, credits}: Props) { //, userDetails
                 <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
                 <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
               </svg>
-              Profile
+              Home Page
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem
@@ -225,7 +226,7 @@ export function UserNav({ plan, user, credits}: Props) { //, userDetails
             </Link>
           </DropdownMenuItem> */}
 
-          <DropdownMenuItem
+          {/* <DropdownMenuItem
             asChild
             className="text-muted-foreground cursor-pointer rounded-md py-2"
           >
@@ -247,7 +248,7 @@ export function UserNav({ plan, user, credits}: Props) { //, userDetails
               </svg>
               Twitter
             </Link>
-          </DropdownMenuItem>
+          </DropdownMenuItem> */}
         </DropdownMenuGroup>
 
         <DropdownMenuSeparator />
@@ -299,6 +300,9 @@ export function UserNav({ plan, user, credits}: Props) { //, userDetails
             setOpen={setFeedbackOpen}
           />
 
+          <DropdownMenuSeparator/>
+          <ThemeToggle />
+          <DropdownMenuSeparator/>
           <DropdownMenuItem
             onClick={async () => {
               const { error } = await supabase.auth.signOut();

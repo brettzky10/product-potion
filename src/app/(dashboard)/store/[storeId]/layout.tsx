@@ -7,7 +7,7 @@ import SideBar from "@/components/global/sidebar";
 //import { auth } from "@clerk/nextjs/server";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { onLoginUser } from "@/lib/actions/auth";
-import NavbarDashboard from "@/components/global/navbar/navbar-dashboard";
+import NavbarDashboard from "@/components/global/navbar/navbar-backup";
 import { getSubDomain, getSubDomainFromStoreId } from "@/lib/actions/store/get-subdomain";
 import { getCredits } from "@/lib/actions/store/get-credits";
 import { getUserPlanInfo } from "@/lib/actions/store/dashboard/get-user-plan";
@@ -62,7 +62,7 @@ export default async function DashboardLayout({
             
              {/* {<BillingNavbar/>} */}
             </div>
-            <div className="mx:mx-12 mx-10">
+            <div className="md:mx-12 mx-10">
                 {children}
             </div>
             </div>

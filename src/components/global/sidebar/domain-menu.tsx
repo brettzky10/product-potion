@@ -114,7 +114,7 @@ const DomainMenu = ({ stores, min }: Props) => {
                   />
                     : <Image
                     //src={`https://ucarecdn.com/${store.icon}/`}
-                    src={`/images/logo-main.png`}
+                    src={`/images/potion.png`}
                     alt="logo"
                     width={20}
                     height={20}

@@ -78,9 +78,9 @@ function ActionPanel({ isLoading, submitImage }: ActionPanelProps) {
       </div>
     </div>
     <div className='mt-5 sm:ml-6 sm:mt-0 sm:flex flex-col space-y-3 sm:flex-shrink-0 sm:items-center lg:flex-row space-x-3'>
-      <Input
+      {/* <Input
         placeholder='A warm light in a cozy cottage setting'
-      />
+      /> */}
       <button
         type='button'
         disabled={isDisabled}
@@ -92,8 +92,8 @@ function ActionPanel({ isLoading, submitImage }: ActionPanelProps) {
         } inline-flex items-center rounded-md px-3 py-2 text-sm font-semibold shadow-sm transition-all duration-300 hover:bg-emerald-500/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600/60 lg:px-3.5 lg:py-2.5`}
       >
         <p>Relight Image</p>
-        <BillingNavbar/>
-        {/* <SparklesIcon className='ml-2 h-4 w-4 text-gray-300' /> */}
+        {/* <BillingNavbar/> */}
+        <SparklesIcon className='ml-2 h-4 w-4 text-gray-300' />
       </button>
     </div>
   </div>

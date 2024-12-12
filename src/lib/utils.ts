@@ -99,3 +99,11 @@ export const camelCase = (str: string) => {
 export const truncateString = (string: string) => {
   return string.slice(0, 60) + "..."
 }
+
+export default function fileToBase64(file: File) {
+  return new Promise((resolve, _) => {
+    const reader = new FileReader();
+    reader.onloadend = () => resolve(reader.result);
+    reader.readAsDataURL(file);
+  });
+}

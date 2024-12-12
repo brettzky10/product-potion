@@ -1,5 +1,5 @@
-import Navigation from '@/components/global/navbar/navbar-site'
-import NavSite from '@/components/global/navbar/navbar-site-dark';
+
+import NavSite from '@/components/global/navbar/navbar-site';
 import { getCredits } from '@/lib/actions/store/get-credits';
 import { createClient } from '@/lib/supabase/supabase-server';
 import { redirect } from 'next/navigation';
@@ -21,7 +21,7 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
 
   return (
     
-      <main className="h-full ">
+      <main className="h-full relative">
         <NavSite user={user} credits={credits} />
         {children}
       </main>

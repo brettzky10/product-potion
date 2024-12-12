@@ -60,7 +60,7 @@ const SIDE_BAR_MENU: SIDE_BAR_MENU_PROPS[] = [
   {
     label: 'Edit Images',
     icon: <Wand2 />,
-    path: `products/edit`,
+    path: `edit`,
   },
   {
     label: 'Discounts',
@@ -80,7 +80,7 @@ const storeId = useParams()
     <div className="py-3 px-4 flex flex-col h-full bg-sand">
       <div className="flex justify-between items-center">
         <Image
-          src="/images/logo-main.png"
+          src="/images/potion.png"
           alt="LOGO"
           sizes="20vw"
           className="animate-fade-in  delay-300 fill-mode-forwards"
@@ -93,7 +93,7 @@ const storeId = useParams()
         />
         {/* <Menu className='w-6 h-6'/> */}
         <Button onClick={onExpand}variant="ghost">
-          {/* <Image src='/logo-main.png' width={20} height={20} alt='logo' /> */}
+          {/* <Image src='/potion.png' width={20} height={20} alt='logo' /> */}
           <Menu className='w-6 h-6 cursor-pointer animate-fade-in  delay-300 fill-mode-forwards'/>
         </Button>
       </div>

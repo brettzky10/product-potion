@@ -1,46 +1,104 @@
+"use client";
 
-import Image from 'next/image'
-import Link from 'next/link'
-import React from 'react'
-import NavLinks from './navbar-site-links'
-import { Button } from '@/components/ui/button'
-import { BuildingIcon, HeartPulseIcon, LeafIcon, MenuIcon, PillIcon, ThermometerIcon } from 'lucide-react'
+import * as React from "react";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+import { User } from "@supabase/supabase-js";
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuList,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu";
+import { UserNav } from "./user-nav";
+import { ThemeToggle } from "./theme-toggle";
+import Potion from "../icons/crafting-nav";
+import { HeartPulseIcon,  MenuIcon, ThermometerIcon } from 'lucide-react'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
-import {ThemeToggle} from '@/components/global/navbar/theme-toggle'
-import Potion from '@/components/global/icons/crafting-nav'
+import { Button } from "@/components/ui/button";
+import NavLinks from "./navbar-site-links";
+import { AnimatedButton } from "@/components/ui/animated-button-right";
+import ShinyButton from "@/components/ui/shiny-button";
 
 
-const Navigation = () => { 
+interface NavbarProps {
+  user: User | null | undefined;
+  credits: number | undefined
+}
+
+export default function NavSite({ user, credits }: NavbarProps) {
+
   return (
-    <div className="fixed top-0 right-0 left-0 p-4 flex items-center justify-between z-30 dark:bg-primary-foreground/40 bg-white/30 backdrop-blur-lg">
-      <aside className="flex items-center gap-2 group cursor-pointer">
-        {/* <Image
-          src={'/images/logo-main.png'}
-          width={40}
-          height={40}
-          alt=" logo"
-          className='rounded-xl'
-        /> */}
-        <Potion selected={false}/>
-        <span className="text-xl font-bold hover:text-primary/50">Launch Potion</span>
-      </aside>
-      <div className='hidden md:flex'>
-        
-      </div>
-      <NavLinks/>
-      <aside className="flex gap-2 items-center">
-        <Link
-          href="/check"
-          className=""
-        >
-          <Button variant="default">
-            Dashboard
-          </Button>
-          {/* <AnimatedButton variant={"ringHover"} className='dark:bg-gradient-to-tr dark:from-yellow-700 dark:via-teal-900 dark:to-purple-800 dark:text-white dark:hover:text-white/60'>
-            Dashboard
-          </AnimatedButton> */}
+    <div>
+      <div
+        className={cn(
+          "fixed top-0 left-0 right-0 z-50 flex items-center justify-between p-6 lg:px-8 sm:flex-row h-14 backdrop-blur-md  bg-transparent text-themeTextGray"
+        )}
+      >
+        <Link href={"/"} className="text-lg font-semibold">
+          <aside className="flex items-center gap-2 group cursor-pointer">
+          <Potion selected={false}/>
+          <span className="text-xl font-bold hover:text-violet-500/70">Launch Potion<sup className="text-violet-500 ml-1">beta</sup></span>
+          </aside>
         </Link>
-        <ThemeToggle />
+        <NavLinks/>
+        <div className="ml-auto flex space-x-3 sm:justify items-center">
+          <div className="space-x-5 md:flex">
+            <div>
+              <NavigationMenu>
+                <NavigationMenuList className="gap-4 items-center">
+                  
+
+                  {user ? (
+                    <div className="flex flex-row gap-3 items-center">
+                      {/* <AnimatedButton asChild variant={"gooeyRight"} size={"sm"} className="bg-gradient-to-r from-violet-500 via-pink-500/70 to-pink-700/80">
+                      <Link
+                        href="/check"
+                        className=""
+                      >
+                        Dashboard
+                      </Link>
+                      </AnimatedButton> */}
+                      <Link href={"/dashboard"}>
+                            <ShinyButton >
+                                Dashboard
+                            </ShinyButton>
+                      </Link>
+                      <UserNav user={user} credits={credits}  />
+                    </div>
+                  ) : (
+                    <NavigationMenuItem>
+                      <Link
+                        href="/login"
+                        className={cn(
+                          navigationMenuTriggerStyle(),
+                          "group",
+                          "bg-transparent focus:bg-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800"
+                        )}
+                      >
+                        <span>Log In</span>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="ml-4 h-3 w-3 opacity-0 -translate-x-2 group-hover:translate-x-0 group-hover:opacity-100 transition-all"
+                        >
+                          <polyline points="9 18 15 12 9 6" />
+                        </svg>
+                      </Link>
+                    </NavigationMenuItem>
+                  )}
+                </NavigationMenuList>
+              </NavigationMenu>
+            </div>
+          </div>
+        </div>
         <Sheet>
             <SheetTrigger asChild>
               <Button className="md:hidden" size="icon" variant="outline">
@@ -87,10 +145,8 @@ const Navigation = () => {
                 </Link> */}
               </div>
             </SheetContent>
-          </Sheet>
-      </aside>
+        </Sheet>
+      </div>
     </div>
-  )
+  );
 }
-
-export default Navigation

@@ -8,6 +8,12 @@ import { MenuLogoMin } from './menu-logo-min'
 import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
 import DomainMenu from './domain-menu'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import { Button } from '@/components/ui/button'
 
 
 type MinMenuProps = {
@@ -142,7 +148,7 @@ export const MinMenu = ({
               />
             </TooltipTrigger>
             <TooltipContent>
-              Settings
+             Settings
             </TooltipContent>
           </Tooltip>
           </TooltipProvider>

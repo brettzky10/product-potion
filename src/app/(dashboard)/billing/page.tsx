@@ -1,4 +1,4 @@
-import Navbar from "@/components/global/navbar/navbar-site-dark";
+import Navbar from "@/components/global/navbar/navbar-dashboard";
 import { Column } from "@/components/ui/column";
 import { Row } from "@/components/ui/row";
 import { createClient } from "@/lib/supabase/supabase-server";
@@ -34,7 +34,7 @@ export default async function SubscriptionPage() {
 
       <Column className="w-full items-center min-h-screen py-18 px-4">
         <Column className="w-full max-w-4xl xl:max-w-7xl">
-          <div className="relative w-full overflow-hidden bg-background flex flex-col justify-start rounded-lg pt-32 pb-14">
+          <div className="relative w-full overflow-hidden bg-background flex flex-col justify-start rounded-lg pt-16 pb-6">
             <div
               className="absolute inset-0 w-full h-full bg-background z-20 pointer-events-none"
               style={{
@@ -55,7 +55,7 @@ export default async function SubscriptionPage() {
             </p>
           </div>
 
-          <Row className="mb-14 w-full h-[1px] bg-gradient-to-r from-transparent via-gray-200 dark:via-gray-800 to-transparent" />
+          <Row className="mb-6 w-full h-[1px] bg-gradient-to-r from-transparent via-gray-200 dark:via-gray-800 to-transparent" />
 
           <SubscriptionDetails
             plan={plan!}

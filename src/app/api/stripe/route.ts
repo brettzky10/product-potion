@@ -29,14 +29,14 @@ export async function POST(req: Request) {
 
       const link = session.metadata?.link;
 
-      const { data, error } = await resend.emails.send({
+      /* const { data, error } = await resend.emails.send({
         from: "Launch Potion <onboarding@resend.dev>",//${store.name}
         to: ["brett.linseman@gmail.com"],
         subject: "a Discount from Launch Potion", //${store.name}
         react: ProductEmail({
           link: link as string,
         }),
-      });
+      }); */
 
       break;
     }
