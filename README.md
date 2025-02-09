@@ -1,4 +1,4 @@
-<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
+<!-- Improved compatibility of back to top link: See: https://github.com/brettzky10/pull/73 -->
 <a id="readme-top"></a>
 <!--
 *** Thanks for checking out the Best-README-Template. If you have a suggestion
@@ -30,23 +30,23 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
+  <a href="https://github.com/brettzky10">
     <img src="public/images/potion.png" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">Launch Potion</h3>
+  <h3 align="center">Product Potion</h3>
 
   <p align="center">
-    Launch your business with our elixir for success!
+    Build & manage multiple businesses from one dashboard.
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
+    <!-- <a href="https://github.com/brettzky10"><strong>Explore the docs »</strong></a> -->
     <br />
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
+    <!-- <a href="https://github.com/brettzky10">View Demo</a>
+    · -->
+    <a href="https://github.com/brettzky10/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
-    ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
+    <a href="https://github.com/brettzky10/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
   </p>
 </div>
 
@@ -85,9 +85,7 @@
 <div>
     
 </div>
-This was built with the intention to be a webhook connection point to promoting products, and leading customers back to tailored sales funnels.
-
-The product input, discounts, and sales funnel is coming along, but more work is needed to accomplish the intention of this project.
+This project was built with the intention of managing multiple stores from one dashboard. Each store has it's own subdomain that display products from that store, discounts, and the ability for their customer to pay and checkout using Stripe connect.
 
 <br>
 
@@ -250,8 +248,8 @@ Don't forget to give the project a star! Thanks again!
 
 ### Top contributors:
 
-<!-- <a href="https://github.com/othneildrew/Best-README-Template/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=othneildrew/Best-README-Template" alt="contrib.rocks image" />
+<!-- <a href="https://github.com/brettzky10/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=brettzky10" alt="contrib.rocks image" />
 </a> -->
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -297,16 +295,16 @@ I've included a few of some helpful resources when building this
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
-[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
-[forks-url]: https://github.com/othneildrew/Best-README-Template/network/members
-[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
-[stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
-[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
-[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/brettzky10.svg?style=for-the-badge
+[contributors-url]: https://github.com/brettzky10/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/brettzky10.svg?style=for-the-badge
+[forks-url]: https://github.com/brettzky10/network/members
+[stars-shield]: https://img.shields.io/github/stars/brettzky10.svg?style=for-the-badge
+[stars-url]: https://github.com/brettzky10/stargazers
+[issues-shield]: https://img.shields.io/github/issues/brettzky10.svg?style=for-the-badge
+[issues-url]: https://github.com/brettzky10/issues
+[license-shield]: https://img.shields.io/github/license/brettzky10.svg?style=for-the-badge
+[license-url]: https://github.com/brettzky10/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/othneildrew
 [product-screenshot]: public/images/screenshot.png
