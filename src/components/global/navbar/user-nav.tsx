@@ -36,7 +36,7 @@ import { ThemeToggle } from "./theme-toggle";
 
 interface Props {
   user: User | null | undefined;
-  credits?: number | undefined,
+  credits?: number | "0",
   plan?: string | undefined
   //userDetails?: any;
 }

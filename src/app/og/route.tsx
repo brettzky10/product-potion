@@ -44,7 +44,7 @@ export async function GET(request: Request) {
 								color: "#7D98A1",
 							}}
 						>
-							Launch Potion
+							Product Potion
 						</h1>
 						<div
 							tw="flex flex-row w-full"
@@ -55,7 +55,7 @@ export async function GET(request: Request) {
 								color: "#FFEDDF",
 							}}
 						>
-							Launch your business with an elixir for success!
+							Build and manage multiple businesses with an elixir for success!
 						</div>
 					</div>
 				</div>

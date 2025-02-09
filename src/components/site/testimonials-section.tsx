@@ -41,7 +41,7 @@ export const InfiniteMovingCards = ({
     {
       stars: "⭐⭐⭐⭐⭐",
         quote:
-        "I only use launch Potion to for my resell business. Without their tools I'd have to learn and purchase a lot of photography equipment.",
+        "I only use product Potion to for my resell business. Without their tools I'd have to learn and purchase a lot of photography equipment.",
       name: "Laura Siegal",
       title: "Reseller",
     },
@@ -68,7 +68,7 @@ export const InfiniteMovingCards = ({
     {
       stars: "⭐⭐⭐⭐⭐",
         quote:
-        "Launch Potion is slowly making waves in my group of business partners. Our business uses it almost daily.",
+        "Product Potion is slowly making waves in my group of business partners. Our business uses it almost daily.",
       name: "Herman Melnan",
       title: "Ecommit",
     },

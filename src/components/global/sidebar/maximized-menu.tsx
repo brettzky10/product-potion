@@ -1,7 +1,7 @@
 'use client';
 
 //import { SIDE_BAR_MENU } from '@/lib/sidebar-constants'
-import { Box, FilePlus, LogOut, Menu, Receipt, Settings, ShirtIcon, Store, Tag, Wand2 } from 'lucide-react'
+import { Bot, Box, FilePlus, LogOut, Menu, Receipt, Settings, ShirtIcon, Store, Tag, Wand2 } from 'lucide-react'
 import Image from 'next/image'
 import React from 'react'
 import MenuItem from './menu-item'
@@ -47,20 +47,25 @@ const SIDE_BAR_MENU: SIDE_BAR_MENU_PROPS[] = [
     icon: <ShirtIcon />,
     path: `products`,
   },
-  {
+  /* {
     label: 'Categories',
     icon: <FilePlus />,
     path: `categories`,
-  },
+  }, */
   /* {
     label: 'Billboard',
     icon: <ImagePlus />,
     path: `billboards`,
   }, */
-  {
+/*   {
     label: 'Edit Images',
     icon: <Wand2 />,
     path: `edit`,
+  }, */
+  {
+    label: 'Squad',
+    icon: <Bot />,
+    path: `squad`,
   },
   {
     label: 'Discounts',

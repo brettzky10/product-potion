@@ -33,7 +33,7 @@ export default function NavSite({ user, credits }: NavbarProps) {
         <Link href={"/"} className="text-lg font-semibold">
           <aside className="flex items-center gap-2 group cursor-pointer">
           <Potion selected={false}/>
-          <span className="text-xl font-bold hover:text-violet-500/70">Launch Potion<sup className="text-violet-500 ml-1">beta</sup></span>
+          <span className="text-xl font-bold hover:text-violet-500/70">Product Potion<sup className="text-violet-500 ml-1">beta</sup></span>
           </aside>
         </Link>
         <div className="ml-auto flex space-x-3 sm:justify items-center">

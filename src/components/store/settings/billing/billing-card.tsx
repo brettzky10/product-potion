@@ -34,7 +34,7 @@ export const SubscriptionCard = ({ onPayment, products, plan }: Props) => {
                 {product.nickname == 'Unlimited'
                   ? 'Enjoy a monthly torrent of credits flooding your account, empowering you to tackle even the most ambitious automation tasks effortlessly.'
                   : product.nickname == 'Pro'
-                  ? 'Experience a monthly surge of credits to supercharge your automation efforts. Ideal for small to medium-sized projects seeking consistent support.'
+                  ? 'Experience a monthly surge of credits to supercharge your automation efforts. Ideal for small to medium-sized projects.'
                   : product.nickname == 'Free' &&
                     "Get a monthly wave of credits to automate your tasks with ease. Perfect for starters looking to dip their toes into Fuzzie's automation capabilities."}
               </CardDescription>

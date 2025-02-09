@@ -24,6 +24,10 @@ model owner {
   stores            store[]
   orders            order[]
 
+  characters        character[]
+  webhook_secret    String?
+  webhooks          webhook[]
+  abilities         ability[]
 
   createdAt        DateTime @default(now())
   updatedAt         DateTime @updatedAt
@@ -107,9 +111,15 @@ model store {
   products            product[]
   orders              order[]
   discounts           discount[]
+  webhooks            webhook[]
+  characters          character[]         
+  abilities           ability[]  
+
   categories          category[] @relation("StoreToCategory")
   sizes               size[] @relation("StoreToSize")
   colors              color[] @relation("StoreToColor")
+
+  
 
   pin                 Int @default(1234)
   wake                Boolean @default(false)
@@ -213,6 +223,7 @@ model category {
   //@@index([billboardId])
 }
 
+//------Product Specs
 model size{
   id String @id @default(uuid())
   storeId String
@@ -239,6 +250,7 @@ model color{
   @@index([storeId])
 }
 
+//------Affiliate------------
 
 model affiliate {
   id        String   @id @default(uuid())
@@ -246,3 +258,97 @@ model affiliate {
   ownerId   String?  @unique
   createdAt DateTime @default(now())
 }
+
+
+//----Characters------------
+enum role {
+  user
+  system
+}
+
+model squad {
+  id        String   @id @default(uuid())
+  character character @relation(fields: [characterId], references: [id])
+  characterId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model characterCategory {
+  id         String      @id @default(uuid())
+  name       String
+  characters character[]
+}
+
+model character {
+  id           String @id @default(uuid())
+  userId       String
+  userName     String
+  src          String
+  name         String
+  description  String
+  instructions String
+  seed         String
+
+  owner       owner    @relation(fields: [ownerId], references: [id])
+  store     store   @relation(fields: [storeId], references: [id])
+  ownerId   String  @unique
+  storeId   String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  category   characterCategory @relation(fields: [categoryId], references: [id])
+  categoryId String
+
+  messages message[]
+  abilities ability[]
+  squad   squad[]
+
+  @@index([categoryId])
+}
+
+model message {
+  id        String   @id @default(uuid())
+  role      role
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  characterId String
+  userId      String
+
+  character character @relation(fields: [characterId], references: [id], onDelete: Cascade)
+
+  @@index([characterId])
+}
+
+model ability {
+  id        String   @id @default(uuid())
+  owner     owner   @relation(fields: [ownerId], references: [id])
+  store    store   @relation(fields: [storeId], references: [id])
+  ownerId   String  @unique
+  storeId   String  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  character  character   @relation(fields: [characterId], references: [id])
+  characterId   String
+
+  schedule  String?
+  webhook   Json?
+  isActive  Boolean   @default(true)
+}
+
+model webhook {
+  id        String   @id @default(uuid())
+  owner     owner?   @relation(fields: [ownerId], references: [id])
+  store    store?   @relation(fields: [storeId], references: [id])
+  ownerId   String?  @unique
+  storeId   String?  @unique
+  createdAt DateTime @default(now())
+  hookdeckConnectionId String
+}
+
+
+

@@ -1,6 +1,7 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 import { discountCodeType } from "@prisma/client"
+import { randomBytes } from "crypto";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -106,4 +107,28 @@ export default function fileToBase64(file: File) {
     reader.onloadend = () => resolve(reader.result);
     reader.readAsDataURL(file);
   });
+}
+
+export function generateWebhookSecret(length: number = 32): string {
+  return `sec_${randomBytes(length).toString("hex")}`;
+}
+
+const STRIP_HEADER_MATCHES = [
+  "x-hookdeck-",
+  "content-length",
+  "x-webhooks-demo-api-key",
+];
+
+export function stripWebhookHeaders(headers: Record<string, string>) {
+  const allowedHeaders: Record<string, string> = {};
+  for (const header in headers) {
+    if (
+      !STRIP_HEADER_MATCHES.some(
+        (stripMatch) => header.indexOf(stripMatch) !== -1
+      )
+    ) {
+      allowedHeaders[header] = headers[header];
+    }
+  }
+  return allowedHeaders;
 }

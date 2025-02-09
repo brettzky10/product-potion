@@ -26,10 +26,10 @@ const FooterSection = (props: Props) => {
                 alt=" logo"
                 className='rounded-xl h-full'
               />
-            <span className={`text-xl font-bold ${font.className}`}>Launch Potion</span>
+            <span className={`text-xl font-bold ${font.className}`}>Product Potion</span>
           </Link>
           <p className="text-muted-foreground">
-            Launch your business with our elixir for success.
+            Build your businesses with our elixir for success.
           </p>
         </div>
         <div className="grid gap-2">

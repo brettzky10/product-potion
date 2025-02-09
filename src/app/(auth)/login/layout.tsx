@@ -17,6 +17,7 @@ const Layout = ({children}: Props) => {
           src="/images/potion-white.png"
           alt="LOGO"
           sizes="100vw"
+          
           style={{
             width: '10%',
             height: 'auto',
@@ -38,11 +39,11 @@ const Layout = ({children}: Props) => {
           all on your very own storefront page!
         </p>
         <Image
-          src="/images/site/launch-potion-ui-laptop-2.png"
+          src="/images/site/product-potion-ui-laptop-2.png"
           alt="app image"
           loading="lazy"
           sizes="30"
-          className="absolute shrink-0 !w-[1600px] top-48"
+          className="absolute shrink-0 !w-[1600px] top-48 rounded-lg"
           width={0}
           height={0}
         />

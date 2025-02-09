@@ -87,7 +87,7 @@
 </div>
 This was built with the intention to be a webhook connection point to promoting products, and leading customers back to tailored sales funnels.
 
-The product input, discounts, and sales funnel is coming along. More work needs to be done to accomplish the intention of this project.
+The product input, discounts, and sales funnel is coming along, but more work is needed to accomplish the intention of this project.
 
 <br>
 
@@ -105,11 +105,11 @@ Features:
 * Multiple subdomains (restricted by subscription)
 <img src="https://sftqhmhkavkfyaxtoqoe.supabase.co/storage/v1/object/public/site-images/launch-potion-10.PNG" alt="Logo"  height="300">
 
-* Stripe Connect - Users can sell their products through their website and Launch Potion takes a very tiny cut.
+* Stripe Connect for merchants to get paid.
 <img src="https://sftqhmhkavkfyaxtoqoe.supabase.co/storage/v1/object/public/site-images/launch-potion-11.PNG" alt="Logo"  height="300">
 
 
-* Discount Creation - Create discounts for products
+* Discount Creation - Create discounts for products (WIP)
 <img src="https://sftqhmhkavkfyaxtoqoe.supabase.co/storage/v1/object/public/site-images/launch-potion-7.PNG" alt="Logo"  height="300">
 <img src="https://sftqhmhkavkfyaxtoqoe.supabase.co/storage/v1/object/public/site-images/launch-potion-12.PNG" alt="Logo"  height="300">
 
@@ -129,7 +129,7 @@ Current state:
 
 Future:
 <br>Online:
-  - A connection point for webhooks from make.com, zapier, ifttt. Extend flows that post, share, and promote your products across the web, leading customers back to a custom sales funnel.
+  - A connection point for webhooks from make.com, zapier, ifttt. Extend flows that post, share, and promote your products, leading customers back to a custom sales funnel.
 
 
 
@@ -210,12 +210,11 @@ To get a local copy up and running follow these simple steps.
 - [x] Add Stripe Connect
 - [x] Add /billing for Stripe Connect
 - [x] Add invoice screen
-- [x] Add discount to template
-- [ ] Add discount to Stripe Connect
-- [x] Add cron-job
-- [x] Add /billing for Stripe Connect
-- [x] Add invoice screen
-- [x] Add invoice screen
+- [ ] Add discounts
+  - [x] Add products to discount
+  - [x] Add discount to template
+  - [ ] Add discount to Stripe Connect
+- [ ] Add cron-job
 - [ ] Add Additional Templates
 - [ ] Fix product drawer categories to Prisma categories.
 - [ ] Fix template slider categories to Prisma categories.
@@ -226,7 +225,7 @@ To get a local copy up and running follow these simple steps.
     - [ ] Spanish
     - [ ] Chinese
     - [ ] French
-- [x] Add semantic search
+- [ ] Add semantic search
 - [ ] Add webhook cron jobs service to Prisma for automations to Make.com/Vapi
 
 

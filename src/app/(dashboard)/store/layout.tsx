@@ -8,6 +8,9 @@ import SideBar from "@/components/global/sidebar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { onLoginUser } from "@/lib/actions/auth";
 import DashboardSidebar from "@/components/global/sidebar/sidebar-2";
+import { getCredits } from "@/lib/actions/store/get-credits";
+import { getUserPlanInfo } from "@/lib/actions/store/dashboard/get-user-plan";
+import { getSubDomainFromStoreId } from "@/lib/actions/store/get-subdomain";
 
 
 export default async function DashboardLayout({
@@ -43,26 +46,21 @@ export default async function DashboardLayout({
      //Grab Store Details for authenticated user:
     const authenticated = await onLoginUser()
     if (!authenticated) return null
-/*
-    const { data: userDetails } = await supabase
-    .from('owner')
-    .select('*')
-    .eq('id', user.id)
-    .single()
 
-    const { data: amount } = await supabase
-    .from('billings')
-    .select('amount')
-    .eq('userId', user.id)
-    .single()
- */
+    const credits = await getCredits(user.id)
+
+    const plan = await getUserPlanInfo()
+    let userPlan = plan?.plan
+        {plan?.plan ? userPlan = plan?.plan : userPlan="STANDARD"}
+
+    const subdomain = await getSubDomainFromStoreId(params.storeId)
+
     return (
         <>
         <div className="relative">
-                {/* <Navbar /> */}
                 <div className="absolute h-full hidden md:flex min-h-[91vh] max-h-screen z-50">
                     <SideBar storeId={store.id} stores={authenticated.store}/>
-                    {/* <DashboardSidebar children={children} email={user.email} credits={credits} storeId={store.id} stores={authenticated.store}/> */}
+                    {/* <DashboardSidebar children={children} email={user.email} credits={credits!} storeId={store.id} stores={authenticated.store} plan={userPlan} user={user} subdomain={subdomain!}/> */}
                 </div>
                 <ScrollArea className="md:ml-12 h-[100vh] flex bg-ghost">
                     {children}

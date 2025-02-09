@@ -236,11 +236,11 @@ export async function CreateStripeAccoutnLink() {
     refresh_url:
       process.env.NODE_ENV === "development"
         ? `http://localhost:3000/billing`
-        : `https://launchpotion.vercel.app/billing`,
+        : `https://productpotion.vercel.app/billing`,
     return_url:
       process.env.NODE_ENV === "development"
         ? `http://localhost:3000/billing/return/${data?.connectedAccountId}`
-        : `https://launchpotion.vercel.app/billing/return/${data?.connectedAccountId}`,
+        : `https://productpotion.vercel.app/billing/return/${data?.connectedAccountId}`,
     type: "account_onboarding",
   });
 
@@ -377,11 +377,11 @@ export async function BuyProduct(formData: FormData) {
     success_url:
       process.env.NODE_ENV === "development"
         ? "http://localhost:3000/billing/payment/success"
-        : "https://launchpotion.vercel.app/billing/payment/success",
+        : "https://productpotion.vercel.app/billing/payment/success",
     cancel_url:
       process.env.NODE_ENV === "development"
         ? "http://localhost:3000/billing/payment/cancel"
-        : "https://launchpotion.vercel.app/billing/payment/cancel",
+        : "https://productpotion.vercel.app/billing/payment/cancel",
   });
 
   return redirect(session.url as string);

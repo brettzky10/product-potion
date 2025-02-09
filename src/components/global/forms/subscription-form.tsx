@@ -29,7 +29,7 @@ const SubscriptionForm = ({ plan }: Props) => {
 
           <SubscriptionCard
             title="PRO"
-            description="Launch your brand to the next level with all the tools."
+            description="Excel your brand to the next level with all the tools."
             price="35"
             payment={payment}
             onPayment={onSetPayment}

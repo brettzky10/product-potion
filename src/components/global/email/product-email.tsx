@@ -31,7 +31,7 @@ import {
                 </Button>
               </Section>
               <Text className="text-lg">
-                We want to hear your thoughts at <br /> Launch Potion Team
+                We want to hear your thoughts at <br /> Product Potion Team
               </Text>
             </Container>
           </Body>

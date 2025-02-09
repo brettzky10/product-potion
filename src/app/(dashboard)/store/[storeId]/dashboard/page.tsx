@@ -36,17 +36,6 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({
         if (!user) {
             redirect('/login');
         }
- 
-
-  //const productsCount = await getProductCount(user!.id)
-  /* async function getLinked = async () => {
-    const linked = await prismadb.owner.findUnique({
-      where: { userId: user?.id, email: user?.email },
-      select: {
-        stripeConnectedLinked: true
-      }
-    })
-  } */
 
 
   async function getProductCount(): Promise<number> {
@@ -82,9 +71,7 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({
   //Timestamp:
   const myUnixTimestamp = 1691622800; // start with a Unix timestamp
 
-const myDate = new Date(myUnixTimestamp * 1000); // convert timestamp to milliseconds and construct Date object
-
-//console.log(myDate); // will print "Thu Aug 10 2023 01:13:20" followed by the local timezone on browser console
+  const myDate = new Date(myUnixTimestamp * 1000); // convert timestamp to milliseconds and construct Date object
 
 
 

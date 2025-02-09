@@ -61,3 +61,8 @@ end;
 
 
 //***Make sure you specify: Definer
+
+
+//**SupaHook - supabase trigger to send webhook when a product is changed
+
+CREATE OR REPLACE TRIGGER "product-updates" AFTER INSERT OR DELETE OR UPDATE ON "public"."products" FOR EACH ROW EXECUTE FUNCTION "supabase_functions"."http_request"('{{HOOKDECK_PRODUCT_UPDATE_WEBHOOK_URL}}', 'POST', '{"Content-type":"application/json","x-supabase-api-key":"{{HOOKDECK_PRODUCT_UPDATE_WEBHOOK_KEY}}"}', '{}', '1000');

@@ -1,4 +1,4 @@
-
+import { Hookdeck } from "@hookdeck/sdk";
 export interface Product {
     id: string;
     category: string | null; //Category
@@ -52,3 +52,40 @@ export interface Product {
   export const imageLoader = ({ src, width, quality = 75 }: ImageLoaderParams): string => 
     `${src}?w=${width}&q=${quality}`;
 
+
+
+  
+export type LinkedInUser = {
+  sub: string;
+  email_verified: boolean;
+  name: string;
+  locale: {
+    country: string;
+    language: string;
+  };
+  given_name: string;
+  family_name: string;
+  email: string;
+  picture: string;
+};
+
+export interface Result<T> {
+  type: "success" | "error";
+  message: string;
+  data: T | null;
+}
+
+export type Message = {
+  type: "success" | "error";
+  message: string;
+};
+
+export type SearchParams<T extends string> = {
+  [K in T]: string | string[] | undefined;
+};
+
+
+//Hookdeck
+export interface WebhookSubscription {
+  connection: Hookdeck.Connection;
+}

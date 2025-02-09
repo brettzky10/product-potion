@@ -4,7 +4,6 @@ import prismadb from "@/lib/db/prismadb"
 
 const currentDate = new Date()
 
-
 export const onGetExplore = async (category: string, paginate: number, storeId: string) => {
     try {
       const products = await prismadb.product.findMany({

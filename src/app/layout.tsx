@@ -23,28 +23,28 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-	metadataBase: new URL("https://next-supabase-vote.vercel.app/"),
+	metadataBase: new URL("https://productpotion.com/"),
 
 	title: {
-		template: "%s | Launch Potion",
-		default: "Launch Potion",
+		template: "%s | Product Potion",
+		default: "Product Potion",
 	},
 	authors: {
 		name: "Brett",
 	},
 
 	description:
-		"Your elixir to business success! Let customers search products in any language and get traffic into your store faster.",
+		"Your elixir to multi-buisness success! Build & manage multiple stores from one dashboard.",
 	openGraph: {
-		title: "Launch Potion",
+		title: "Product Potion",
 		description:
-			"Your elixir to business success! Let customers search products in any language and get traffic into your store faster.",
-		url: "https://launchpotion.vercel.app/",
-		siteName: "Launch Potion",
+			"Your elixir to business success! Build & manage multiple stores from one dashboard.",
+		url: "https://productpotion.vercel.app/",
+		siteName: "Product Potion",
 		images: "/og.png",
 		type: "website",
 	},
-	keywords: ["search products language", "launch potion", "find products language"],
+	keywords: ["Buid multiple stores", "product potion", "product stores"],
 };
 
 export default function RootLayout({

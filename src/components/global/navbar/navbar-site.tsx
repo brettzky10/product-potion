@@ -38,7 +38,7 @@ export default function NavSite({ user, credits }: NavbarProps) {
         <Link href={"/"} className="text-lg font-semibold">
           <aside className="flex items-center gap-2 group cursor-pointer">
           <Potion selected={false}/>
-          <span className="text-xl font-bold hover:text-violet-500/70">Launch Potion<sup className="text-violet-500 ml-1">beta</sup></span>
+          <span className="text-xl font-bold hover:text-violet-500/70">Product Potion<sup className="text-violet-500 ml-1">beta</sup></span>
           </aside>
         </Link>
         <NavLinks/>
@@ -103,7 +103,7 @@ export default function NavSite({ user, credits }: NavbarProps) {
             <SheetTrigger asChild>
               <Button className="md:hidden" size="icon" variant="outline">
                 <MenuIcon className="h-6 w-6" />
-                <span className="sr-only">Launch Potion</span>
+                <span className="sr-only">Product Potion</span>
               </Button>
             </SheetTrigger>
             <SheetContent side="right">

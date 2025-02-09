@@ -58,11 +58,12 @@ export default async function DashboardLayout({
             
             {/* <Navbar /> */}
             <div className="">
+            
             <NavbarDashboard subdomain={subdomain!} credits={credits!} user={user} userId={user.id} email={userEmail} plan={userPlan}/>
             
              {/* {<BillingNavbar/>} */}
             </div>
-            <div className="md:mx-12 mx-10">
+            <div className="sm:mx-12 ">
                 {children}
             </div>
             </div>

@@ -64,7 +64,7 @@ const NavBarDomain = async () => {
                         
                         <SheetContent className='w-56 bg-gray-100 text-coral space-y-10'>
                           <SheetHeader className='font-light text-5xl'>
-                            Launch <span className='text-potion font-black'>Potion</span>
+                            Product <span className='text-potion font-black'>Potion</span>
                           </SheetHeader>
                           <ThemeToggle/>
                           <WakeLockToggle id={store!.id} />

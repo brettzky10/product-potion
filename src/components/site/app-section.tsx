@@ -22,7 +22,7 @@ export function AppSection() {
         }
       >
         <Image
-          src={`/images/site/launch-potion-ui.png`}
+          src={`/images/site/product-potion-ui.png`}
           alt="hero"
           height={720}
           width={1400}

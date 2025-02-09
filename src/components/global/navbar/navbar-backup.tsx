@@ -23,12 +23,12 @@ const NavbarDashboard =  ({credits, subdomain, userId, email, plan, user}:{credi
                         <TooltipTrigger className="mx-2">
                         <Badge className="text-sm text-steel">
                         <a target="_blank" href={`http://${subdomain}.localhost:3000/`} rel="noopener noreferrer">
-                        <span className="text-white">{subdomain}</span>.launchpotion.com
+                        <span className="text-white">{subdomain}</span>.productpotion.com
                         </a>
                         </Badge>
                         </TooltipTrigger>
                         <TooltipContent>
-                        {subdomain}.launchpotion.com
+                        {subdomain}.productpotion.com
                         </TooltipContent>
                     </Tooltip>
                 </TooltipProvider>

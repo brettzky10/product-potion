@@ -144,7 +144,7 @@ export function ShareFeedback({ email, open, setOpen }: ShareFeedbackProps) {
                       Request a Feature
                     </CardTitle>
                     <CardDescription>
-                      Looking to add someone to Launch Potion? Share
+                      Looking to add someone to Product Potion? Share
                       your ideas and we will consider them for future updates.
                     </CardDescription>
                   </CardHeader>
@@ -218,7 +218,7 @@ export function ShareFeedback({ email, open, setOpen }: ShareFeedbackProps) {
                   />
                   <CardHeader className="pt-1">
                     <CardTitle className="text-xl">
-                      Tell us what you think of Launch Potion!
+                      Tell us what you think of Product Potion!
                     </CardTitle>
                     <CardDescription>
                       Share your love and what you like, areas that could be improved, and bug reports!

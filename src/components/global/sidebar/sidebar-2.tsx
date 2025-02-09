@@ -27,7 +27,7 @@ import {
   Trash2,
   Shirt
 } from "lucide-react"
-
+import { User } from "@supabase/supabase-js";
 import {
   Avatar,
   AvatarFallback,
@@ -82,6 +82,8 @@ import { createClient } from "@/lib/supabase/supabase-client"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { UserNav } from "../navbar/user-nav"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
 // This is sample data. You might want to fetch this from an API or database in a real application.
 const data = {
@@ -207,7 +209,7 @@ const data = {
   ], */
 }
 
-export default function DashboardSidebar({ children, email, credits, storeId, stores }: { children: React.ReactNode, email: string | undefined, credits: number | '0', storeId: string, stores:
+export default function DashboardSidebar({ children, email, credits, storeId, stores, user, plan, subdomain }: { children: React.ReactNode, email: string | undefined, credits: number | '0', subdomain: string, user: User | null | undefined, plan: string, storeId: string, stores:
     | {
         id: string | ''
         name: string | 'name'
@@ -478,9 +480,9 @@ export default function DashboardSidebar({ children, email, credits, storeId, st
         </SidebarFooter>
         <SidebarRail />
       </Sidebar>
-      <SidebarInset className="bg-sand w-full">
-        <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 bg-sand">
-          <div className="flex items-center gap-2 px-4">
+      <SidebarInset className="bg-sand flex">
+        <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 bg-sand justify-between pr-3">
+          <div className="flex items-center gap-2 px-4 ">
             <SidebarTrigger className="-ml-1" />
             <Separator orientation="vertical" className="mr-2 h-4" />
             <Breadcrumb>
@@ -496,14 +498,48 @@ export default function DashboardSidebar({ children, email, credits, storeId, st
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
+            
           </div>
+          <TooltipProvider>
+                    <Tooltip>
+                        <TooltipTrigger className="mx-2">
+                        <Badge className="text-sm text-steel">
+                        <a target="_blank" href={`http://${subdomain}.localhost:3000/`} rel="noopener noreferrer">
+                        <span className="text-white">{subdomain}</span>.productpotion.com
+                        </a>
+                        </Badge>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                        {subdomain}.productpotion.com
+                        </TooltipContent>
+                    </Tooltip>
+                </TooltipProvider>
+                <div className="flex items-center">
+                    <Link
+                        href={"/buy"}
+                        >
+                        <Badge variant="gradient" >
+                            <span className=" text-sm font-normal mx-1 text-zinc-300 dark:text-zinc-400">
+                            {credits ?? 0}
+        
+                            </span>
+                            <img
+                              src='/icons/dollar-coin.png'
+                              alt='credits'
+                              className='w-4'
+                              />
+                        </Badge>
+                    </Link>
+                    <UserNav user={user} credits={credits} plan={plan}/>
+                      
+                    
+                </div>
+              
         </header>
-        <ScrollArea className="h-[100vh] flex bg-ghost">
+        <ScrollArea className="h-[100vh] w-full flex bg-ghost">
             {children}   
         </ScrollArea>
-        {/* <div className="bg-zinc-950">
-          {children}
-        </div> */}
+
         
       </SidebarInset>
     </SidebarProvider>

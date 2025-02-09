@@ -39,37 +39,37 @@ const ExplorePageContent = ({ layout, category, storeId }: Props) => {
           <>
             {/* <ExploreSlider
               label={categories.name}
-              text="Join top performing products on launch potion."
+              text="Join top performing products on product potion."
               query={categories.name}
               storeId={storeId}
             />
             <ExploreSlider
               label={categories.name}
-              text="Join top performing products on launch potion."
+              text="Join top performing products on product potion."
               query={categories.name}
               storeId={storeId}
             />
             <ExploreSlider
               label={categories.name}
-              text="Join top performing products on launch potion."
+              text="Join top performing products on product potion."
               query={categories.name}
               storeId={storeId}
             /> */}
             <ExploreSlider
               label="Lifestyle"
-              text="Join top performing products on launch potion."
+              text="Join top performing products on product potion."
               query="lifestyle"
               storeId={storeId}
             />
             <ExploreSlider
               label="Fitness"
-              text="Join top performing products on launch potion."
+              text="Join top performing products on product potion."
               query="fitness"
               storeId={storeId}
             />
             <ExploreSlider
               label="Music"
-              text="Join top performing products on launch potion."
+              text="Join top performing products on product potion."
               query="music"
               storeId={storeId}
             />

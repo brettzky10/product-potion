@@ -16,8 +16,7 @@ export default function ReturnUrlStripe() {
               Linking was Successful
             </h3>
             <p className="mt-2 text-sm text-muted-foreground">
-              Congrats on linking your account to Launch Potion. You can now start
-              selling your products!
+              Congrats on linking your account to Product Potion. You can now start selling your products!
             </p>
 
             <Button className="mt-5 sm:mt-6 w-full" asChild>
